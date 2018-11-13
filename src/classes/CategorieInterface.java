@@ -1,5 +1,5 @@
 package classes;
 
-public class CategorieInterface {
+public interface CategorieInterface {
 
 }
