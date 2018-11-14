@@ -11,7 +11,7 @@ import java.util.Map;
  * - Clé : le nom de la catégorie (énumération)
  * - Valeurs (List) : les pièces associées à une catégorie
  * 
- * @author math & chach
+ * @author math & chach44
  *
  */
 public class Categorie implements CategorieInterface {
