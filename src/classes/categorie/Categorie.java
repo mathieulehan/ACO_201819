@@ -1,4 +1,4 @@
-package classes;
+package classes.categorie;
 
 import java.util.Arrays;
 import java.util.HashMap;

@@ -1,4 +1,4 @@
-package classes;
+package classes.config;
 
 public interface Configuration {
 

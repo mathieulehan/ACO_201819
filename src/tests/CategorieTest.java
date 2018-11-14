@@ -4,8 +4,8 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
 
-import classes.Categorie;
-import classes.Categorie.Categories;
+import classes.categorie.Categorie;
+import classes.categorie.Categorie.Categories;
 
 class CategorieTest {
 
