@@ -1,12 +1,17 @@
 package classes;
 
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 
 /**
- * Classe Piece, implémentant une interface PieceInterface, s'agissant d'une Map ayant pour : 
- * - Clé : le nom de la pièce
+ * Classe Piece, implementant une interface PieceInterface, s'agissant d'une Map ayant pour : 
+ * - Cle : le nom de la pièce
  * - Valeurs : Description
+ * 
+ * Gestion des incompatibilites et necessites de pieces
  * 
  * @author math & chach
  *
@@ -15,18 +20,21 @@ public class Piece implements PieceInterface {
 	/**
 	 * Variable locale
 	 */
-	private Map<String, String> pieceCatalogue;
+	public Map<String, String> pieceCatalogue;
+	Map<String, List<String>> pieceImcompatibilites;
 	
 	/**
 	 * Constructeur Piece
 	 */
 	public Piece () {
-		this.pieceCatalogue = new HashMap<>();;
+		this.pieceCatalogue = new HashMap<>();
+		this.pieceImcompatibilites = new HashMap<>();
 	}
 	 
 	/**
-	 * Initialsation des clés (piece) suivies de ses valeurs (description, incompatibilités, nécessités)
+	 * Initialisation des cles (piece) suivies de ses valeurs (description, incompatibilites, necessites)
 	 */
+	@Override
 	public void initialiserPiece () {
 		pieceCatalogue.put("EG100", "Gasoline 100kW");
 		pieceCatalogue.put("EG133", "Gasoline 133kW");
@@ -46,15 +54,47 @@ public class Piece implements PieceInterface {
 		pieceCatalogue.put("IN",  "Standard interior");
 		pieceCatalogue.put("IH", "High-end interior");
 		pieceCatalogue.put("IS", "Sport-finish");
-
-	}
-	
-	
-	public static void main (String[] args) {
-		Piece pieces = new Piece();
-		pieces.initialiserPiece();
 		
-		System.out.println(pieces.pieceCatalogue.get("XS"));
-		System.out.println("Size of map is:- " + pieces.pieceCatalogue.size()); 
+
+		pieceImcompatibilites.put("TA5", new LinkedList<String>(Arrays.asList("EG100")));
+		pieceImcompatibilites.put("TSF7", new LinkedList<String>(Arrays.asList("EG100", "EG133", "ED110")));
+		pieceImcompatibilites.put("XC", new LinkedList<String>(Arrays.asList("EG210")));
+		pieceImcompatibilites.put("XM", new LinkedList<String>(Arrays.asList("EG100")));
+		pieceImcompatibilites.put("XS", new LinkedList<String>(Arrays.asList("EG100")));
+		pieceImcompatibilites.put("IS", new LinkedList<String>(Arrays.asList("EG100", "TM5")));
+	}
+
+	/**
+	 * 
+	 * @param nomPiece
+	 * @return
+	 */
+	@Override
+	public boolean verification (String nomPiece) {
+		return pieceImcompatibilites.containsKey(nomPiece);
+	}
+
+	@Override
+	public void ajoutIncompatibilite() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void suppressionIncompatibilite() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void ajoutNecessite() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void suppressionNecessite() {
+		// TODO Auto-generated method stub
+		
 	}
 }
