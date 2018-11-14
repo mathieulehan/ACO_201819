@@ -1,4 +1,4 @@
-package classes;
+package classes.piece;
 
 public interface VerifCompatibilite {
 

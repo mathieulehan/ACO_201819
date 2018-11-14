@@ -1,4 +1,4 @@
-package classes;
+package classes.categorie;
 
 public interface CategorieInterface {
 

@@ -4,7 +4,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
 
-class TypePieceTest {
+class ConfigAppImpl {
 
 	@Test
 	void test() {
