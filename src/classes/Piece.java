@@ -13,7 +13,7 @@ import java.util.Map;
  * 
  * Gestion des incompatibilites et necessites de pieces
  * 
- * @author math & chach
+ * @author math & chach44
  *
  */
 public class Piece implements PieceInterface {
@@ -71,7 +71,7 @@ public class Piece implements PieceInterface {
 	 */
 	@Override
 	public boolean verification (String nomPiece) {
-		return pieceImcompatibilites.containsKey(nomPiece);
+		return ConfigVoiture.mesIncompatibilites.contains(nomPiece);
 	}
 
 	@Override
