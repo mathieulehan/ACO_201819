@@ -23,7 +23,8 @@ public class Piece implements PieceInterface {
 	 * Variable locale
 	 */
 	public Map<String, String> pieceCatalogue;
-	Map<String, List<String>> pieceImcompatibilites;
+	public Map<String, List<String>> pieceImcompatibilites;
+	public Map<String, String> pieceRequises;
 	
 	/**
 	 * Constructeur Piece
@@ -31,6 +32,7 @@ public class Piece implements PieceInterface {
 	public Piece () {
 		this.pieceCatalogue = new HashMap<>();
 		this.pieceImcompatibilites = new HashMap<>();
+		this.pieceRequises = new HashMap<>();
 	}
 	 
 	/**
@@ -64,6 +66,12 @@ public class Piece implements PieceInterface {
 		pieceImcompatibilites.put("XM", new LinkedList<String>(Arrays.asList("EG100")));
 		pieceImcompatibilites.put("XS", new LinkedList<String>(Arrays.asList("EG100")));
 		pieceImcompatibilites.put("IS", new LinkedList<String>(Arrays.asList("EG100", "TM5")));
+		
+
+		pieceRequises.put("EH120", "TC120");
+		pieceRequises.put("TC120", "EH120");
+		pieceRequises.put("XS", "IS");
+		pieceRequises.put("IS", "XS");
 	}
 
 	/**

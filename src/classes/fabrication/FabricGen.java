@@ -1,4 +1,4 @@
-package classes.piece;
+package classes.fabrication;
 
 public class FabricGen {
 
