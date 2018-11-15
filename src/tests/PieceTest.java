@@ -3,7 +3,7 @@ package tests;
 import static org.junit.Assert.assertEquals;
 import org.junit.jupiter.api.Test;
 
-import classes.Piece;
+import classes.piece.Piece;
 
 class PieceTest {
 

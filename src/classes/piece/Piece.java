@@ -6,6 +6,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+import classes.config.ConfigVoiture;
+
 /**
  * Classe Piece, implementant une interface PieceInterface, s'agissant d'une Map ayant pour : 
  * - Cle : le nom de la pièce
