@@ -5,4 +5,5 @@ import java.util.Set;
 public class ConfigVoiture {
 
 	public static Set mesIncompatibilites;
+	public String[] maConfig;
 }
