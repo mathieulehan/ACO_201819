@@ -10,7 +10,7 @@ import classes.config.ConfigVoiture;
 
 /**
  * Classe Piece, implementant une interface PieceInterface, s'agissant d'une Map ayant pour : 
- * - Cle : le nom de la pièce
+ * - Cle : le nom de la piece
  * - Valeurs : Description
  * 
  * Gestion des incompatibilites et necessites de pieces

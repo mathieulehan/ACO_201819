@@ -4,13 +4,13 @@ import java.util.Set;
 
 public class ConfigVoiture {
 
-	public static Set<String> mesIncompatibilites;
-	
+	public String[] maConfig;
+	public static Set mesIncompatibilites;
 	public void getPieceIncompatibles() {
 		
 	}
 	
-	public void getPieceRequis() {
 		
+	public void getPieceRequis() {
 	}
 }
