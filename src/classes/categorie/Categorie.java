@@ -19,7 +19,7 @@ public class Categorie implements CategorieInterface {
 	/**
 	 * Enumeration des categories existantes
 	 */
-	public enum Categories {ENGINE, TRANSMISSION, EXTERIOR, INTERIOR};
+	public static enum Categories {ENGINE, TRANSMISSION, EXTERIOR, INTERIOR};
 	private Map<Categories, List<String>> categorieCatalogue;
 	
 	/**
@@ -45,5 +45,12 @@ public class Categorie implements CategorieInterface {
 
 	public Map<Categories, List<String>> getCategorieCatalogue() {
 		return categorieCatalogue;
+	}
+	
+	public static void main(String[] args) {
+		Categorie cat = new Categorie();
+		cat.initialiserCategorie();
+		System.out.println(cat.getCategorie(Categories.ENGINE));
+		System.out.println(cat.getCategorieCatalogue());
 	}
 }

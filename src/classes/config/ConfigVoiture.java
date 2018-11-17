@@ -4,5 +4,13 @@ import java.util.Set;
 
 public class ConfigVoiture {
 
-	public static Set mesIncompatibilites;
+	public static Set<String> mesIncompatibilites;
+	
+	public void getPieceIncompatibles() {
+		
+	}
+	
+	public void getPieceRequis() {
+		
+	}
 }
