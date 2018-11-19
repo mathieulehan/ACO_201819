@@ -1,17 +1,17 @@
 package classes.piece;
 
+import java.util.List;
+import java.util.Set;
+
+import exceptions.PasDIncompatibilitesException;
+
 public interface GestionCompatibilite {
 
-	public void setIncompatibilite(String piece);
-	
-	public void ajouterIncompatibilite(String piece);
-	
-	public void supprimerIncompatibilite(String piece);
-	
-	
-	public void setNecessite(String piece);
-	
-	public void ajouterNecessite(String piece);
-	
-	public void supprimerNecessite(String piece);
+	void setIncompatibilites(Set<String> newIncompatibilites);
+	public void ajoutIncompatibilite(String incompatibilité);
+	public void suppressionIncompatibilite(String incompatibilite) throws PasDIncompatibilitesException;
+
+	void setNecessites(Set<String> newNecessites);
+	public void ajoutNecessite(String necessite);
+	public void suppressionNecessite(String necessite) throws PasDIncompatibilitesException;
 }
