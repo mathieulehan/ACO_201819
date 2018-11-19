@@ -44,6 +44,11 @@ public class ConfigVoiture implements ConfigInterface {
 		// TODO Auto-generated method stub
 		
 	}
+	
+	public void notificationConfigTest(ConfigAppImpl conf) {
+		//modifier ce dont on a besoin à l'aide de la conf
+		
+	}
 
 
 	@Override
