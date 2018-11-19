@@ -1,5 +1,8 @@
 package classes.config;
 
+import classes.categorie.Categorie;
+import classes.piece.Piece;
+
 public interface ConfigInterface {
 
 	/**
@@ -19,4 +22,21 @@ public interface ConfigInterface {
 	 * @return
 	 */
 	public boolean estObservable();
+	
+	/**
+	 * Supprimer une piece de la configuration
+	 * @param piece
+	 */
+	public void supprimerPiece (Piece piece);
+	
+	/**
+	 * Ajouter une piece dans la configuration
+	 * @param piece
+	 */
+	public void ajouterPiece (Piece piece);
+	
+	/**
+	 * Recupere les pieces selon categorie
+	 */
+	public void getPieces(Categorie categorie);
 }

@@ -2,9 +2,16 @@ package classes.piece;
 
 public interface GestionCompatibilite {
 
-	public void set();
+	public void setIncompatibilite(String piece);
 	
-	public void add();
+	public void ajouterIncompatibilite(String piece);
 	
-	public void remove();
+	public void supprimerIncompatibilite(String piece);
+	
+	
+	public void setNecessite(String piece);
+	
+	public void ajouterNecessite(String piece);
+	
+	public void supprimerNecessite(String piece);
 }
