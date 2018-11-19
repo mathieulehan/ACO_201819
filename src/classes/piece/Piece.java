@@ -23,20 +23,20 @@ public class Piece implements PieceInterface {
 	 * Variable locale
 	 */
 	public Map<String, String> pieceCatalogue;
-	public Map<String, List<String>> pieceImcompatibilites;
-	public Map<String, String> pieceRequises;
+	public Map<String, List<String>> pieceIncompatibilites;
+	public Map<String, List<String>> pieceRequises;
 	
 	/**
 	 * Constructeur Piece
 	 */
 	public Piece () {
 		this.pieceCatalogue = new HashMap<>();
-		this.pieceImcompatibilites = new HashMap<>();
+		this.pieceIncompatibilites = new HashMap<>();
 		this.pieceRequises = new HashMap<>();
 	}
 	 
 	/**
-	 * Initialisation des cles (piece) suivies de ses valeurs (description, incompatibilites, necessites)
+	 * Initialisation des cles (piece) suivies de sa description
 	 */
 	@Override
 	public void initialiserPiece () {
@@ -60,51 +60,91 @@ public class Piece implements PieceInterface {
 		pieceCatalogue.put("IS", "Sport-finish");
 		
 
-		pieceImcompatibilites.put("TA5", new LinkedList<String>(Arrays.asList("EG100")));
-		pieceImcompatibilites.put("TSF7", new LinkedList<String>(Arrays.asList("EG100", "EG133", "ED110")));
-		pieceImcompatibilites.put("XC", new LinkedList<String>(Arrays.asList("EG210")));
-		pieceImcompatibilites.put("XM", new LinkedList<String>(Arrays.asList("EG100")));
-		pieceImcompatibilites.put("XS", new LinkedList<String>(Arrays.asList("EG100")));
-		pieceImcompatibilites.put("IS", new LinkedList<String>(Arrays.asList("EG100", "TM5")));
+		pieceIncompatibilites.put("TA5", new LinkedList<String>(Arrays.asList("EG100")));
+		pieceIncompatibilites.put("TSF7", new LinkedList<String>(Arrays.asList("EG100", "EG133", "ED110")));
+		pieceIncompatibilites.put("XC", new LinkedList<String>(Arrays.asList("EG210")));
+		pieceIncompatibilites.put("XM", new LinkedList<String>(Arrays.asList("EG100")));
+		pieceIncompatibilites.put("XS", new LinkedList<String>(Arrays.asList("EG100")));
+		pieceIncompatibilites.put("IS", new LinkedList<String>(Arrays.asList("EG100", "TM5")));
 		
 
-		pieceRequises.put("EH120", "TC120");
-		pieceRequises.put("TC120", "EH120");
-		pieceRequises.put("XS", "IS");
-		pieceRequises.put("IS", "XS");
+		pieceRequises.put("EH120",new LinkedList<String>(Arrays.asList("TC120")));
+		pieceRequises.put("TC120", new LinkedList<String>(Arrays.asList("EH120")));
+		pieceRequises.put("XS", new LinkedList<String>(Arrays.asList("IS")));
+		pieceRequises.put("IS", new LinkedList<String>(Arrays.asList("XS")));
+	}
+//
+//	/**
+//	 * On verifie que la piece 
+//	 * @param nomPiece
+//	 * @return
+//	 */
+//	@Override
+//	public boolean verification (String nomPiece) {
+//		return ConfigVoiture.mesIncompatibilites.contains(nomPiece);
+//	}
+
+	/**
+	 * Methode permettant de rajouter une incompatibilite a la piece en parametre
+	 */
+	@Override
+	public void ajoutIncompatibilite(String nomPiece, String incompatibilite) {
+		List<String> incompatibilites = new LinkedList<String>();
+		if(pieceIncompatibilites.get(nomPiece) != null) {
+			incompatibilites = pieceIncompatibilites.get(nomPiece);
+			incompatibilites.add(incompatibilite);
+		}
+		else {
+			incompatibilites = new LinkedList<String>();
+			incompatibilites.add(incompatibilite);
+		}
+		pieceIncompatibilites.put(nomPiece, incompatibilites);	
 	}
 
 	/**
-	 * 
-	 * @param nomPiece
-	 * @return
+	 * Methode permettant de supprimer une incompatibilite de la piece en parametre
 	 */
 	@Override
-	public boolean verification (String nomPiece) {
-		return ConfigVoiture.mesIncompatibilites.contains(nomPiece);
+	public void suppressionIncompatibilite(String nomPiece, String incompatibilite) {
+		List<String> incompatibilites = new LinkedList<String>();
+		if(!pieceIncompatibilites.get(nomPiece).isEmpty() || pieceIncompatibilites.get(nomPiece) != null) {
+			incompatibilites = pieceIncompatibilites.get(nomPiece);
+			incompatibilites.remove(incompatibilite);
+		}
+		else {
+			// y'a pas d'incompatibilites pour cette piece. TODO Exception la piece n'a pas d'incompatibilite(s)
+		}
 	}
 
+	/**
+	 * Methode permettant de rajouter une necessite a la piece en parametre
+	 */
 	@Override
-	public void ajoutIncompatibilite() {
-		// TODO Auto-generated method stub
-		
+	public void ajoutNecessite(String nomPiece, String necessite) {
+		List<String> necessites = new LinkedList<String>();
+		if(pieceRequises.get(nomPiece) != null) {
+			necessites = pieceIncompatibilites.get(nomPiece);
+			necessites.add(necessite);
+		}
+		else {
+			necessites = new LinkedList<String>();
+			necessites.add(necessite);
+		}
+		pieceRequises.put(nomPiece, necessites);
 	}
 
+	/**
+	 * Methode permettant de supprimer une necessite de la piece en parametre
+	 */
 	@Override
-	public void suppressionIncompatibilite() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void ajoutNecessite() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void suppressionNecessite() {
-		// TODO Auto-generated method stub
-		
+	public void suppressionNecessite(String nomPiece, String necessite) {
+		List<String> necessites = new LinkedList<String>();
+		if(!pieceRequises.get(nomPiece).isEmpty() || pieceRequises.get(nomPiece) != null) {
+			necessites = pieceRequises.get(nomPiece);
+			necessites.remove(necessite);
+		}
+		else {
+			// y'a pas de necessites pour cette piece. TODO Exception
+		}
 	}
 }
