@@ -1,30 +1,61 @@
 package tests;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
-import classes.piece.TypePiece;
+
+import classes.piece.Piece;
+import exceptions.PasDIncompatibilitesException;
 
 class PieceTest {
 
 	@Test
-	void taille_du_catalogue_Piece() {
-		TypePiece pieces = new TypePiece();
-		pieces.initialiserPieces();
-		assertEquals(18, pieces.getPiecesDisponibles().size());
+	void ajoutIncompatibilites() {
+		Piece pieceTest = new Piece("Piece", "Piece de test");
+		assertTrue(pieceTest.getIncompatibilites().size() == 0);
+		Piece incompatibilite = new Piece("Incompatibilite", "Incompatibilte de test");
+		pieceTest.ajoutIncompatibilite(incompatibilite);
+		assertTrue(pieceTest.getIncompatibilites().size() == 1);
+		assertTrue(pieceTest.getIncompatibilites().contains(incompatibilite));
+		Piece incompatibilite2 = new Piece("Deuxieme incompatibilite", "Incompatibilite de test");
+		pieceTest.ajoutIncompatibilite(incompatibilite2);
+		assertTrue(pieceTest.getIncompatibilites().size() == 2);
+		assertTrue((pieceTest.getIncompatibilites().contains(incompatibilite) && (pieceTest.getIncompatibilites().contains(incompatibilite2))));
 	}
-	
+
 	@Test
-	void piece_TA5_est_automatic_5_gears() {
-		TypePiece pieces = new TypePiece();
-		pieces.initialiserPieces();
-		assertEquals("Automatic 5 gears", pieces.chercherPieceParNom("TA5").getDescription());
+	void suppressionIncompatibilites() throws PasDIncompatibilitesException {
+		Piece pieceTest = new Piece("Piece", "Piece de test");
+		assertTrue(pieceTest.getIncompatibilites().size() == 0);
+		Piece incompatibilite = new Piece("Incompatibilite", "Incompatibilite de test");
+		pieceTest.ajoutIncompatibilite(incompatibilite);
+		assertTrue(pieceTest.getIncompatibilites().size() == 1);
+		pieceTest.suppressionIncompatibilite(incompatibilite);
+		assertTrue(pieceTest.getIncompatibilites().size() == 0);
 	}
-	
+
 	@Test
-	void get_piece_inexistance() {
-		TypePiece pieces = new TypePiece();
-		pieces.initialiserPieces();
-		assertEquals(null, pieces.chercherPieceParNom("INEXISTANTE"));
+	void ajoutNecessites() {
+		Piece pieceTest = new Piece("Piece", "Piece de test");
+		assertTrue(pieceTest.getNecessites().size() == 0);
+		Piece necessite = new Piece("Necessite", "Necessite de test");
+		pieceTest.ajoutNecessite(necessite);
+		assertTrue(pieceTest.getNecessites().size() == 1);
+		assertTrue(pieceTest.getNecessites().contains(necessite));
+		Piece necessite2 = new Piece("Deuxieme necessite", "Necessite de test");
+		pieceTest.ajoutNecessite(necessite2);
+		assertTrue(pieceTest.getNecessites().size() == 2);
+		assertTrue((pieceTest.getNecessites().contains(necessite) && (pieceTest.getNecessites().contains(necessite2))));
+	}
+
+	@Test
+	void suppressionNecessites() throws PasDIncompatibilitesException {
+		Piece pieceTest = new Piece("Piece", "Piece de test");
+		assertTrue(pieceTest.getNecessites().size() == 0);
+		Piece necessite = new Piece("Necessites", "Necessites de test");
+		pieceTest.ajoutNecessite(necessite);
+		assertTrue(pieceTest.getNecessites().size() == 1);
+		pieceTest.suppressionNecessite(necessite);
+		assertTrue(pieceTest.getNecessites().size() == 0);
 	}
 }

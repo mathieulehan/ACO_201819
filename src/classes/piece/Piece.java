@@ -1,5 +1,6 @@
 package classes.piece;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import classes.config.ConfigVoiture;
@@ -25,6 +26,8 @@ public class Piece implements PieceInterface, GestionCompatibilite, VerifCompati
 	public Piece(String nom, String description) {
 		this.nom = nom;
 		this.description = description;
+		this.incompatibilites = new HashSet<Piece>();
+		this.necessites = new HashSet<Piece>();
 	}
 	
 	public String getNom() {
