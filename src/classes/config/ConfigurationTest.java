@@ -1,33 +1,43 @@
 package classes.config;
 
-import java.util.List;
-import java.util.Objects;
+import java.util.Observable;
 
-//observable
-public class ConfigurationTest {
+/**
+ * Exemple d'une configuration avec une piece pour le moment
+ * Cette classe est une classe Observable
+ * @author Thomas
+ *
+ */
+public class ConfigurationTest extends Observable {
 	
-	private List<ConfigAppImpl> configs;
+	private int piece = 0;
 	
-	public void ajouterConfigApp(ConfigAppImpl conf) {
-		Objects.requireNonNull(conf, conf+" cannot be null");
-		if (configs.contains(conf)) {
-			throw new IllegalArgumentException(conf+" is registered already");
-		}
-		configs.add(conf);
+	/**
+	 * Exemple !! C'est juste une configuration avec une seule piece
+	 * @param p
+	 */
+	public ConfigurationTest(int p) {
+		this.piece = p;
 	}
 	
-	public void supprimerConfigApp(ConfigAppImpl conf) {
-		Objects.requireNonNull(conf, conf+" cannot be null");
-		if (!configs.contains(conf)) {
-			throw new IllegalArgumentException(conf+" is not registered");
-		}
-		configs.remove(conf);
-	}
-
-	public void notifierConfigApp() {
-		for (ConfigAppImpl conf : configs) {
-			conf.notificationConfigTest(this);
-		}
-	}
+	/**
+	 * Ajoute une nouvelle piece a la place de l'anciene
+	 * @param p
+	 */
+	public void setPiece(int p)
+	   {
+	      this.piece = p;
+	      setChanged();
+	      notifyObservers();
+	   }
+	
+	/**
+	 * Recupere la piece de la config
+	 * @return
+	 */
+	public int getPiece()
+	   {
+	      return this.piece;
+	   }
 
 }

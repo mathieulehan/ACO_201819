@@ -39,6 +39,5 @@ public interface ConfigInterface {
 	 * Recupere les pieces selon categorie
 	 */
 	public void getPieces(Categorie categorie);
-	
-	public void notificationConfigTest(ConfigAppImpl conf);
+
 }

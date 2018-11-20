@@ -1,13 +1,15 @@
 package classes.config;
 
+import java.util.Observable;
+import java.util.Observer;
 import java.util.Set;
 
 import classes.categorie.Categorie;
 import classes.piece.Piece;
 
-public class ConfigVoiture implements ConfigInterface {
+public class ConfigVoiture implements ConfigInterface, Observer {
 
-	public String[] maConfig;
+	public Set<Piece> maConfig;
 	public static Set<Piece> mesIncompatibilites;
 	public static Set<Piece> mesNecessites;
 
@@ -44,15 +46,17 @@ public class ConfigVoiture implements ConfigInterface {
 		// TODO Auto-generated method stub
 		
 	}
-	
-	public void notificationConfigTest(ConfigAppImpl conf) {
-		//modifier ce dont on a besoin à l'aide de la conf
+
+
+	@Override
+	public void getPieces(Categorie categorie) {
+		// TODO Auto-generated method stub
 		
 	}
 
 
 	@Override
-	public void getPieces(Categorie categorie) {
+	public void update(Observable o, Object arg) {
 		// TODO Auto-generated method stub
 		
 	}
