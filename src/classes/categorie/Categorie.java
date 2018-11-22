@@ -46,11 +46,4 @@ public class Categorie implements CategorieInterface {
 	public Map<Categories, List<String>> getCategorieCatalogue() {
 		return categorieCatalogue;
 	}
-	
-	public static void main(String[] args) {
-		Categorie cat = new Categorie();
-		cat.initialiserCategorie();
-		System.out.println(cat.getCategorie(Categories.ENGINE));
-		System.out.println(cat.getCategorieCatalogue());
-	}
 }
