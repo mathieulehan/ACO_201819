@@ -3,6 +3,7 @@ package classes.piece;
 import java.util.HashSet;
 import java.util.Set;
 
+import classes.categorie.Categorie;
 import classes.config.ConfigVoiture;
 import exceptions.PasDIncompatibilitesException;
 
@@ -46,8 +47,15 @@ public class Piece implements PieceInterface, GestionCompatibilite, VerifCompati
 		this.description = description;
 	}
 
-	public void getCategorie() {
-		// TODO à faire
+	public String getCategorie() {
+		Categorie cat = new Categorie();
+		cat.initialiserCategorie();
+		for (String categorie : cat.getCategories()) {
+			if(cat.getCategorie(categorie).contains(this.nom)) {
+				return categorie;
+			}
+		}
+		return null;
 	}
 
 	@Override

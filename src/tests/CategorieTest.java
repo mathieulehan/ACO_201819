@@ -2,12 +2,8 @@ package tests;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import java.util.List;
-import java.util.Map;
-
 import org.junit.jupiter.api.Test;
 import classes.categorie.Categorie;
-import classes.categorie.Categorie.Categories;
 
 class CategorieTest {
 
@@ -38,6 +34,6 @@ class CategorieTest {
 	@Test
 	void testCleExistante() {
 		categorieTest.initialiserCategorie();
-		assertTrue(categorieTest.getCategorie(Categories.ENGINE) != null);
+		assertTrue(categorieTest.getCategorie("ENGINE") != null);
 	}
 }

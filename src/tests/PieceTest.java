@@ -2,12 +2,33 @@ package tests;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import classes.piece.Piece;
 import exceptions.PasDIncompatibilitesException;
 
 class PieceTest {
+
+	/**
+	 * On souhaite obtenir la categorie de la piece
+	 */
+	@Test
+	void getCategorieExistante() {
+		Piece pieceTest = new Piece("EG100", "Description de l'EG100");
+		assertEquals("ENGINE", pieceTest.getCategorie());
+	}
+	
+	/**
+	 * On souhaite obtenir la categorie de la piece, mais elle n'en a pas
+	 * la methode contains utilisee pour retrouver la categorie de la piece
+	 * va donc renvoyer un {@link NullPointerException}
+	 */
+	@Test
+	void getCategorieInexistante() {
+		Piece pieceTest = new Piece("EG1000", "Description de la piece inexistante");
+		Assertions.assertThrows(NullPointerException.class, () -> pieceTest.getCategorie());
+	}
 
 	/**
 	 * Differents tests autour de l'ajout d'incompatibilites aux pieces
