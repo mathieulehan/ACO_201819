@@ -9,6 +9,9 @@ import exceptions.PasDIncompatibilitesException;
 
 class PieceTest {
 
+	/**
+	 * Differents tests autour de l'ajout d'incompatibilites aux pieces
+	 */
 	@Test
 	void ajoutIncompatibilites() {
 		Piece pieceTest = new Piece("Piece", "Piece de test");
@@ -23,6 +26,10 @@ class PieceTest {
 		assertTrue((pieceTest.getIncompatibilites().contains(incompatibilite) && (pieceTest.getIncompatibilites().contains(incompatibilite2))));
 	}
 
+	/**
+	 * On verifie si la suppression d'une incompatibilite fonctionne
+	 * @throws PasDIncompatibilitesException
+	 */
 	@Test
 	void suppressionIncompatibilites() throws PasDIncompatibilitesException {
 		Piece pieceTest = new Piece("Piece", "Piece de test");
@@ -34,6 +41,9 @@ class PieceTest {
 		assertTrue(pieceTest.getIncompatibilites().size() == 0);
 	}
 
+	/**
+	 * Differents tests autour de l'ajout de necessites aux pieces
+	 */
 	@Test
 	void ajoutNecessites() {
 		Piece pieceTest = new Piece("Piece", "Piece de test");
@@ -48,6 +58,10 @@ class PieceTest {
 		assertTrue((pieceTest.getNecessites().contains(necessite) && (pieceTest.getNecessites().contains(necessite2))));
 	}
 
+	/**
+	 * On verifie que la suppression d'une necessite fonctionne
+	 * @throws PasDIncompatibilitesException
+	 */
 	@Test
 	void suppressionNecessites() throws PasDIncompatibilitesException {
 		Piece pieceTest = new Piece("Piece", "Piece de test");
