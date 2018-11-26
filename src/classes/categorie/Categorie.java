@@ -8,6 +8,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import exceptions.CategorieEstNullException;
+
 /**
  * Classe Categorie, implementant une interface CategorieInterface, s'agissant d'une Map ayant pour : 
  * - Cle : le nom de la categorie (enumeration)
@@ -49,7 +51,14 @@ public class Categorie implements CategorieInterface {
 		this.categorieCatalogue.put("INTERIOR", new LinkedList<String>(Arrays.asList("IN", "IH", "IS")));
 	}
 	
-	public List<String> getCategorie(String categorie) {
+	/**
+	 * @param la categorie que l'on souhaite récupérer
+	 * @throws CategorieEstNullException si la categorie en parametre est nulle
+	 */
+	public List<String> getCategorie(String categorie) throws CategorieEstNullException {
+		if (categorie == null) {
+			throw new CategorieEstNullException("La catégorie en paramètre est nulle");
+		}
 		return getCategorieCatalogue().get(categorie);
 	}
 

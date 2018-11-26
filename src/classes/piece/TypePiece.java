@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 /**
  * Classe Piece, implementant une interface PieceInterface, s'agissant d'une Map ayant pour : 

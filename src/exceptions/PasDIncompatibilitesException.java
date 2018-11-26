@@ -2,7 +2,7 @@ package exceptions;
 
 /**
  * 
- * Classe creant une Exception lors de la tentative de suppression d'une incompatibilite ou d'une necessite
+ * Classe creant une Exception dans le cas ou la piece n'aurait pas l'incompatibilite que l'on souhaite supprimer
  * 
  * @author mathi
  *
