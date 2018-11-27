@@ -18,8 +18,9 @@ public interface CategorieInterface {
 	 * @param categorie
 	 * @return la liste des pieces dans la categorie
 	 * @throws ParametreNullException 
+	 * @throws ResultatNullException 
 	 */
-	public List<String> getCategorie(String categorie) throws ParametreNullException;
+	public List<String> getCategorie(String categorie) throws ParametreNullException, ResultatNullException;
 
 	/**
 	 * Recupere toutes les pieces et toutes les categories

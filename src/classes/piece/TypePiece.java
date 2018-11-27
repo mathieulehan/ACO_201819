@@ -5,6 +5,9 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+import exceptions.ParametreNullException;
+import exceptions.ResultatNullException;
+
 /**
  * Classe Piece, implementant une interface PieceInterface, s'agissant d'une Map ayant pour : 
  * - Cle : le nom de la piece
@@ -37,8 +40,10 @@ public class TypePiece {
 	
 	/**
 	 * Initialisation des pieces (objets TypePiece) et de leurs incompatibilites & necessites
+	 * @throws ResultatNullException 
+	 * @throws ParametreNullException 
 	 */
-	public void initialiserPieces () {
+	public void initialiserPieces () throws ParametreNullException, ResultatNullException {
 		// donnees brutes
 		pieceCatalogue.put("EG100", "Gasoline 100kW");
 		pieceCatalogue.put("EG133", "Gasoline 133kW");

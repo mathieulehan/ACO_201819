@@ -61,8 +61,9 @@ public class Piece implements PieceInterface, GestionCompatibilite, VerifCompati
 	 * @return la categorie de la piece
 	 * @throws ParametreNullException si une categorie renvoyee par cat.getCategories() est null
 	 * @throws PasDeCategorieException si la piece n'a pas de categorie
+	 * @throws ResultatNullException 
 	 */
-	public String getCategorie() throws PasDeCategorieException, ParametreNullException {
+	public String getCategorie() throws PasDeCategorieException, ParametreNullException, ResultatNullException {
 		Categorie cat = new Categorie();
 		cat.initialiserCategorie();
 		for (String categorie : cat.getCategories()) {
