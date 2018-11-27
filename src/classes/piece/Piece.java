@@ -3,11 +3,9 @@ package classes.piece;
 import java.util.HashSet;
 import java.util.Set;
 
-import classes.categorie.Categorie;
 import classes.config.ConfigVoiture;
 import exceptions.ParametreNullException;
 import exceptions.PasDIncompatibilitesException;
-import exceptions.PasDeCategorieException;
 import exceptions.PasDeNecessitesException;
 import exceptions.ResultatNullException;
 
@@ -55,23 +53,6 @@ public class Piece implements PieceInterface, GestionCompatibilite, VerifCompati
 	public void setDescription(String description) throws ParametreNullException {
 		if (description == null) throw new ParametreNullException("La description en parametre est nulle");
 		this.description = description;
-	}
-
-	/**
-	 * @return la categorie de la piece
-	 * @throws ParametreNullException si une categorie renvoyee par cat.getCategories() est null
-	 * @throws PasDeCategorieException si la piece n'a pas de categorie
-	 * @throws ResultatNullException 
-	 */
-	public String getCategorie() throws PasDeCategorieException, ParametreNullException, ResultatNullException {
-		Categorie cat = new Categorie();
-		cat.initialiserCategorie();
-		for (String categorie : cat.getCategories()) {
-			if(cat.getCategorie(categorie).contains(this.nom)) {
-				return categorie;
-			}
-		}
-		throw new PasDeCategorieException("La piece ne possede pas de categorie");
 	}
 	
 	/**
@@ -134,9 +115,7 @@ public class Piece implements PieceInterface, GestionCompatibilite, VerifCompati
 	 */
 	@Override
 	public Set<Piece> getNecessites() throws ResultatNullException {
-		if (necessites == null) {
-			throw new ResultatNullException("Le Set de necessite de la piece est null");
-		}
+		if (necessites == null) throw new ResultatNullException("Le Set de necessite de la piece est null");
 		return necessites;
 	}
 	
@@ -157,6 +136,7 @@ public class Piece implements PieceInterface, GestionCompatibilite, VerifCompati
 	 * @throws ParametreNullException si la necessite en parametre est nulle
 	 * @throws PasDeNecessitesException si la piece n'a pas la necessite en parametre
 	 */
+	
 	@Override
 	public void suppressionNecessite(Piece necessite) throws PasDeNecessitesException, ParametreNullException {
 		if (necessite == null) throw new ParametreNullException("La necessite en parametre est nulle");
@@ -165,14 +145,15 @@ public class Piece implements PieceInterface, GestionCompatibilite, VerifCompati
 	}
 
 	/**
-	 * On verifie que la piece 
+	 * On verifie que la piece n'est pas presente dans les incompatibilites de notre configVoiture
+	 * Precondition : Piece non nulle
 	 * @param nomPiece la piece a verifier
-	 * @return
-	 * @throws ParametreNullException si la piece en parametre est nulle
+	 * @return true si la piece n'est pas presente dans les incompatibilites, false sinon
+	 * @throws ParametreNullException
 	 */
 	@Override
-	public boolean verification (Piece piece) throws ParametreNullException {
+	public boolean verificationIncompatibilite (Piece piece) throws ParametreNullException {
 		if (piece == null) throw new ParametreNullException("La piece en parametre est nulle");
-		return ConfigVoiture.mesIncompatibilites.contains(piece);
+		return !ConfigVoiture.mesIncompatibilites.contains(piece);
 	}
 }

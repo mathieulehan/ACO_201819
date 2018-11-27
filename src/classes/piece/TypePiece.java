@@ -125,12 +125,12 @@ public class TypePiece {
 		}
 	}
 
-	public Piece chercherPieceParNom(String nomPiece) {
+	public Piece chercherPieceParNom(String nomPiece) throws ResultatNullException {
 		for (Piece piece : piecesDisponibles) {
 			if (piece.getNom().equals(nomPiece)) {
 				return piece;
 			}
 		}
-		return null;
+		throw new ResultatNullException("Piece introuvable par son nom");
 	}
 }

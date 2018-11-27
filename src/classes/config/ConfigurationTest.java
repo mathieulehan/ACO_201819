@@ -1,6 +1,11 @@
 package classes.config;
 
+import java.util.Iterator;
 import java.util.Observable;
+
+import classes.categorie.Categorie;
+import classes.piece.Piece;
+import classes.piece.TypePiece;
 
 /**
  * Exemple d'une configuration avec une piece pour le moment
@@ -39,5 +44,28 @@ public class ConfigurationTest extends Observable {
 	   {
 	      return this.piece;
 	   }
+	
+	/**
+	 * main
+	 * @param args
+	 */
+	public static void main(String[] args) {
+		TypePiece tp = new TypePiece();
+		tp.initialiserPieces(); //initialisation des pieces
+		Categorie c = new Categorie();
+		c.initialiserCategorie(); // initialisation des categories
+		
+		ConfigVoiture configV = new ConfigVoiture();
+		Iterator<Piece> it = configV.maConfig.iterator();
+		while(it.hasNext()) {
+	        Piece p = it.next();
+	        System.out.println(p);
+		}
+		
+		//Il me faut toutes les pieces par categorie 
+		//que je puisse choisir une piece dans une categorie et la mettre dans ma configuration actuelle
+		//il faut mettre a jour en fonction des incompatibilites
+		//mettre une configuartion de base 
+	}
 
 }
