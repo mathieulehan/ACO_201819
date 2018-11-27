@@ -8,7 +8,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import exceptions.CategorieEstNullException;
+import exceptions.ParametreNullException;
+import exceptions.ResultatNullException;
 
 /**
  * Classe Categorie, implementant une interface CategorieInterface, s'agissant d'une Map ayant pour : 
@@ -25,15 +26,20 @@ public class Categorie implements CategorieInterface {
 	 */
 	private Set<String> categories = new HashSet<String>();
 	private Map<String, List<String>> categorieCatalogue;
-	
+
 	/**
 	 * Constructeur Categorie
 	 */
 	public Categorie () {
 		this.categorieCatalogue = new HashMap<>();
-}
-	
-	public Set<String> getCategories() {
+	}
+
+	/**
+	 * @return le set de categoriesq
+	 * @throws ResultatNullException si le Set de categories renvoye est null
+	 */
+	public Set<String> getCategories() throws ResultatNullException {
+		if(categories == null) throw new ResultatNullException("Le Set de categories est null");
 		return categories;
 	}
 
@@ -50,19 +56,24 @@ public class Categorie implements CategorieInterface {
 		this.categorieCatalogue.put("EXTERIOR", new LinkedList<String>(Arrays.asList("XC", "XM", "XS")));
 		this.categorieCatalogue.put("INTERIOR", new LinkedList<String>(Arrays.asList("IN", "IH", "IS")));
 	}
-	
+
 	/**
 	 * @param la categorie que l'on souhaite récupérer
-	 * @throws CategorieEstNullException si la categorie en parametre est nulle
+	 * @throws ParametreNullException si la categorie en parametre est null
 	 */
-	public List<String> getCategorie(String categorie) throws CategorieEstNullException {
+	public List<String> getCategorie(String categorie) throws ParametreNullException {
 		if (categorie == null) {
-			throw new CategorieEstNullException("La catégorie en paramètre est nulle");
+			throw new ParametreNullException("La catégorie en paramètre est nulle");
 		}
 		return getCategorieCatalogue().get(categorie);
 	}
 
-	public Map<String, List<String>> getCategorieCatalogue() {
+	/**
+	 * @return Chaque categorie avec ces pieces, sous forme de Map
+	 * @throws ResultatNullException si la Map que l'on retourne est null
+	 */
+	public Map<String, List<String>> getCategorieCatalogue() throws ResultatNullException {
+		if(categorieCatalogue == null) throw new ResultatNullException("La Map<String, List<String>> est null.");
 		return categorieCatalogue;
 	}
 }

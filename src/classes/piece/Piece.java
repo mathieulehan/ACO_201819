@@ -5,13 +5,11 @@ import java.util.Set;
 
 import classes.categorie.Categorie;
 import classes.config.ConfigVoiture;
-import exceptions.CategorieEstNullException;
-import exceptions.DescriptionEstNullException;
-import exceptions.IncompatibiliteEstNullException;
-import exceptions.NecessiteEstNullException;
+import exceptions.ParametreNullException;
 import exceptions.PasDIncompatibilitesException;
+import exceptions.PasDeCategorieException;
 import exceptions.PasDeNecessitesException;
-import exceptions.PieceEstNullException;
+import exceptions.ResultatNullException;
 
 /**
  * Classe possedant des methodes permettant de gerer les pieces
@@ -40,8 +38,9 @@ public class Piece implements PieceInterface, GestionCompatibilite, VerifCompati
 	public String getNom() {
 		return nom;
 	}
-
-	public void setNom(String nom) {
+	
+	public void setNom(String nom) throws ParametreNullException {
+		if (nom == null) throw new ParametreNullException("Le nom entre en parametre est null");
 		this.nom = nom;
 	}
 
@@ -51,20 +50,19 @@ public class Piece implements PieceInterface, GestionCompatibilite, VerifCompati
 
 	/**
 	 * @param description la description souhaitee pour la piece
-	 * @throws DescriptionEstNullException si la description en parametre est nulle	
+	 * @throws ParametreNullException si la description en parametre est nulle	
 	 */
-	public void setDescription(String description) throws DescriptionEstNullException {
-		if (description == null) {
-			throw new DescriptionEstNullException("La description en parametre est nulle");
-		}
+	public void setDescription(String description) throws ParametreNullException {
+		if (description == null) throw new ParametreNullException("La description en parametre est nulle");
 		this.description = description;
 	}
 
 	/**
 	 * @return la categorie de la piece
-	 * @throws CategorieEstNullException si la categorie de la piece est nulle
+	 * @throws ParametreNullException si une categorie renvoyee par cat.getCategories() est null
+	 * @throws PasDeCategorieException si la piece n'a pas de categorie
 	 */
-	public String getCategorie() throws CategorieEstNullException {
+	public String getCategorie() throws PasDeCategorieException, ParametreNullException {
 		Categorie cat = new Categorie();
 		cat.initialiserCategorie();
 		for (String categorie : cat.getCategories()) {
@@ -72,36 +70,38 @@ public class Piece implements PieceInterface, GestionCompatibilite, VerifCompati
 				return categorie;
 			}
 		}
-		return null;
+		throw new PasDeCategorieException("La piece ne possede pas de categorie");
 	}
 	
 	/**
 	 * @param incompatibilites les incompatibilites a ajouter a la piece
-	 * @throws IncompatibiliteEstNullException si le Set d'incompatibilites en parametre est null
+	 * @throws ParametreNullException si le Set d'incompatibilites en parametre est null
 	 */
 	@Override
-	public void setIncompatibilites(Set<Piece> incompatibilites) throws IncompatibiliteEstNullException {
-		if (incompatibilites == null) {
-			throw new IncompatibiliteEstNullException("Le Set d'incompatibilites en parametre est null");
-		}
+	public void setIncompatibilites(Set<Piece> incompatibilites) throws ParametreNullException {
+		if (incompatibilites == null) throw new ParametreNullException("Le Set d'incompatibilites en parametre est null");
 		this.incompatibilites = incompatibilites;
 	}
 	
+	/**
+	 * @throws ParametreNullException si la piece a un set d'incompatibilites null
+	 * @throws ResultatNullException 
+	 */
 	@Override
-	public Set<Piece> getIncompatibilites() {
+	public Set<Piece> getIncompatibilites() throws ParametreNullException, ResultatNullException {
+		if(incompatibilites.getClass() != Set.class) throw new ParametreNullException("Les incompatibilites de la piece ne sont stockees sous forme de Set");
+		else if (incompatibilites == null) throw new ResultatNullException("Le Set d'incompatibilite de la piece est null");
 		return incompatibilites;
 	}
 	
 	/**
 	 * Ajout d'une incompatibilite
 	 * @param incompatibilite l'incompatibilite a ajouter a la piece
-	 * @throws IncompatibiliteEstNullException si l'incompatibilite est nulle
+	 * @throws ParametreNullException si l'incompatibilite est nulle
 	 */
 	@Override
-	public void ajoutIncompatibilite(Piece incompatibilite) throws IncompatibiliteEstNullException {
-		if (incompatibilite == null) {
-			throw new IncompatibiliteEstNullException("L'incompatibilite en parametre est nulle");
-		}
+	public void ajoutIncompatibilite(Piece incompatibilite) throws ParametreNullException {
+		if (incompatibilite == null) throw new ParametreNullException("L'incompatibilite en parametre est nulle");
 		this.incompatibilites.add(incompatibilite);
 	}
 
@@ -109,57 +109,57 @@ public class Piece implements PieceInterface, GestionCompatibilite, VerifCompati
 	 * Suppression d'une incompatibilite
 	 * @param incompatibilite l'incompatibilite que l'on souhaite supprimer pour la piece
 	 * @throws PasDIncompatibilitesException si la piece ne possede pas cette incompatibilite
-	 * @throws IncompatibiliteEstNullException si l'incompatibilite en parametre est nulle
+	 * @throws ParametreNullException si l'incompatibilite en parametre est nulle
 	 */
 	@Override
-	public void suppressionIncompatibilite(Piece incompatibilite) throws PasDIncompatibilitesException, IncompatibiliteEstNullException {
-		if (incompatibilite == null) {
-			throw new IncompatibiliteEstNullException("L'incompatibilite en parametre est nulle");
-		}
+	public void suppressionIncompatibilite(Piece incompatibilite) throws PasDIncompatibilitesException, ParametreNullException {
+		if (incompatibilite == null) throw new ParametreNullException("L'incompatibilite en parametre est nulle");
 		this.incompatibilites.remove(incompatibilite);
 	}
 
 	/**
 	 * @param necessites le Set de necessites a ajouter a la piece
-	 * @throws NecessiteEstNullException si le Set de necessites en parametre est null
+	 * @throws ParametreNullException si le Set de necessites en parametre est null
 	 */
 	@Override
-	public void setNecessites(Set<Piece> necessites) throws NecessiteEstNullException {
-		if (necessites == null) {
-			throw new NecessiteEstNullException("La necessite en parametre est nulle");
-		}
+	public void setNecessites(Set<Piece> necessites) throws ParametreNullException {
+		if (necessites == null) throw new ParametreNullException("La necessite en parametre est nulle");
 		this.necessites = necessites;
 	}
 	
+	/**
+	 * @throws ResultatNullException si le Set de necessite de la piece est null
+	 * @return le Set de necessites de la piece
+	 */
 	@Override
-	public Set<Piece> getNecessites() {
+	public Set<Piece> getNecessites() throws ResultatNullException {
+		if (necessites == null) {
+			throw new ResultatNullException("Le Set de necessite de la piece est null");
+		}
 		return necessites;
 	}
 	
 	/**
 	 * Ajout d'une necessite
 	 * @param necessite la necessite a ajouter a la piece
-	 * @throws NecessiteEstNullException si la necessite en parametre est nulle
+	 * @throws ParametreNullException si la necessite en parametre est nulle
 	 */
 	@Override
-	public void ajoutNecessite(Piece necessite) throws NecessiteEstNullException {
-		if (necessite == null) {
-			throw new NecessiteEstNullException("La necessite est parametre est nulle");
-		}
+	public void ajoutNecessite(Piece necessite) throws ParametreNullException {
+		if (necessite == null) throw new ParametreNullException("La necessite est parametre est nulle");
 		this.necessites.add(necessite);
 	}
 
 	/**
 	 * Suppression d'une necessite
 	 * @param necessite la necessite a supprimer de la piece
-	 * @throws NecessiteEstNullException si la necessite en parametre est nulle
+	 * @throws ParametreNullException si la necessite en parametre est nulle
 	 * @throws PasDeNecessitesException si la piece n'a pas la necessite en parametre
 	 */
 	@Override
-	public void suppressionNecessite(Piece necessite) throws PasDeNecessitesException, NecessiteEstNullException {
-		if (necessite == null) {
-			throw new NecessiteEstNullException("La necessite en parametre est nulle");
-		}
+	public void suppressionNecessite(Piece necessite) throws PasDeNecessitesException, ParametreNullException {
+		if (necessite == null) throw new ParametreNullException("La necessite en parametre est nulle");
+		else if (!this.necessites.contains(necessite)) throw new PasDeNecessitesException("La necessite en parametre est nulle");
 		this.necessites.remove(necessite);
 	}
 
@@ -167,13 +167,11 @@ public class Piece implements PieceInterface, GestionCompatibilite, VerifCompati
 	 * On verifie que la piece 
 	 * @param nomPiece la piece a verifier
 	 * @return
-	 * @throws PieceEstNullException si la piece en parametre est nulle
+	 * @throws ParametreNullException si la piece en parametre est nulle
 	 */
 	@Override
-	public boolean verification (Piece piece) throws PieceEstNullException {
-		if (piece == null) {
-			throw new PieceEstNullException("La piece en parametre est nulle");
-		}
+	public boolean verification (Piece piece) throws ParametreNullException {
+		if (piece == null) throw new ParametreNullException("La piece en parametre est nulle");
 		return ConfigVoiture.mesIncompatibilites.contains(piece);
 	}
 }
