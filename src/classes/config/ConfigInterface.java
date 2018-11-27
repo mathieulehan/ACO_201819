@@ -38,6 +38,6 @@ public interface ConfigInterface {
 	/**
 	 * Recupere les pieces selon categorie
 	 */
-	public void getPieces(Categorie categorie);
+	public void getPiecesCategorie(Categorie categorie);
 
 }

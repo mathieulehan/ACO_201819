@@ -1,5 +1,7 @@
 package classes.config;
 
+import java.util.List;
+import java.util.Map;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.Set;
@@ -36,21 +38,24 @@ public class ConfigVoiture implements ConfigInterface, Observer {
 	// Bien penser a mettre setChanged() et notifyObservers() a chaque modification pour notifier a configVoiture qu'il y a un changement
 	@Override
 	public void supprimerPiece(Piece piece) {
-		// TODO Auto-generated method stub
-		
+		this.maConfig.remove(piece);
 	}
 
 	@Override
 	public void ajouterPiece(Piece piece) {
-		// TODO Auto-generated method stub
+		this.maConfig.add(piece);
+	}
+
+	@Override
+	public Categorie[] getCategories() {
+		return
 	}
 
 
-
 	@Override
-	public void getPieces(Categorie categorie) {
-		// TODO Auto-generated method stub
-		
+	public Piece[] getPiecesCategorie(Categorie categorie) {
+		Map<String, List<String>> mesPiece = Categorie.getCategorieCatalogue();
+		return mesPieces;
 	}
 
 
