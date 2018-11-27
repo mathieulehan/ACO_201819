@@ -60,8 +60,9 @@ public class Categorie implements CategorieInterface {
 	/**
 	 * @param la categorie que l'on souhaite récupérer
 	 * @throws ParametreNullException si la categorie en parametre est null
+	 * @throws ResultatNullException 
 	 */
-	public List<String> getCategorie(String categorie) throws ParametreNullException {
+	public List<String> getCategorie(String categorie) throws ParametreNullException, ResultatNullException {
 		if (categorie == null) {
 			throw new ParametreNullException("La catégorie en paramètre est nulle");
 		}
