@@ -3,7 +3,8 @@ package classes.categorie;
 import java.util.List;
 import java.util.Map;
 
-import exceptions.CategorieEstNullException;
+import exceptions.ParametreNullException;
+import exceptions.ResultatNullException;
 
 public interface CategorieInterface {
 
@@ -16,13 +17,14 @@ public interface CategorieInterface {
 	 * Recupere les pieces d'une categorie
 	 * @param categorie
 	 * @return la liste des pieces dans la categorie
-	 * @throws CategorieEstNullException 
+	 * @throws ParametreNullException 
 	 */
-	public List<String> getCategorie(String categorie) throws CategorieEstNullException;
+	public List<String> getCategorie(String categorie) throws ParametreNullException;
 
 	/**
 	 * Recupere toutes les pieces et toutes les categories
 	 * @return l'ensemble des categories et des pieces existantes
+	 * @throws ResultatNullException 
 	 */
-	public Map<String, List<String>> getCategorieCatalogue() ;
+	public Map<String, List<String>> getCategorieCatalogue() throws ResultatNullException ;
 }

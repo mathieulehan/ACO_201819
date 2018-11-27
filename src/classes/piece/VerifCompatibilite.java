@@ -2,12 +2,13 @@ package classes.piece;
 
 import java.util.Set;
 
-import exceptions.PieceEstNullException;
+import exceptions.ParametreNullException;
+import exceptions.ResultatNullException;
 
 public interface VerifCompatibilite {
 
-	boolean verification(Piece piece) throws PieceEstNullException;
+	boolean verification(Piece piece) throws ParametreNullException;
 
-	Set<Piece> getIncompatibilites();
-	Set<Piece> getNecessites();
+	Set<Piece> getIncompatibilites() throws ParametreNullException, ResultatNullException;
+	Set<Piece> getNecessites() throws ResultatNullException;
 }
