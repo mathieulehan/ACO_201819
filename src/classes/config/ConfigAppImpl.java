@@ -37,48 +37,6 @@ public class ConfigAppImpl extends Observable implements Configuration, Observer
 			
 	}
 
-	@Override
-	public boolean estComplet() {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean estValide() {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	// Bien penser a mettre setChanged() et notifyObservers() a chaque modification pour notifier a configVoiture qu'il y a un changement
-	@Override
-	public boolean estObservable() {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	// Bien penser a mettre setChanged() et notifyObservers() a chaque modification pour notifier a configVoiture qu'il y a un changement
-	@Override
-	public void supprimerPiece(Piece piece) {
-		// TODO Auto-generated method stub
-		
-		setChanged();
-	    notifyObservers();
-	}
-
-	@Override
-	public void ajouterPiece(Piece piece) {
-		// TODO Auto-generated method stub
-		
-		setChanged();
-	    notifyObservers();
-	}
-
-	@Override
-	public void getPieces(Categorie categorie) {
-		// TODO Auto-generated method stub
-		
-	}
-	
 	/*
 	 * (non-Javadoc)
 	 * @see java.util.Observer#update(java.util.Observable, java.lang.Object)
