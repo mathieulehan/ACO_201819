@@ -8,6 +8,6 @@ package classes.config;
  * @author Charlotte
  *
  */
-public interface Configuration extends ConfigInterface {
+public interface Configuration  {
 
 }

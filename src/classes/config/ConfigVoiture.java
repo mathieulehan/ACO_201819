@@ -13,12 +13,12 @@ public class ConfigVoiture implements ConfigInterface, Observer {
 	public static Set<Piece> mesIncompatibilites;
 	public static Set<Piece> mesNecessites;
 
+
 	@Override
 	public boolean estComplet() {
 		// TODO Auto-generated method stub
 		return false;
 	}
-
 
 	@Override
 	public boolean estValide() {
@@ -26,26 +26,25 @@ public class ConfigVoiture implements ConfigInterface, Observer {
 		return false;
 	}
 
-
+	// Bien penser a mettre setChanged() et notifyObservers() a chaque modification pour notifier a configVoiture qu'il y a un changement
 	@Override
 	public boolean estObservable() {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
-
+	// Bien penser a mettre setChanged() et notifyObservers() a chaque modification pour notifier a configVoiture qu'il y a un changement
 	@Override
 	public void supprimerPiece(Piece piece) {
 		// TODO Auto-generated method stub
 		
 	}
 
-
 	@Override
 	public void ajouterPiece(Piece piece) {
 		// TODO Auto-generated method stub
-		
 	}
+
 
 
 	@Override
