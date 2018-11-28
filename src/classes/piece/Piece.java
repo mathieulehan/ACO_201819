@@ -29,8 +29,8 @@ public class Piece implements PieceInterface, GestionCompatibilite, VerifCompati
 	public Piece(String nom, String description) {
 		this.nom = nom;
 		this.description = description;
-		this.incompatibilites = new HashSet<Piece>();
-		this.necessites = new HashSet<Piece>();
+		this.incompatibilites = new HashSet<>();
+		this.necessites = new HashSet<>();
 	}
 	
 	public String getNom() {
@@ -71,7 +71,7 @@ public class Piece implements PieceInterface, GestionCompatibilite, VerifCompati
 	 */
 	@Override
 	public Set<Piece> getIncompatibilites() throws ParametreNullException, ResultatNullException {
-		if(incompatibilites.getClass() != Set.class) throw new ParametreNullException("Les incompatibilites de la piece ne sont stockees sous forme de Set");
+		if(incompatibilites.getClass() != HashSet.class) throw new ParametreNullException("Les incompatibilites de la piece ne sont stockees sous forme de Set");
 		else if (incompatibilites == null) throw new ResultatNullException("Le Set d'incompatibilite de la piece est null");
 		return incompatibilites;
 	}
@@ -151,7 +151,6 @@ public class Piece implements PieceInterface, GestionCompatibilite, VerifCompati
 	 * @return true si la piece n'est pas presente dans les incompatibilites, false sinon
 	 * @throws ParametreNullException
 	 */
-	@Override
 	public boolean verificationIncompatibilite (Piece piece) throws ParametreNullException {
 		if (piece == null) throw new ParametreNullException("La piece en parametre est nulle");
 		return !ConfigVoiture.mesIncompatibilites.contains(piece);

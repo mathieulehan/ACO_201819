@@ -2,39 +2,23 @@ package tests;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import classes.piece.Piece;
+import exceptions.ParametreNullException;
 import exceptions.PasDIncompatibilitesException;
+import exceptions.PasDeNecessitesException;
+import exceptions.ResultatNullException;
 
 class PieceTest {
 
 	/**
-	 * On souhaite obtenir la categorie de la piece
-	 */
-	@Test
-	void getCategorieExistante() {
-		Piece pieceTest = new Piece("EG100", "Description de l'EG100");
-		assertEquals("ENGINE", pieceTest.getCategorie());
-	}
-	
-	/**
-	 * On souhaite obtenir la categorie de la piece, mais elle n'en a pas
-	 * la methode contains utilisee pour retrouver la categorie de la piece
-	 * va donc renvoyer un {@link NullPointerException}
-	 */
-	@Test
-	void getCategorieInexistante() {
-		Piece pieceTest = new Piece("EG1000", "Description de la piece inexistante");
-		Assertions.assertThrows(NullPointerException.class, () -> pieceTest.getCategorie());
-	}
-
-	/**
 	 * Differents tests autour de l'ajout d'incompatibilites aux pieces
+	 * @throws ResultatNullException 
+	 * @throws ParametreNullException 
 	 */
 	@Test
-	void ajoutIncompatibilites() {
+	void ajoutIncompatibilites() throws ParametreNullException, ResultatNullException {
 		Piece pieceTest = new Piece("Piece", "Piece de test");
 		assertTrue(pieceTest.getIncompatibilites().size() == 0);
 		Piece incompatibilite = new Piece("Incompatibilite", "Incompatibilte de test");
@@ -50,9 +34,11 @@ class PieceTest {
 	/**
 	 * On verifie si la suppression d'une incompatibilite fonctionne
 	 * @throws PasDIncompatibilitesException
+	 * @throws ResultatNullException 
+	 * @throws ParametreNullException 
 	 */
 	@Test
-	void suppressionIncompatibilites() throws PasDIncompatibilitesException {
+	void suppressionIncompatibilites() throws PasDIncompatibilitesException, ParametreNullException, ResultatNullException {
 		Piece pieceTest = new Piece("Piece", "Piece de test");
 		assertTrue(pieceTest.getIncompatibilites().size() == 0);
 		Piece incompatibilite = new Piece("Incompatibilite", "Incompatibilite de test");
@@ -64,9 +50,11 @@ class PieceTest {
 
 	/**
 	 * Differents tests autour de l'ajout de necessites aux pieces
+	 * @throws ResultatNullException 
+	 * @throws ParametreNullException 
 	 */
 	@Test
-	void ajoutNecessites() {
+	void ajoutNecessites() throws ResultatNullException, ParametreNullException {
 		Piece pieceTest = new Piece("Piece", "Piece de test");
 		assertTrue(pieceTest.getNecessites().size() == 0);
 		Piece necessite = new Piece("Necessite", "Necessite de test");
@@ -82,9 +70,12 @@ class PieceTest {
 	/**
 	 * On verifie que la suppression d'une necessite fonctionne
 	 * @throws PasDIncompatibilitesException
+	 * @throws ResultatNullException 
+	 * @throws ParametreNullException 
+	 * @throws PasDeNecessitesException 
 	 */
 	@Test
-	void suppressionNecessites() throws PasDIncompatibilitesException {
+	void suppressionNecessites() throws PasDIncompatibilitesException, ResultatNullException, ParametreNullException, PasDeNecessitesException {
 		Piece pieceTest = new Piece("Piece", "Piece de test");
 		assertTrue(pieceTest.getNecessites().size() == 0);
 		Piece necessite = new Piece("Necessites", "Necessites de test");

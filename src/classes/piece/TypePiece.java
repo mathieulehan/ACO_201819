@@ -30,7 +30,7 @@ public class TypePiece {
 	 * Constructeur Pieces
 	 */
 	public TypePiece () {
-		this.pieceCatalogue = new HashMap<String, String>();
+		this.pieceCatalogue = new HashMap<>();
 		this.piecesDisponibles = new LinkedList<Piece>();
 	}
 
