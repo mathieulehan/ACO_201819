@@ -7,8 +7,8 @@ import exceptions.ResultatNullException;
 
 public interface VerifCompatibilite {
 
-	boolean verificationIncompatibilite(Piece piece) throws ParametreNullException;
-
 	Set<Piece> getIncompatibilites() throws ParametreNullException, ResultatNullException;
 	Set<Piece> getNecessites() throws ResultatNullException;
+
+	boolean verificationIncompatibilite() throws ParametreNullException;
 }

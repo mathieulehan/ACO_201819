@@ -20,14 +20,14 @@ import exceptions.ResultatNullException;
  */
 public class TypePiece {
 
-	private List<Piece> pieces ;
+	private static List<Piece> pieces ;
 	/**
 	 * Donnees brutes dans le catalogue, il s'agit des pieces standards
 	 */
-	private Map<String, String> cataloguePiecesStandards  = new HashMap<>();
+	private static Map<String, String> cataloguePiecesStandards  = new HashMap<>();
 
 	public TypePiece () {
-		this.pieces = new LinkedList<Piece>();
+		pieces = new LinkedList<>();
 	}
 
 	/**
@@ -43,7 +43,7 @@ public class TypePiece {
 	 * @throws ResultatNullException 
 	 * @throws ParametreNullException 
 	 */
-	public void initialiserPieces () throws ParametreNullException, ResultatNullException {
+	public static void initialiserPieces () throws ParametreNullException, ResultatNullException {
 		
 		initDonneesBrutes();
 
@@ -116,7 +116,7 @@ public class TypePiece {
 	/**
 	 * Initialisation des donnees brutes dans le catalogue de base
 	 */
-	private void initDonneesBrutes () {
+	private static void initDonneesBrutes () {
 		cataloguePiecesStandards.put("EG100", "Gasoline 100kW");
 		cataloguePiecesStandards.put("EG133", "Gasoline 133kW");
 		cataloguePiecesStandards.put("EG210", "Gasoline 210kW");
@@ -142,7 +142,7 @@ public class TypePiece {
 	 * @return Piece si elle est trouvee
 	 * @throws ResultatNullException
 	 */
-	public Piece chercherPieceParNom(String nomPiece) throws ResultatNullException {
+	public static Piece chercherPieceParNom(String nomPiece) throws ResultatNullException {
 		for (Piece piece : pieces) {
 			if (piece.getNom().equals(nomPiece)) {
 				return piece;

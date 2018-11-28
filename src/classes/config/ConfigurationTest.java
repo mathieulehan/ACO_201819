@@ -5,7 +5,8 @@ import java.util.Observable;
 
 import classes.categorie.Categorie;
 import classes.piece.Piece;
-import classes.piece.TypePiece;
+import exceptions.ParametreNullException;
+import exceptions.ResultatNullException;
 
 /**
  * Exemple d'une configuration avec une piece pour le moment
@@ -49,12 +50,8 @@ public class ConfigurationTest extends Observable {
 	 * main
 	 * @param args
 	 */
-	public static void main(String[] args) {
-		TypePiece tp = new TypePiece();
-		tp.initialiserPieces(); //initialisation des pieces
-		Categorie c = new Categorie();
-		c.initialiserCategorie(); // initialisation des categories
-		
+	public static void main(String[] args) throws ParametreNullException, ResultatNullException{
+		Categorie.initialiserCategories(); // initialisation des categories
 		ConfigVoiture configV = new ConfigVoiture();
 		Iterator<Piece> it = configV.maConfig.iterator();
 		while(it.hasNext()) {
@@ -65,7 +62,7 @@ public class ConfigurationTest extends Observable {
 		//Il me faut toutes les pieces par categorie 
 		//que je puisse choisir une piece dans une categorie et la mettre dans ma configuration actuelle
 		//il faut mettre a jour en fonction des incompatibilites
-		//mettre une configuartion de base 
+		//mettre une configuration de base 
 	}
 
 }

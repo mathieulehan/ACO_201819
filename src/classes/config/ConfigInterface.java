@@ -1,7 +1,10 @@
 package classes.config;
 
-import classes.categorie.Categorie;
+import java.util.Set;
+
 import classes.piece.Piece;
+import exceptions.ParametreNullException;
+import exceptions.ResultatNullException;
 
 public interface ConfigInterface {
 
@@ -36,8 +39,16 @@ public interface ConfigInterface {
 	public void ajouterPiece (Piece piece);
 	
 	/**
-	 * Recupere les pieces selon categorie
+	 * Recupere la piece en fonction de la categorie
 	 */
-	public void getPiecesCategorie(Categorie categorie);
+	public Piece getPieceCategorie(String categorie) throws ParametreNullException, ResultatNullException;
+
+	/**
+	 * Renvoie les categories presentes dans ma configuration
+	 * @return
+	 * @throws ResultatNullException 
+	 * @throws ParametreNullException 
+	 */
+	public Set<String> getCategories() throws ResultatNullException, ParametreNullException;
 
 }

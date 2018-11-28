@@ -8,6 +8,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import classes.piece.Piece;
+import classes.piece.TypePiece;
 import exceptions.ParametreNullException;
 import exceptions.ResultatNullException;
 
@@ -24,18 +26,18 @@ public class Categorie implements CategorieInterface {
 	/**
 	 * Enumeration des categories existantes
 	 */
-	private Set<String> categories = new HashSet<String>();
-	private Map<String, List<String>> categorieCatalogue;
+	private static Set<String> categories = new HashSet<String>();
+	private static Map<String, List<Piece>> categorieCatalogue;
 
 	/**
 	 * Constructeur Categorie
 	 */
 	public Categorie () {
-		this.categorieCatalogue = new HashMap<>();
+		categorieCatalogue = new HashMap<>();
 	}
 
 	/**
-	 * @return le set de categoriesq
+	 * @return le set de categories
 	 * @throws ResultatNullException si le Set de categories renvoye est null
 	 */
 	public Set<String> getCategories() throws ResultatNullException {
@@ -45,36 +47,39 @@ public class Categorie implements CategorieInterface {
 
 	/**
 	 * Initialisation des cles (categorie) suivies de ses valeurs (pieces associees)
+	 * @throws ResultatNullException 
+	 * @throws ParametreNullException 
 	 */
-	public void initialiserCategorie () {
-		this.categories.add("ENGINE");
-		this.categories.add("TRNASMISSION");
-		this.categories.add("EXTERIOR");
-		this.categories.add("INTERIOR");
-		this.categorieCatalogue.put("ENGINE", new LinkedList<String>(Arrays.asList("EG100", "EG133", "EG210", "ED100", "ED180", "EH120")));
-		this.categorieCatalogue.put("TRANSMISSION", new LinkedList<String>(Arrays.asList("TM5", "TM6", "TA5", "TS6", "TSF7", "TC120")));
-		this.categorieCatalogue.put("EXTERIOR", new LinkedList<String>(Arrays.asList("XC", "XM", "XS")));
-		this.categorieCatalogue.put("INTERIOR", new LinkedList<String>(Arrays.asList("IN", "IH", "IS")));
+	public static void initialiserCategories () throws ParametreNullException, ResultatNullException {
+		TypePiece.initialiserPieces();
+		categories.add("ENGINE");
+		categories.add("TRNASMISSION");
+		categories.add("EXTERIOR");
+		categories.add("INTERIOR");
+		categorieCatalogue.put("ENGINE", new LinkedList<Piece>(Arrays.asList(TypePiece.chercherPieceParNom("EG100"),TypePiece.chercherPieceParNom("EG133"), TypePiece.chercherPieceParNom("EG210"), TypePiece.chercherPieceParNom("ED100"), TypePiece.chercherPieceParNom("ED180"), TypePiece.chercherPieceParNom("EH120"))));
+		categorieCatalogue.put("ENGINE", new LinkedList<Piece>(Arrays.asList(TypePiece.chercherPieceParNom("EG100"),TypePiece.chercherPieceParNom("TM5"), TypePiece.chercherPieceParNom("TM6"), TypePiece.chercherPieceParNom("TA5"), TypePiece.chercherPieceParNom("TS6"), TypePiece.chercherPieceParNom("TSF7"), TypePiece.chercherPieceParNom("TC120"))));
+		categorieCatalogue.put("ENGINE", new LinkedList<Piece>(Arrays.asList(TypePiece.chercherPieceParNom("XC"),TypePiece.chercherPieceParNom("XM"), TypePiece.chercherPieceParNom("XS"))));
+		categorieCatalogue.put("ENGINE", new LinkedList<Piece>(Arrays.asList(TypePiece.chercherPieceParNom("IN"),TypePiece.chercherPieceParNom("IH"), TypePiece.chercherPieceParNom("IS"))));
 	}
 
 	/**
-	 * @param la categorie que l'on souhaite récupérer
+	 * @param la categorie des pieces que l'on souhaite récupérer
 	 * @throws ParametreNullException si la categorie en parametre est null
 	 * @throws ResultatNullException 
 	 */
-	public List<String> getCategorie(String categorie) throws ParametreNullException, ResultatNullException {
-		if (categorie == null) {
-			throw new ParametreNullException("La catégorie en paramètre est nulle");
+	public static List<Piece> getPiecesCategorie(String categorie) throws ParametreNullException, ResultatNullException {
+		if (categories.contains(categorie)) {
+			throw new ParametreNullException("La catégorie en paramètre n'existe pas");
 		}
 		return getCategorieCatalogue().get(categorie);
 	}
 
 	/**
-	 * @return Chaque categorie avec ces pieces, sous forme de Map
+	 * @return Chaque categorie avec ses pieces, sous forme de Map
 	 * @throws ResultatNullException si la Map que l'on retourne est null
 	 */
-	public Map<String, List<String>> getCategorieCatalogue() throws ResultatNullException {
-		if(categorieCatalogue == null) throw new ResultatNullException("La Map<String, List<String>> est null.");
+	public static Map<String, List<Piece>> getCategorieCatalogue() throws ResultatNullException {
+		if(categorieCatalogue == null) throw new ResultatNullException("Il n'y a pas de categorie.");
 		return categorieCatalogue;
 	}
 }

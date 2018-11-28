@@ -151,8 +151,8 @@ public class Piece implements PieceInterface, GestionCompatibilite, VerifCompati
 	 * @return true si la piece n'est pas presente dans les incompatibilites, false sinon
 	 * @throws ParametreNullException
 	 */
-	public boolean verificationIncompatibilite (Piece piece) throws ParametreNullException {
-		if (piece == null) throw new ParametreNullException("La piece en parametre est nulle");
-		return !ConfigVoiture.mesIncompatibilites.contains(piece);
+	@Override
+	public boolean verificationIncompatibilite() throws ParametreNullException {
+		return !ConfigVoiture.mesIncompatibilites.contains(this);
 	}
 }
