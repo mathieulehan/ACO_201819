@@ -9,124 +9,141 @@ import exceptions.ParametreNullException;
 import exceptions.ResultatNullException;
 
 /**
- * Classe Piece, implementant une interface PieceInterface, s'agissant d'une Map ayant pour : 
- * - Cle : le nom de la piece
- * - Valeurs : Description
- * 
- * Gestion des incompatibilites et necessites de pieces
+ * Classe TypePiece sous forme de List avec : 
+ * - le nom de la piece
+ * - la description
+ * - les pieces incompatibles
+ * - les pieces necessaires 
  * 
  * @author math & chach44
  *
  */
 public class TypePiece {
-	/**
-	 * Variable locale
-	 */
 
-	private List<Piece> piecesDisponibles;
-	private Map<String, String> pieceCatalogue;
-
+	private List<Piece> pieces ;
 	/**
-	 * Constructeur Pieces
+	 * Donnees brutes dans le catalogue, il s'agit des pieces standards
 	 */
+	private Map<String, String> cataloguePiecesStandards  = new HashMap<>();
+
 	public TypePiece () {
-		this.pieceCatalogue = new HashMap<>();
-		this.piecesDisponibles = new LinkedList<Piece>();
+		this.pieces = new LinkedList<Piece>();
 	}
 
-	public List<Piece> getPiecesDisponibles() {
-		return piecesDisponibles;
-	}
-	
 	/**
-	 * Initialisation des pieces (objets TypePiece) et de leurs incompatibilites & necessites
+	 * Getter de la liste de Piece 
+	 * @return List de piece
+	 */
+	public List<Piece> getPieces() {
+		return pieces;
+	}
+
+	/**
+	 * Initialisation des pieces (objets TypePiece), de leurs incompatibilites et de leurs necessites
 	 * @throws ResultatNullException 
 	 * @throws ParametreNullException 
 	 */
 	public void initialiserPieces () throws ParametreNullException, ResultatNullException {
-		// donnees brutes
-		pieceCatalogue.put("EG100", "Gasoline 100kW");
-		pieceCatalogue.put("EG133", "Gasoline 133kW");
-		pieceCatalogue.put("EG210", "Gasoline 210kW");
-		pieceCatalogue.put("ED110", "Diesel 110kW");
-		pieceCatalogue.put("ED180", "Diesel 180kW");
-		pieceCatalogue.put("EH120", "Gasoline/electric hybrid 120kW");
-		pieceCatalogue.put("TM5", "Manual 5 gears");
-		pieceCatalogue.put("TM6", "Manual 6 gears");
-		pieceCatalogue.put("TA5", "Automatic 5 gears");
-		pieceCatalogue.put("TS6", "Sequential 6 gears");
-		pieceCatalogue.put("TSF7", "Sequential 7 gears 4 wheels drive");
-		pieceCatalogue.put("TC120", "Converter 120kW max");
-		pieceCatalogue.put("XC", "Classic paint");
-		pieceCatalogue.put("XM", "Metallic paint");
-		pieceCatalogue.put("XS", "Red paint and sport decoration");
-		pieceCatalogue.put("IN",  "Standard interior");
-		pieceCatalogue.put("IH", "High-end interior");
-		pieceCatalogue.put("IS", "Sport-finish");
+		
+		initDonneesBrutes();
 
-		// initialisation des pieces du catalogue
-		for (String nomPiece : pieceCatalogue.keySet()) {
-			Piece nouvellePiece = new Piece(nomPiece, pieceCatalogue.get(nomPiece));
-			piecesDisponibles.add(nouvellePiece);
+		/**
+		 * Initialisation du notre catalogue de pieces
+		 */
+		for (String nomPiece : cataloguePiecesStandards.keySet()) {
+			Piece nouvellePiece = new Piece(nomPiece, cataloguePiecesStandards.get(nomPiece));
+			pieces.add(nouvellePiece);
 		}
-		// ajout des incompatibilites et des necessites des pieces instanciees
-		for (Piece nouvellePiece : piecesDisponibles) {
+		
+		/**
+		 * Ajout des incompatibilites et des necessites des pieces instanciees
+		 */
+		for (Piece nomPiece : pieces) {
 
-			switch (pieceCatalogue.keySet().toString()) {
+			switch (cataloguePiecesStandards.keySet().toString()) {
 			case "TA5":
-				nouvellePiece.getIncompatibilites().add(chercherPieceParNom("EG100"));
+				nomPiece.getIncompatibilites().add(chercherPieceParNom("EG100"));
 				break;
 			case "TSF7":
-				nouvellePiece.getIncompatibilites().add(chercherPieceParNom("EG100"));
-				nouvellePiece.getIncompatibilites().add(chercherPieceParNom("EG110"));
-				nouvellePiece.getIncompatibilites().add(chercherPieceParNom("EG133"));
+				nomPiece.getIncompatibilites().add(chercherPieceParNom("EG100"));
+				nomPiece.getIncompatibilites().add(chercherPieceParNom("EG110"));
+				nomPiece.getIncompatibilites().add(chercherPieceParNom("EG133"));
 				break;
 			case "XC":
-				nouvellePiece.getIncompatibilites().add(chercherPieceParNom("EG210"));
+				nomPiece.getIncompatibilites().add(chercherPieceParNom("EG210"));
 				break;
 			case "XM":
-				nouvellePiece.getIncompatibilites().add(chercherPieceParNom("EG100"));
+				nomPiece.getIncompatibilites().add(chercherPieceParNom("EG100"));
 				break;
 			case "XS":
-				nouvellePiece.getIncompatibilites().add(chercherPieceParNom("EG100"));
-				nouvellePiece.getNecessites().add(chercherPieceParNom("IS"));
+				nomPiece.getIncompatibilites().add(chercherPieceParNom("EG100"));
+				nomPiece.getNecessites().add(chercherPieceParNom("IS"));
 				break;
 			case "IS":
-				nouvellePiece.getIncompatibilites().add(chercherPieceParNom("EG100"));
-				nouvellePiece.getIncompatibilites().add(chercherPieceParNom("TM5"));
-				nouvellePiece.getNecessites().add(chercherPieceParNom("XS"));
+				nomPiece.getIncompatibilites().add(chercherPieceParNom("EG100"));
+				nomPiece.getIncompatibilites().add(chercherPieceParNom("TM5"));
+				nomPiece.getNecessites().add(chercherPieceParNom("XS"));
 				break;
 			case "EG100":
-				nouvellePiece.getIncompatibilites().add(chercherPieceParNom("TA5"));
-				nouvellePiece.getIncompatibilites().add(chercherPieceParNom("TSF7"));
-				nouvellePiece.getIncompatibilites().add(chercherPieceParNom("XM"));
-				nouvellePiece.getIncompatibilites().add(chercherPieceParNom("XS"));
-				nouvellePiece.getIncompatibilites().add(chercherPieceParNom("IS"));
+				nomPiece.getIncompatibilites().add(chercherPieceParNom("TA5"));
+				nomPiece.getIncompatibilites().add(chercherPieceParNom("TSF7"));
+				nomPiece.getIncompatibilites().add(chercherPieceParNom("XM"));
+				nomPiece.getIncompatibilites().add(chercherPieceParNom("XS"));
+				nomPiece.getIncompatibilites().add(chercherPieceParNom("IS"));
 				break;
 			case "EG133":
-				nouvellePiece.getIncompatibilites().add(chercherPieceParNom("TSF7"));
+				nomPiece.getIncompatibilites().add(chercherPieceParNom("TSF7"));
 				break;
 			case "ED110":
-				nouvellePiece.getIncompatibilites().add(chercherPieceParNom("TSF7"));
+				nomPiece.getIncompatibilites().add(chercherPieceParNom("TSF7"));
 				break;
 			case "EG210":
-				nouvellePiece.getIncompatibilites().add(chercherPieceParNom("XC"));
+				nomPiece.getIncompatibilites().add(chercherPieceParNom("XC"));
 				break;
 			case "EH120":
-				nouvellePiece.getNecessites().add(chercherPieceParNom("TC120"));
+				nomPiece.getNecessites().add(chercherPieceParNom("TC120"));
 				break;
 			case "TC120":
-				nouvellePiece.getNecessites().add(chercherPieceParNom("EH120"));
+				nomPiece.getNecessites().add(chercherPieceParNom("EH120"));
 				break;
 			case "TM5":
-				nouvellePiece.getIncompatibilites().add(chercherPieceParNom("IS"));
+				nomPiece.getIncompatibilites().add(chercherPieceParNom("IS"));
 				break;
 			}
 		}
 	}
 
+	/**
+	 * Initialisation des donnees brutes dans le catalogue de base
+	 */
+	private void initDonneesBrutes () {
+		cataloguePiecesStandards.put("EG100", "Gasoline 100kW");
+		cataloguePiecesStandards.put("EG133", "Gasoline 133kW");
+		cataloguePiecesStandards.put("EG210", "Gasoline 210kW");
+		cataloguePiecesStandards.put("ED110", "Diesel 110kW");
+		cataloguePiecesStandards.put("ED180", "Diesel 180kW");
+		cataloguePiecesStandards.put("EH120", "Gasoline/electric hybrid 120kW");
+		cataloguePiecesStandards.put("TM5", "Manual 5 gears");
+		cataloguePiecesStandards.put("TM6", "Manual 6 gears");
+		cataloguePiecesStandards.put("TA5", "Automatic 5 gears");
+		cataloguePiecesStandards.put("TS6", "Sequential 6 gears");
+		cataloguePiecesStandards.put("TSF7", "Sequential 7 gears 4 wheels drive");
+		cataloguePiecesStandards.put("TC120", "Converter 120kW max");
+		cataloguePiecesStandards.put("XC", "Classic paint");
+		cataloguePiecesStandards.put("XM", "Metallic paint");
+		cataloguePiecesStandards.put("XS", "Red paint and sport decoration");
+		cataloguePiecesStandards.put("IN",  "Standard interior");
+		cataloguePiecesStandards.put("IH", "High-end interior");
+		cataloguePiecesStandards.put("IS", "Sport-finish");
+	}
+	/**
+	 * Methode recherchant parmis la liste des pieces celle dont le nom est passe en parametre
+	 * @param nomPiece
+	 * @return Piece si elle est trouvee
+	 * @throws ResultatNullException
+	 */
 	public Piece chercherPieceParNom(String nomPiece) throws ResultatNullException {
-		for (Piece piece : piecesDisponibles) {
+		for (Piece piece : pieces) {
 			if (piece.getNom().equals(nomPiece)) {
 				return piece;
 			}

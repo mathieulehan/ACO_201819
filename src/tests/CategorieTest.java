@@ -2,6 +2,7 @@ package tests;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import classes.categorie.Categorie;
 import exceptions.ParametreNullException;
@@ -9,8 +10,14 @@ import exceptions.ResultatNullException;
 
 class CategorieTest {
 
-	Categorie categorieTest = new Categorie();
+	Categorie categorieTest;
 			
+	@BeforeEach
+	void init() {
+		categorieTest  = new Categorie();
+		categorieTest.initialiserCategorie();
+	}
+	
 	/**
 	 * On verifie si l'initialisation de la Map<Categories, List<String>> categorieCatalogue
 	 * se deroule comme prevu. (des entrees sont-elles ajoutees ?)
@@ -18,7 +25,6 @@ class CategorieTest {
 	 */
 	@Test
 	void testInitialisation() throws ResultatNullException{
-		categorieTest.initialiserCategorie();
 		assertTrue(!categorieTest.getCategorieCatalogue().isEmpty());
 	}
 	
@@ -28,7 +34,6 @@ class CategorieTest {
 	 */
 	@Test
 	void testTailleCatalogue() throws ResultatNullException {
-		categorieTest.initialiserCategorie();
 		assertTrue(categorieTest.getCategorieCatalogue().size() == 4);
 	}
 	
@@ -39,7 +44,6 @@ class CategorieTest {
 	 */
 	@Test
 	void testCleExistante() throws ParametreNullException, ResultatNullException {
-		categorieTest.initialiserCategorie();
 		assertTrue(categorieTest.getCategorie("ENGINE") != null);
 	}
 }

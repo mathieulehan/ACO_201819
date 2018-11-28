@@ -1,7 +1,10 @@
 package tests;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import classes.piece.TypePiece;
@@ -10,41 +13,53 @@ import exceptions.ResultatNullException;
 
 class TypePieceTest {
 
+	TypePiece pieces;
+	
+	/**
+	 * Initialisation pour chaque test d'un object TypePiece et de son initialisation
+	 * @throws ParametreNullException
+	 * @throws ResultatNullException
+	 */
+	@BeforeEach
+	void init () throws ParametreNullException, ResultatNullException {
+		pieces = new TypePiece();
+		pieces.initialiserPieces();
+	}
+	
 	/**
 	 * Test verifiant si la methode initialiserPieces fonctionne comme attendu
 	 * On verifie apres execution si toutes les pieces ont etees generees
-	 * @throws ResultatNullException 
-	 * @throws ParametreNullException 
 	 */
 	@Test
-	void taille_du_catalogue_Piece() throws ParametreNullException, ResultatNullException {
-		TypePiece pieces = new TypePiece();
-		pieces.initialiserPieces();
-		assertEquals(18, pieces.getPiecesDisponibles().size());
+	void taille_du_catalogue_Piece() {
+		assertEquals(18, pieces.getPieces().size());
+		assertFalse(pieces.getPieces().isEmpty());
 	}
 	
 	/**
 	 * On verifie si on obtient bien la bonne description a partir du nom d'une piece
-	 * @throws ResultatNullException 
-	 * @throws ParametreNullException 
+	 * @throws ResultatNullException
 	 */
 	@Test
-	void piece_TA5_est_automatic_5_gears() throws ParametreNullException, ResultatNullException {
-		TypePiece pieces = new TypePiece();
-		pieces.initialiserPieces();
+	void piece_TA5_est_automatic_5_gears() throws ResultatNullException {
 		assertEquals("Automatic 5 gears", pieces.chercherPieceParNom("TA5").getDescription());
 	}
 	
 	/**
-	 * Si on cherche une piece qui n'existe pas, on recoit un null
-	 * @throws ResultatNullException 
-	 * @throws ParametreNullException 
+	 * Si on cherche une piece qui n'existe pas, une exception est levee 
 	 */
 	@Test
-	void get_piece_inexistance() throws ResultatNullException, ParametreNullException {
-		TypePiece pieces = new TypePiece();
-		pieces.initialiserPieces();
-		assertEquals(null, pieces.chercherPieceParNom("INEXISTANTE"));
+	void chercher_piece_inexistance() {
+		assertThrows(ResultatNullException.class, 
+				() -> { pieces.getPieces().contains(pieces.chercherPieceParNom("INEXISTANTE")); });
 	}
 
+	/**
+	 * Si on cherche une piece qui n'existe pas, on recoit un null 
+	 * @throws ResultatNullException 
+	 */
+	@Test
+	void chercher_piece_existance() throws ResultatNullException {
+		assertTrue(pieces.getPieces().contains(pieces.chercherPieceParNom("XM")));
+	}
 }
