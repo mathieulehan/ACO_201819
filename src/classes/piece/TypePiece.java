@@ -5,6 +5,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+import classes.categorie.Categorie;
 import exceptions.ParametreNullException;
 import exceptions.ResultatNullException;
 
@@ -20,21 +21,17 @@ import exceptions.ResultatNullException;
  */
 public class TypePiece {
 
-	private static List<Piece> pieces ;
+	private static List<Piece> pieces = new LinkedList<>();
 	/**
-	 * Donnees brutes dans le catalogue, il s'agit des pieces standards
+	 * Donnees brutes dans un catalogue, il s'agit des pieces standards
 	 */
 	private static Map<String, String> cataloguePiecesStandards  = new HashMap<>();
-
-	public TypePiece () {
-		pieces = new LinkedList<>();
-	}
 
 	/**
 	 * Getter de la liste de Piece 
 	 * @return List de piece
 	 */
-	public List<Piece> getPieces() {
+	public static List<Piece> getPieces() {
 		return pieces;
 	}
 
@@ -150,4 +147,5 @@ public class TypePiece {
 		}
 		throw new ResultatNullException("Piece introuvable par son nom");
 	}
+
 }

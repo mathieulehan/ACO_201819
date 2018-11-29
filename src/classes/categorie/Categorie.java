@@ -27,14 +27,7 @@ public class Categorie implements CategorieInterface {
 	 * Enumeration des categories existantes
 	 */
 	private static Set<String> categories = new HashSet<String>();
-	private static Map<String, List<Piece>> categorieCatalogue;
-
-	/**
-	 * Constructeur Categorie
-	 */
-	public Categorie () {
-		categorieCatalogue = new HashMap<>();
-	}
+	private static Map<String, List<Piece>> categorieCatalogue = new HashMap<String, List<Piece>>();
 
 	/**
 	 * @return le set de categories
@@ -53,13 +46,31 @@ public class Categorie implements CategorieInterface {
 	public static void initialiserCategories () throws ParametreNullException, ResultatNullException {
 		TypePiece.initialiserPieces();
 		categories.add("ENGINE");
-		categories.add("TRNASMISSION");
+		categories.add("TRANSMISSION");
 		categories.add("EXTERIOR");
 		categories.add("INTERIOR");
-		categorieCatalogue.put("ENGINE", new LinkedList<Piece>(Arrays.asList(TypePiece.chercherPieceParNom("EG100"),TypePiece.chercherPieceParNom("EG133"), TypePiece.chercherPieceParNom("EG210"), TypePiece.chercherPieceParNom("ED100"), TypePiece.chercherPieceParNom("ED180"), TypePiece.chercherPieceParNom("EH120"))));
-		categorieCatalogue.put("ENGINE", new LinkedList<Piece>(Arrays.asList(TypePiece.chercherPieceParNom("EG100"),TypePiece.chercherPieceParNom("TM5"), TypePiece.chercherPieceParNom("TM6"), TypePiece.chercherPieceParNom("TA5"), TypePiece.chercherPieceParNom("TS6"), TypePiece.chercherPieceParNom("TSF7"), TypePiece.chercherPieceParNom("TC120"))));
-		categorieCatalogue.put("ENGINE", new LinkedList<Piece>(Arrays.asList(TypePiece.chercherPieceParNom("XC"),TypePiece.chercherPieceParNom("XM"), TypePiece.chercherPieceParNom("XS"))));
-		categorieCatalogue.put("ENGINE", new LinkedList<Piece>(Arrays.asList(TypePiece.chercherPieceParNom("IN"),TypePiece.chercherPieceParNom("IH"), TypePiece.chercherPieceParNom("IS"))));
+		categorieCatalogue.put("ENGINE", new LinkedList<Piece>(Arrays.asList(
+				TypePiece.chercherPieceParNom("EG100"),
+				TypePiece.chercherPieceParNom("EG133"), 
+				TypePiece.chercherPieceParNom("EG210"), 
+				TypePiece.chercherPieceParNom("ED110"), 
+				TypePiece.chercherPieceParNom("ED180"), 
+				TypePiece.chercherPieceParNom("EH120"))));
+		categorieCatalogue.put("TRANSMISSION", new LinkedList<Piece>(Arrays.asList(
+				TypePiece.chercherPieceParNom("TM5"), 
+				TypePiece.chercherPieceParNom("TM6"), 
+				TypePiece.chercherPieceParNom("TA5"), 
+				TypePiece.chercherPieceParNom("TS6"), 
+				TypePiece.chercherPieceParNom("TSF7"), 
+				TypePiece.chercherPieceParNom("TC120"))));
+		categorieCatalogue.put("EXTERIOR", new LinkedList<Piece>(Arrays.asList(
+				TypePiece.chercherPieceParNom("XC"),
+				TypePiece.chercherPieceParNom("XM"), 
+				TypePiece.chercherPieceParNom("XS"))));
+		categorieCatalogue.put("INTERIOR", new LinkedList<Piece>(Arrays.asList(
+				TypePiece.chercherPieceParNom("IN"),
+				TypePiece.chercherPieceParNom("IH"), 
+				TypePiece.chercherPieceParNom("IS"))));
 	}
 
 	/**
