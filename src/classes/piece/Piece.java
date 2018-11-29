@@ -24,7 +24,7 @@ public class Piece implements PieceInterface, GestionCompatibilite, VerifCompati
 	/**
 	 * Constructeur
 	 * @param nom le nom de la piece
-	 * @param description la descriptiond de la piece
+	 * @param description la description de la piece
 	 */
 	public Piece(String nom, String description) {
 		this.nom = nom;
@@ -33,22 +33,36 @@ public class Piece implements PieceInterface, GestionCompatibilite, VerifCompati
 		this.necessites = new HashSet<>();
 	}
 	
-	public String getNom() {
-		return nom;
+	public String getNom() throws ResultatNullException {
+		if(this.nom == null) {
+			throw new ResultatNullException("Le nom de la piece est null");
+		}
+		return this.nom;
 	}
 	
+	/**
+	 * @param nom le nom de la piece
+	 * @throws ParametreNullException si le nom donne en parametre est null
+	 */
 	public void setNom(String nom) throws ParametreNullException {
 		if (nom == null) throw new ParametreNullException("Le nom entre en parametre est null");
 		this.nom = nom;
 	}
 
-	public String getDescription() {
+	/**
+	 * @return la description de la piece
+	 * @throws ResultatNullException si la description de la piece est null
+	 */
+	public String getDescription() throws ResultatNullException {
+		if(this.description == null) {
+			throw new ResultatNullException("La description de la piece est null");
+		}
 		return description;
 	}
 
 	/**
 	 * @param description la description souhaitee pour la piece
-	 * @throws ParametreNullException si la description en parametre est nulle	
+	 * @throws ParametreNullException si la description en parametre est null
 	 */
 	public void setDescription(String description) throws ParametreNullException {
 		if (description == null) throw new ParametreNullException("La description en parametre est nulle");
@@ -67,7 +81,7 @@ public class Piece implements PieceInterface, GestionCompatibilite, VerifCompati
 	
 	/**
 	 * @throws ParametreNullException si la piece a un set d'incompatibilites null
-	 * @throws ResultatNullException 
+	 * @throws ResultatNullException si le Set d'incompatibilite de la piece est null
 	 */
 	@Override
 	public Set<Piece> getIncompatibilites() throws ParametreNullException, ResultatNullException {
@@ -147,12 +161,11 @@ public class Piece implements PieceInterface, GestionCompatibilite, VerifCompati
 	/**
 	 * On verifie que la piece n'est pas presente dans les incompatibilites de notre configVoiture
 	 * Precondition : Piece non nulle
-	 * @param nomPiece la piece a verifier
 	 * @return true si la piece n'est pas presente dans les incompatibilites, false sinon
 	 * @throws ParametreNullException
 	 */
 	@Override
-	public boolean verificationIncompatibilite() throws ParametreNullException {
+	public boolean verificationIncompatibilite () {
 		return !ConfigVoiture.mesIncompatibilites.contains(this);
 	}
 }
