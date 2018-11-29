@@ -5,6 +5,7 @@ import java.util.Observable;
 
 import classes.categorie.Categorie;
 import classes.piece.Piece;
+import classes.piece.TypePiece;
 import exceptions.ParametreNullException;
 import exceptions.ResultatNullException;
 
@@ -49,9 +50,15 @@ public class ConfigurationTest extends Observable {
 	/**
 	 * main
 	 * @param args
+	 * @throws ResultatNullException 
+	 * @throws ParametreNullException 
 	 */
-	public static void main(String[] args) throws ParametreNullException, ResultatNullException{
-		Categorie.initialiserCategories(); // initialisation des categories
+	public static void main(String[] args) throws ParametreNullException, ResultatNullException {
+		TypePiece tp = new TypePiece();
+		tp.initialiserPieces(); //initialisation des pieces
+		Categorie c = new Categorie();
+		c.initialiserCategorie(); // initialisation des categories
+		
 		ConfigVoiture configV = new ConfigVoiture();
 		Iterator<Piece> it = configV.maConfig.iterator();
 		while(it.hasNext()) {
