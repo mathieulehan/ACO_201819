@@ -12,8 +12,6 @@ import exceptions.ParametreNullException;
 import exceptions.ResultatNullException;
 
 class TypePieceTest {
-
-	TypePiece pieces;
 	
 	/**
 	 * Initialisation pour chaque test d'un object TypePiece et de son initialisation
