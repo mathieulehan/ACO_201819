@@ -3,6 +3,7 @@ package classes.config;
 import java.util.Set;
 
 import classes.piece.Piece;
+import exceptions.ActionPieceInvalideException;
 import exceptions.ParametreNullException;
 import exceptions.ResultatNullException;
 
@@ -31,14 +32,22 @@ public interface ConfigInterface {
 	/**
 	 * Supprimer une piece de la configuration
 	 * @param piece
+	 * @return 
+	 * @throws ActionPieceInvalideException 
+	 * @throws ResultatNullException 
+	 * @throws ParametreNullException 
 	 */
-	public void supprimerPiece (Piece piece);
+	public boolean supprimerPiece (String piece) throws ActionPieceInvalideException, ResultatNullException, ParametreNullException  ;
 	
 	/**
 	 * Ajouter une piece dans la configuration
 	 * @param piece
+	 * @return 
+	 * @throws ResultatNullException 
+	 * @throws ParametreNullException 
+	 * @throws ActionPieceInvalideException 
 	 */
-	public void ajouterPiece (Piece piece);
+	public boolean ajouterPiece(String p) throws ActionPieceInvalideException, ParametreNullException, ResultatNullException;
 	
 	/**
 	 * Recupere la piece en fonction de la categorie
@@ -51,10 +60,12 @@ public interface ConfigInterface {
 	 * @throws ResultatNullException 
 	 * @throws ParametreNullException 
 	 */
-	public Set<String> getConfigCategories() throws ResultatNullException, ParametreNullException;
+	//public Set<String> getConfigCategories() throws ResultatNullException, ParametreNullException;
 
 	Set<Piece> getPiecesPossibles() throws ParametreNullException, ResultatNullException;
 
 	Set<String> getCategoriesRestantes() throws ResultatNullException, ParametreNullException;
+
+	
 
 }

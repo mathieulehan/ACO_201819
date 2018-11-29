@@ -10,12 +10,10 @@ import exceptions.ResultatNullException;
 
 class CategorieTest {
 
-	Categorie categorieTest;
 			
 	@BeforeEach
-	void init() {
-		categorieTest  = new Categorie();
-		categorieTest.initialiserCategorie();
+	void init() throws ParametreNullException, ResultatNullException {
+		Categorie.initialiserCategories();
 	}
 	
 	/**
@@ -25,7 +23,7 @@ class CategorieTest {
 	 */
 	@Test
 	void testInitialisation() throws ResultatNullException{
-		assertTrue(!categorieTest.getCategorieCatalogue().isEmpty());
+		assertTrue(!Categorie.getCategorieCatalogue().isEmpty());
 	}
 	
 	/**
@@ -34,7 +32,7 @@ class CategorieTest {
 	 */
 	@Test
 	void testTailleCatalogue() throws ResultatNullException {
-		assertTrue(categorieTest.getCategorieCatalogue().size() == 4);
+		assertTrue(Categorie.getCategorieCatalogue().size() == 4);
 	}
 	
 	/**
@@ -44,6 +42,6 @@ class CategorieTest {
 	 */
 	@Test
 	void testCleExistante() throws ParametreNullException, ResultatNullException {
-		assertTrue(categorieTest.getCategorie("ENGINE") != null);
+		assertTrue(Categorie.getCategories() != null);
 	}
 }

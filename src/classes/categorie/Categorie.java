@@ -16,7 +16,7 @@ import exceptions.ResultatNullException;
 /**
  * Classe Categorie, implementant une interface CategorieInterface, s'agissant d'une Map ayant pour : 
  * - Cle : le nom de la categorie (enumeration)
- * - Valeurs (List) : les pieces associees a  une categorie
+ * - Valeurs (List) : les pieces associees aï¿½ une categorie
  * 
  * @author math & chach44
  *
@@ -74,13 +74,13 @@ public class Categorie implements CategorieInterface {
 	}
 
 	/**
-	 * @param la categorie des pieces que l'on souhaite récupérer
+	 * @param la categorie des pieces que l'on souhaite rï¿½cupï¿½rer
 	 * @throws ParametreNullException si la categorie en parametre est null
 	 * @throws ResultatNullException 
 	 */
 	public static List<Piece> getPiecesCategorie(String categorie) throws ParametreNullException, ResultatNullException {
 		if (categories.contains(categorie)) {
-			throw new ParametreNullException("La catégorie en paramètre n'existe pas");
+			throw new ParametreNullException("La catï¿½gorie en paramï¿½tre n'existe pas");
 		}
 		return getCategorieCatalogue().get(categorie);
 	}
