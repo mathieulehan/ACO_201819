@@ -22,8 +22,7 @@ class TypePieceTest {
 	 */
 	@BeforeEach
 	void init () throws ParametreNullException, ResultatNullException {
-		pieces = new TypePiece();
-		pieces.initialiserPieces();
+		TypePiece.initialiserPieces();
 	}
 	
 	/**
@@ -32,8 +31,8 @@ class TypePieceTest {
 	 */
 	@Test
 	void taille_du_catalogue_Piece() {
-		assertEquals(18, pieces.getPieces().size());
-		assertFalse(pieces.getPieces().isEmpty());
+		assertEquals(18, TypePiece.getPieces().size());
+		assertFalse(TypePiece.getPieces().isEmpty());
 	}
 	
 	/**
@@ -42,7 +41,7 @@ class TypePieceTest {
 	 */
 	@Test
 	void piece_TA5_est_automatic_5_gears() throws ResultatNullException {
-		assertEquals("Automatic 5 gears", pieces.chercherPieceParNom("TA5").getDescription());
+		assertEquals("Automatic 5 gears", TypePiece.chercherPieceParNom("TA5").getDescription());
 	}
 	
 	/**
@@ -51,7 +50,7 @@ class TypePieceTest {
 	@Test
 	void chercher_piece_inexistance() {
 		assertThrows(ResultatNullException.class, 
-				() -> { pieces.getPieces().contains(pieces.chercherPieceParNom("INEXISTANTE")); });
+				() -> { TypePiece.getPieces().contains(TypePiece.chercherPieceParNom("INEXISTANTE")); });
 	}
 
 	/**
@@ -60,6 +59,6 @@ class TypePieceTest {
 	 */
 	@Test
 	void chercher_piece_existance() throws ResultatNullException {
-		assertTrue(pieces.getPieces().contains(pieces.chercherPieceParNom("XM")));
+		assertTrue(TypePiece.getPieces().contains(TypePiece.chercherPieceParNom("XM")));
 	}
 }
