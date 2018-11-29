@@ -40,7 +40,7 @@ public class Categorie implements CategorieInterface {
 	 * @return le set de categories
 	 * @throws ResultatNullException si le Set de categories renvoye est null
 	 */
-	public Set<String> getCategories() throws ResultatNullException {
+	public static Set<String> getCategories() throws ResultatNullException {
 		if(categories == null) throw new ResultatNullException("Le Set de categories est null");
 		return categories;
 	}

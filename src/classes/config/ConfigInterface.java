@@ -11,8 +11,10 @@ public interface ConfigInterface {
 	/**
 	 * Verifie que la configuration courante est complete (toutes les categories)
 	 * @return
+	 * @throws ParametreNullException 
+	 * @throws ResultatNullException 
 	 */
-	public boolean estComplet();
+	public boolean estComplet() throws ResultatNullException, ParametreNullException;
 
 	/**
 	 * Verifie que la configuration courante est valide
@@ -49,6 +51,10 @@ public interface ConfigInterface {
 	 * @throws ResultatNullException 
 	 * @throws ParametreNullException 
 	 */
-	public Set<String> getCategories() throws ResultatNullException, ParametreNullException;
+	public Set<String> getConfigCategories() throws ResultatNullException, ParametreNullException;
+
+	Set<Piece> getPiecesPossibles() throws ParametreNullException, ResultatNullException;
+
+	Set<String> getCategoriesRestantes() throws ResultatNullException, ParametreNullException;
 
 }
