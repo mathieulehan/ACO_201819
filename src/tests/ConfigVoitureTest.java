@@ -25,8 +25,10 @@ class ConfigVoitureTest {
 	}
 	
 	/**
-	 * Ajout de pieces dans notre configuration
-	 * Condition a verifier : UNE piece par categorie et les incompatibilites
+	 * Ajout de pieces dans notre configuration, conditions a verifier :
+	 * - une piece par categorie
+	 * - les incompatibilites
+	 * - ajout des pieces necessaires
 	 * @throws ActionPieceInvalideException
 	 * @throws ParametreNullException
 	 * @throws ResultatNullException
@@ -44,8 +46,9 @@ class ConfigVoitureTest {
 	}
 	
 	/**
-	 * Suppression de pieces dans notre configuration
-	 * Condition a verifier : piece presente dans la configuration
+	 * Suppression de pieces dans notre configuration, conditions a verifier : 
+	 * - piece presente dans la configuration
+	 * - suppression des pieces necessaires
 	 * @throws ActionPieceInvalideException
 	 * @throws ParametreNullException
 	 * @throws ResultatNullException
@@ -56,11 +59,12 @@ class ConfigVoitureTest {
 		
 		assertTrue(cv.ajouterPiece("EG133"));
 		assertTrue(cv.ajouterPiece("XS"));
-		assertTrue(cv.ajouterPiece("IS"));
+		// Ajout de la piece IS car necessaire a la piece XS
 		assertEquals(3, cv.maConfig.size());
 		
-		assertTrue(cv.supprimerPiece("EG133"));
-		assertEquals(2, cv.maConfig.size());
+		assertTrue(cv.supprimerPiece("IS"));
+		// Suppression de la piece XS car necessaire a la piece IS
+		assertEquals(1, cv.maConfig.size());
 		
 		assertThrows(ActionPieceInvalideException.class, 
 				() -> cv.ajouterPiece("EH120")); // Incompatible avec EG133
@@ -80,8 +84,8 @@ class ConfigVoitureTest {
 	public void verification_categories() throws ResultatNullException, ParametreNullException, ActionPieceInvalideException {
 		Categorie.initialiserCategories();
 		
-		assertTrue(cv.ajouterPiece("EH120"));
-		assertTrue(cv.ajouterPiece("TC120"));
+		assertTrue(cv.ajouterPiece("EH120")); 
+		// Ajout de la piece TC120 car necessaire a la piece EH120
 		assertTrue(cv.ajouterPiece("XM"));
 		
 		HashSet<String> categoriesSouhaitees = new HashSet<>();

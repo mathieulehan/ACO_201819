@@ -23,14 +23,13 @@ public class ConfigVoiture implements ConfigInterface, Observer {
 	public Set<Piece> maConfig = new HashSet<Piece>();
 	private Set<String> mesCategories = new HashSet<String>();
 	private Set<Piece> mesIncompatibilites = new HashSet<Piece>();
-	private Set<Piece> mesNecessites = new HashSet<Piece>();
 
 	/**
 	 * Si toutes les categories sont presentes dans la configuration, alors cette derniere est complete
 	 */
 	@Override
 	public boolean estComplet() throws ResultatNullException, ParametreNullException {
-		if(this.getMesCategories().size() == Categorie.getCategories().size()) {
+		if(this.mesCategories.size() == Categorie.getCategories().size()) {
 			return true;
 		}
 		return false;
@@ -49,7 +48,7 @@ public class ConfigVoiture implements ConfigInterface, Observer {
 	}
 
 	public Set<String> getMesCategories() {
-		return mesCategories;
+		return this.mesCategories;
 	}
 
 	@Override
@@ -60,10 +59,22 @@ public class ConfigVoiture implements ConfigInterface, Observer {
 		if(!maConfig.contains(piece) ) throw new ActionPieceInvalideException("Cette piece n'est pas dans votre configuration");
 
 		this.mesIncompatibilites.removeAll(piece.getIncompatibilites()) ;
-		this.mesNecessites.removeAll(piece.getNecessites()) ;
-		this.getMesCategories().remove(rechercherCategorieParPiece(piece)) ;
+		this.mesCategories.remove(rechercherCategorieParPiece(piece)) ;
 		this.maConfig.remove(piece);
+		supprimerPieceNecessaire(piece);
 		return true;
+	}
+	
+	public void supprimerPieceNecessaire(Piece piece) throws ResultatNullException, ParametreNullException, ActionPieceInvalideException {
+		if(piece.getNecessites().size() > 0) {
+			Iterator<Piece> it = piece.getNecessites().iterator();
+			while(it.hasNext()) {
+				Piece pieceNecessaire = it.next();
+				if(maConfig.contains(pieceNecessaire)) {
+					supprimerPiece(pieceNecessaire.getNom());
+				}
+			}
+		}
 	}
 
 	@Override
@@ -75,10 +86,22 @@ public class ConfigVoiture implements ConfigInterface, Observer {
 		if (!getPiecesPossibles().contains(piece)) throw new ActionPieceInvalideException("Cette piece n'est pas dans la liste des pieces possibles");
 
 		this.mesIncompatibilites.addAll(piece.getIncompatibilites()) ;
-		this.mesNecessites.addAll(piece.getNecessites()) ;
-		this.getMesCategories().add(rechercherCategorieParPiece(piece)) ;
+		this.mesCategories.add(rechercherCategorieParPiece(piece)) ;
 		this.maConfig.add(piece);
+		ajouterPieceNecessaire(piece);
 		return true;
+	}
+	
+	public void ajouterPieceNecessaire(Piece piece) throws ResultatNullException, ParametreNullException, ActionPieceInvalideException {
+		if(piece.getNecessites().size() > 0) {
+			Iterator<Piece> it = piece.getNecessites().iterator();
+			while(it.hasNext()) {
+				Piece pieceNecessaire = it.next();
+				if(!maConfig.contains(pieceNecessaire)) {
+					ajouterPiece(pieceNecessaire.getNom());
+				}
+			}
+		}
 	}
 
 	/**
@@ -108,7 +131,7 @@ public class ConfigVoiture implements ConfigInterface, Observer {
 	@Override
 	public Set<String> getCategoriesRestantes() throws ResultatNullException, ParametreNullException{
 		Set<String> categories = Categorie.getCategories();
-		categories.removeAll(this.getMesCategories());
+		categories.removeAll(this.mesCategories);
 		return categories;
 	}
 
