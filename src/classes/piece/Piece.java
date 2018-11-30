@@ -85,8 +85,8 @@ public class Piece implements PieceInterface, GestionCompatibilite, VerifCompati
 	 */
 	@Override
 	public Set<Piece> getIncompatibilites() throws ParametreNullException, ResultatNullException {
-		if(incompatibilites.getClass() != HashSet.class) throw new ParametreNullException("Les incompatibilites de la piece ne sont stockees sous forme de Set");
-		else if (incompatibilites == null) throw new ResultatNullException("Le Set d'incompatibilite de la piece est null");
+//		if(incompatibilites.getClass() != HashSet.class) throw new ParametreNullException("Les incompatibilites de la piece ne sont stockees sous forme de Set");
+//		else if (incompatibilites == null) throw new ResultatNullException("Le Set d'incompatibilite de la piece est null");
 		return incompatibilites;
 	}
 	
@@ -159,13 +159,13 @@ public class Piece implements PieceInterface, GestionCompatibilite, VerifCompati
 	}
 
 	/**
-	 * On verifie que la piece n'est pas presente dans les incompatibilites de notre configVoiture
+	 * On verifie que la piece n'est pas presente dans les incompatibilites de notre piece
 	 * Precondition : Piece non nulle
 	 * @return true si la piece n'est pas presente dans les incompatibilites, false sinon
 	 * @throws ParametreNullException
 	 */
 	@Override
-	public boolean verificationIncompatibilite () {
-		return !ConfigVoiture.mesIncompatibilites.contains(this);
+	public boolean verificationIncompatibilite (Piece piece) {
+		return incompatibilites.contains(this);
 	}
 }

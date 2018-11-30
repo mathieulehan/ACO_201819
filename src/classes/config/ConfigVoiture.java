@@ -188,15 +188,15 @@ public class ConfigVoiture implements ConfigInterface, Observer {
 
 	}
 
-	public static void main(String[] args) throws Exception {
-		ConfigVoiture cv = new ConfigVoiture();
-		Categorie.initialiserCategories();
-		cv.ajouterPiece("EG100");
-		cv.ajouterPiece("XC");
-		cv.ajouterPiece("IN");
-		
-		//System.out.println(TypePiece.chercherPieceParNom("EG100").getIncompatibilites());
-		//System.out.println(cv.mesIncompatibilites);
-
-	}
+//	public static void main(String[] args) throws Exception {
+//		ConfigVoiture cv = new ConfigVoiture();
+//		Categorie.initialiserCategories();
+//		cv.ajouterPiece("EG100");
+//		cv.ajouterPiece("XC");
+//		cv.ajouterPiece("IN");
+//		
+//		//System.out.println(TypePiece.chercherPieceParNom("EG100").getIncompatibilites());
+//		//System.out.println(cv.mesIncompatibilites);
+//
+//	}
 }

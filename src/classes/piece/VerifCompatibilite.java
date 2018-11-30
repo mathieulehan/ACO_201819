@@ -10,5 +10,5 @@ public interface VerifCompatibilite {
 	Set<Piece> getIncompatibilites() throws ParametreNullException, ResultatNullException;
 	Set<Piece> getNecessites() throws ResultatNullException;
 
-	boolean verificationIncompatibilite() throws ParametreNullException;
+	boolean verificationIncompatibilite(Piece piece);
 }
