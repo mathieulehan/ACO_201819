@@ -3,7 +3,6 @@ package classes.piece;
 import java.util.HashSet;
 import java.util.Set;
 
-import classes.config.ConfigVoiture;
 import exceptions.ParametreNullException;
 import exceptions.PasDIncompatibilitesException;
 import exceptions.PasDeNecessitesException;
@@ -34,9 +33,7 @@ public class Piece implements PieceInterface, GestionCompatibilite, VerifCompati
 	}
 	
 	public String getNom() throws ResultatNullException {
-		if(this.nom == null) {
-			throw new ResultatNullException("Le nom de la piece est null");
-		}
+		if(this.nom == null) throw new ResultatNullException("Le nom de la piece est null");
 		return this.nom;
 	}
 	
@@ -54,10 +51,8 @@ public class Piece implements PieceInterface, GestionCompatibilite, VerifCompati
 	 * @throws ResultatNullException si la description de la piece est null
 	 */
 	public String getDescription() throws ResultatNullException {
-		if(this.description == null) {
-			throw new ResultatNullException("La description de la piece est null");
-		}
-		return description;
+		if(this.description == null) throw new ResultatNullException("La description de la piece est null");
+		return this.description;
 	}
 
 	/**
@@ -70,13 +65,14 @@ public class Piece implements PieceInterface, GestionCompatibilite, VerifCompati
 	}
 	
 	/**
-	 * @param incompatibilites les incompatibilites a ajouter a la piece
+	 * @param piecesIncomp les incompatibilites a ajouter a la piece
 	 * @throws ParametreNullException si le Set d'incompatibilites en parametre est null
 	 */
 	@Override
-	public void setIncompatibilites(Set<Piece> incompatibilites) throws ParametreNullException {
-		if (incompatibilites == null) throw new ParametreNullException("Le Set d'incompatibilites en parametre est null");
-		this.incompatibilites = incompatibilites;
+	public void setIncompatibilites(Set<Piece> piecesIncomp) throws ParametreNullException {
+		// TODO : DESIGN PATTERN this.incompatibilites = Object.requireNonNull(piecesIncomp);
+		if (piecesIncomp == null) throw new ParametreNullException("Le Set d'incompatibilites en parametre est null");
+		this.incompatibilites = piecesIncomp;
 	}
 	
 	/**
@@ -85,9 +81,8 @@ public class Piece implements PieceInterface, GestionCompatibilite, VerifCompati
 	 */
 	@Override
 	public Set<Piece> getIncompatibilites() throws ParametreNullException, ResultatNullException {
-		if(incompatibilites.getClass() != HashSet.class) throw new ParametreNullException("Les incompatibilites de la piece ne sont stockees sous forme de Set");
-		else if (incompatibilites == null) throw new ResultatNullException("Le Set d'incompatibilite de la piece est null");
-		return incompatibilites;
+		if(this.incompatibilites.getClass() != HashSet.class) throw new ParametreNullException("Les incompatibilites de la piece ne sont stockees sous forme de Set");
+		return this.incompatibilites;
 	}
 	
 	/**
@@ -110,6 +105,7 @@ public class Piece implements PieceInterface, GestionCompatibilite, VerifCompati
 	@Override
 	public void suppressionIncompatibilite(Piece incompatibilite) throws PasDIncompatibilitesException, ParametreNullException {
 		if (incompatibilite == null) throw new ParametreNullException("L'incompatibilite en parametre est nulle");
+		else if (!this.incompatibilites.contains(incompatibilite)) throw new PasDIncompatibilitesException("L'incompatibilite en parametre est nulle");
 		this.incompatibilites.remove(incompatibilite);
 	}
 
@@ -119,18 +115,19 @@ public class Piece implements PieceInterface, GestionCompatibilite, VerifCompati
 	 */
 	@Override
 	public void setNecessites(Set<Piece> necessites) throws ParametreNullException {
-		if (necessites == null) throw new ParametreNullException("La necessite en parametre est nulle");
+		if (this.necessites == null) throw new ParametreNullException("La necessite en parametre est nulle");
 		this.necessites = necessites;
 	}
 	
 	/**
 	 * @throws ResultatNullException si le Set de necessite de la piece est null
 	 * @return le Set de necessites de la piece
+	 * @throws ParametreNullException 
 	 */
 	@Override
-	public Set<Piece> getNecessites() throws ResultatNullException {
-		if (necessites == null) throw new ResultatNullException("Le Set de necessite de la piece est null");
-		return necessites;
+	public Set<Piece> getNecessites() throws ResultatNullException, ParametreNullException {
+		if(this.necessites.getClass() != HashSet.class) throw new ParametreNullException("Les necessites de la piece sont stockees sous forme de Set");
+		return this.necessites;
 	}
 	
 	/**
@@ -164,8 +161,8 @@ public class Piece implements PieceInterface, GestionCompatibilite, VerifCompati
 	 * @return true si la piece n'est pas presente dans les incompatibilites, false sinon
 	 * @throws ParametreNullException
 	 */
-	@Override
-	public boolean verificationIncompatibilite () {
-		return !ConfigVoiture.mesIncompatibilites.contains(this);
-	}
+//	@Override
+//	public boolean estIncompatible (Piece piece) {
+//		return this.incompatibilites.contains(piece);
+//	}
 }

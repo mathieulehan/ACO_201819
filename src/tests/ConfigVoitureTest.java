@@ -22,49 +22,108 @@ class ConfigVoitureTest {
 	@BeforeEach
 	public void init () throws ParametreNullException, ResultatNullException {
 		cv = new ConfigVoiture();
-		Categorie.initialiserCategories();
 	}
 	
+	/**
+	 * Ajout de pieces dans notre configuration
+	 * Condition a verifier : UNE piece par categorie et les incompatibilites
+	 * @throws ActionPieceInvalideException
+	 * @throws ParametreNullException
+	 * @throws ResultatNullException
+	 */
 	@Test
 	void ajout_de_pieces() throws ActionPieceInvalideException, ParametreNullException, ResultatNullException {
-		assertTrue(cv.ajouterPiece("EG100"));
-		assertTrue(cv.ajouterPiece("XC"));
-		assertTrue(cv.ajouterPiece("IN"));
-		assertEquals(3, cv.maConfig.size());
-		assertThrows(ActionPieceInvalideException.class, () -> cv.ajouterPiece("IH"));
-	}
-	
-	void suppression_pieces() throws ActionPieceInvalideException, ParametreNullException, ResultatNullException {
-		assertTrue(cv.ajouterPiece("EG100"));
-		assertTrue(cv.ajouterPiece("XC"));
-		assertTrue(cv.ajouterPiece("IN"));
+		Categorie.initialiserCategories();
 		
-		assertTrue(cv.supprimerPiece("EG100"));
-		assertThrows(ActionPieceInvalideException.class, () -> cv.ajouterPiece("TS6"));
+		assertTrue(cv.ajouterPiece("TM5"));
+		assertTrue(cv.ajouterPiece("IN"));
+		assertEquals(2, cv.maConfig.size());
+
+		assertThrows(ActionPieceInvalideException.class, 
+				() -> { cv.ajouterPiece("IH"); }); // Incompatible avec IN
 	}
 	
+	/**
+	 * Suppression de pieces dans notre configuration
+	 * Condition a verifier : piece presente dans la configuration
+	 * @throws ActionPieceInvalideException
+	 * @throws ParametreNullException
+	 * @throws ResultatNullException
+	 */
+	@Test
+	void suppression_pieces() throws ActionPieceInvalideException, ParametreNullException, ResultatNullException {
+		Categorie.initialiserCategories();
+		
+		assertTrue(cv.ajouterPiece("EG133"));
+		assertTrue(cv.ajouterPiece("XS"));
+		assertTrue(cv.ajouterPiece("IS"));
+		assertEquals(3, cv.maConfig.size());
+		
+		assertTrue(cv.supprimerPiece("EG133"));
+		assertEquals(2, cv.maConfig.size());
+		
+		assertThrows(ActionPieceInvalideException.class, 
+				() -> cv.ajouterPiece("EH120")); // Incompatible avec EG133
+		assertThrows(ActionPieceInvalideException.class, 
+				() -> cv.supprimerPiece("EH120")); // Piece non ajoutee dans la configuration
+	}
+	
+	/**
+	 * Apres une selection de pieces dans notre configuration, on souhaite recuperer :
+	 * - Les categories ou une piece a ete choisie
+	 * - les categories ou aucune piece n'a ete choisie
+	 * @throws ResultatNullException
+	 * @throws ParametreNullException
+	 * @throws ActionPieceInvalideException
+	 */
 	@Test
 	public void verification_categories() throws ResultatNullException, ParametreNullException, ActionPieceInvalideException {
-		assertTrue(cv.ajouterPiece("EG100"));
-		assertTrue(cv.ajouterPiece("XC"));
-		assertTrue(cv.ajouterPiece("IN"));
+		Categorie.initialiserCategories();
+		
+		assertTrue(cv.ajouterPiece("EH120"));
+		assertTrue(cv.ajouterPiece("TC120"));
+		assertTrue(cv.ajouterPiece("XM"));
 		
 		HashSet<String> categoriesSouhaitees = new HashSet<>();
-		categoriesSouhaitees.addAll( Arrays.asList("EXTERIOR", "INTERIOR", "ENGINE"));
+		categoriesSouhaitees.addAll( Arrays.asList("EXTERIOR", "TRANSMISSION", "ENGINE"));
 		assertEquals(categoriesSouhaitees, cv.getMesCategories());
 		
 		HashSet<String> categoriesRestantes = new HashSet<>();
-		categoriesRestantes.addAll( Arrays.asList("TRANSMISSION"));
+		categoriesRestantes.addAll( Arrays.asList("INTERIOR"));
 		assertEquals(categoriesRestantes, cv.getCategoriesRestantes());
 	}
 	
+	/**
+	 * Recherche de la categorie d'une piece
+	 * @throws ParametreNullException
+	 * @throws ResultatNullException
+	 * @throws ActionPieceInvalideException
+	 */
 	@Test
-	public void jhgfds() throws ParametreNullException, ResultatNullException, ActionPieceInvalideException {
-		assertTrue(cv.ajouterPiece("ED180"));
+	public void categories_en_fonction_pieces_de_ma_configuration() throws ParametreNullException, ResultatNullException, ActionPieceInvalideException {
+		Categorie.initialiserCategories();
 		assertTrue(cv.ajouterPiece("TSF7"));
 
 		assertEquals(TypePiece.chercherPieceParNom("TSF7"), cv.getPieceCategorie("TRANSMISSION"));
-		assertThrows(ResultatNullException.class, () -> TypePiece.chercherPieceParNom("PieceLambda").equals(cv.getPieceCategorie("TRANSMISSION")));
+		assertThrows(ResultatNullException.class, 
+				() -> TypePiece.chercherPieceParNom("PieceLambda").equals(cv.getPieceCategorie("TRANSMISSION")));
+	}
+	
+	/**
+	 * Recherche des pieces encore disponibles pour notre configuration
+	 * @throws ActionPieceInvalideException
+	 * @throws ParametreNullException
+	 * @throws ResultatNullException
+	 */
+	@Test
+	public void pieces_disponibles() throws ActionPieceInvalideException, ParametreNullException, ResultatNullException {
+		Categorie.initialiserCategories();
+		
+		assertTrue(cv.ajouterPiece("XC"));
+		assertTrue(cv.ajouterPiece("TM5"));
+		assertTrue(cv.ajouterPiece("ED110"));
+		assertTrue(cv.getPiecesPossibles().contains(TypePiece.chercherPieceParNom("IN")));
+		assertFalse(cv.getPiecesPossibles().contains(TypePiece.chercherPieceParNom("IS")));
 	}
 
 }

@@ -74,13 +74,13 @@ public class Categorie implements CategorieInterface {
 	}
 
 	/**
-	 * @param la categorie des pieces que l'on souhaite r�cup�rer
+	 * @param la categorie des pieces que l'on souhaite recuperer
 	 * @throws ParametreNullException si la categorie en parametre est null
 	 * @throws ResultatNullException 
 	 */
 	public static List<Piece> getPiecesCategorie(String categorie) throws ParametreNullException, ResultatNullException {
-		if (categories.contains(categorie)) {
-			throw new ParametreNullException("La cat�gorie en param�tre n'existe pas");
+		if (!categorieCatalogue.containsKey(categorie)) {
+			throw new ParametreNullException("La categorie en parametre n'existe pas");
 		}
 		return getCategorieCatalogue().get(categorie);
 	}

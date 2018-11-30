@@ -1,11 +1,12 @@
 package classes.piece;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
-import classes.categorie.Categorie;
 import exceptions.ParametreNullException;
 import exceptions.ResultatNullException;
 
@@ -41,7 +42,7 @@ public class TypePiece {
 	 * @throws ParametreNullException 
 	 */
 	public static void initialiserPieces () throws ParametreNullException, ResultatNullException {
-		
+
 		initDonneesBrutes();
 
 		/**
@@ -51,62 +52,65 @@ public class TypePiece {
 			Piece nouvellePiece = new Piece(nomPiece, cataloguePiecesStandards.get(nomPiece));
 			pieces.add(nouvellePiece);
 		}
-		
+
 		/**
 		 * Ajout des incompatibilites et des necessites des pieces instanciees
 		 */
-		for (Piece nomPiece : pieces) {
-
-			switch (cataloguePiecesStandards.keySet().toString()) {
+		for (Piece piece : pieces) {
+			Set<Piece> mesIncompatibilites = new HashSet<Piece>();
+			Set<Piece> mesNecessites = new HashSet<Piece>();
+			switch (piece.getNom()) {
 			case "TA5":
-				nomPiece.getIncompatibilites().add(chercherPieceParNom("EG100"));
+				mesIncompatibilites.add(chercherPieceParNom("EG100"));
 				break;
 			case "TSF7":
-				nomPiece.getIncompatibilites().add(chercherPieceParNom("EG100"));
-				nomPiece.getIncompatibilites().add(chercherPieceParNom("EG110"));
-				nomPiece.getIncompatibilites().add(chercherPieceParNom("EG133"));
+				mesIncompatibilites.add(chercherPieceParNom("EG100"));
+				mesIncompatibilites.add(chercherPieceParNom("EG133"));
+				mesIncompatibilites.add(chercherPieceParNom("ED110"));
 				break;
 			case "XC":
-				nomPiece.getIncompatibilites().add(chercherPieceParNom("EG210"));
+				mesIncompatibilites.add(chercherPieceParNom("EG210"));
 				break;
 			case "XM":
-				nomPiece.getIncompatibilites().add(chercherPieceParNom("EG100"));
+				mesIncompatibilites.add(chercherPieceParNom("EG100"));
 				break;
 			case "XS":
-				nomPiece.getIncompatibilites().add(chercherPieceParNom("EG100"));
-				nomPiece.getNecessites().add(chercherPieceParNom("IS"));
+				mesIncompatibilites.add(chercherPieceParNom("EG100"));
+				mesNecessites.add(chercherPieceParNom("IS"));
 				break;
 			case "IS":
-				nomPiece.getIncompatibilites().add(chercherPieceParNom("EG100"));
-				nomPiece.getIncompatibilites().add(chercherPieceParNom("TM5"));
-				nomPiece.getNecessites().add(chercherPieceParNom("XS"));
+				mesIncompatibilites.add(chercherPieceParNom("EG100"));
+				mesIncompatibilites.add(chercherPieceParNom("TM5"));
+				mesNecessites.add(chercherPieceParNom("XS"));
 				break;
 			case "EG100":
-				nomPiece.getIncompatibilites().add(chercherPieceParNom("TA5"));
-				nomPiece.getIncompatibilites().add(chercherPieceParNom("TSF7"));
-				nomPiece.getIncompatibilites().add(chercherPieceParNom("XM"));
-				nomPiece.getIncompatibilites().add(chercherPieceParNom("XS"));
-				nomPiece.getIncompatibilites().add(chercherPieceParNom("IS"));
+				mesIncompatibilites.add(chercherPieceParNom("TA5"));
+				mesIncompatibilites.add(chercherPieceParNom("TSF7"));
+				mesIncompatibilites.add(chercherPieceParNom("XM"));
+				mesIncompatibilites.add(chercherPieceParNom("XS"));
+				mesIncompatibilites.add(chercherPieceParNom("IS"));
 				break;
 			case "EG133":
-				nomPiece.getIncompatibilites().add(chercherPieceParNom("TSF7"));
+				mesIncompatibilites.add(chercherPieceParNom("TSF7"));
 				break;
 			case "ED110":
-				nomPiece.getIncompatibilites().add(chercherPieceParNom("TSF7"));
+				mesIncompatibilites.add(chercherPieceParNom("TSF7"));
 				break;
 			case "EG210":
-				nomPiece.getIncompatibilites().add(chercherPieceParNom("XC"));
+				mesIncompatibilites.add(chercherPieceParNom("XC"));
 				break;
 			case "EH120":
-				nomPiece.getNecessites().add(chercherPieceParNom("TC120"));
+				mesNecessites.add(chercherPieceParNom("TC120"));
 				break;
 			case "TC120":
-				nomPiece.getNecessites().add(chercherPieceParNom("EH120"));
+				mesNecessites.add(chercherPieceParNom("EH120"));
 				break;
 			case "TM5":
-				nomPiece.getIncompatibilites().add(chercherPieceParNom("IS"));
+				mesIncompatibilites.add(chercherPieceParNom("IS"));
 				break;
 			}
+			piece.setIncompatibilites(mesIncompatibilites);
+			piece.setNecessites(mesNecessites);
 		}
 	}
 
@@ -133,6 +137,7 @@ public class TypePiece {
 		cataloguePiecesStandards.put("IH", "High-end interior");
 		cataloguePiecesStandards.put("IS", "Sport-finish");
 	}
+
 	/**
 	 * Methode recherchant parmis la liste des pieces celle dont le nom est passe en parametre
 	 * @param nomPiece
@@ -146,6 +151,7 @@ public class TypePiece {
 			}
 		}
 		throw new ResultatNullException("Piece introuvable par son nom");
+
 	}
 
 }

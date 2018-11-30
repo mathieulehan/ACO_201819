@@ -54,10 +54,13 @@ public class ConfigVoiture implements ConfigInterface, Observer {
 
 	@Override
 	public boolean supprimerPiece(String p) throws ActionPieceInvalideException, ResultatNullException, ParametreNullException {
+		if(p == null) throw new ParametreNullException("Pas de piece en parametre");
+
 		Piece piece = TypePiece.chercherPieceParNom(p);
 		if(!maConfig.contains(piece) ) throw new ActionPieceInvalideException("Cette piece n'est pas dans votre configuration");
-		
-		this.mesIncompatibilites.removeAll(piece.getIncompatibilites()) ; // TODO NE MARCHE PAS
+
+		this.mesIncompatibilites.removeAll(piece.getIncompatibilites()) ;
+		this.mesNecessites.removeAll(piece.getNecessites()) ;
 		this.getMesCategories().remove(rechercherCategorieParPiece(piece)) ;
 		this.maConfig.remove(piece);
 		return true;
@@ -65,41 +68,18 @@ public class ConfigVoiture implements ConfigInterface, Observer {
 
 	@Override
 	public boolean ajouterPiece(String p) throws ActionPieceInvalideException, ParametreNullException, ResultatNullException {
+		if(p == null) throw new ParametreNullException("Pas de piece en parametre");
+
 		Piece piece = TypePiece.chercherPieceParNom(p);
 		if (mesIncompatibilites.contains(piece)) throw new ActionPieceInvalideException("Piece incompatible");
 		if (!getPiecesPossibles().contains(piece)) throw new ActionPieceInvalideException("Cette piece n'est pas dans la liste des pieces possibles");
 
-		this.mesIncompatibilites.addAll(piece.getIncompatibilites()) ; // TODO NE MARCHE PAS
+		this.mesIncompatibilites.addAll(piece.getIncompatibilites()) ;
+		this.mesNecessites.addAll(piece.getNecessites()) ;
 		this.getMesCategories().add(rechercherCategorieParPiece(piece)) ;
 		this.maConfig.add(piece);
 		return true;
-
-
 	}
-
-	/**
-	 * Renvoie toutes les categories presentes dans la configuration actuelle
-	 * @throws ParametreNullException 
-	 */
-	//	@Override
-	//	public Set<String> getConfigCategories() throws ResultatNullException, ParametreNullException {
-	//		Map<String, List<Piece>> catalogue = Categorie.getCategorieCatalogue();
-	//		Set<String> mesCategories = new HashSet<String>();
-	//		Iterator<Entry<String, List<Piece>>> itCatalogue = catalogue.entrySet().iterator();
-	//		while(itCatalogue.hasNext()) {
-	//			Map.Entry<String, List<String>> entry = (Map.Entry) itCatalogue.next();
-	//			String nomCategorie = entry.getKey();
-	//			List<String> listPiece = entry.getValue();
-	//			Iterator<Piece> itConfig = maConfig.iterator();
-	//			while(itConfig.hasNext()) {
-	//				Piece piece = itConfig.next();
-	//				if(listPiece.contains(piece)) {
-	//					mesCategories.add(nomCategorie);
-	//				}
-	//			}
-	//		}
-	//		return mesCategories;
-	//	}
 
 	/**
 	 * Recherche de la categorie assiciee a une piece
@@ -107,7 +87,7 @@ public class ConfigVoiture implements ConfigInterface, Observer {
 	 * @return la categorie d'une piece si elle existe
 	 * @throws ResultatNullException
 	 */
-	public String rechercherCategorieParPiece(Piece piece) throws ResultatNullException {
+	private String rechercherCategorieParPiece(Piece piece) throws ResultatNullException {
 		Map<String, List<Piece>> catalogue = Categorie.getCategorieCatalogue();
 		Iterator<Entry<String, List<Piece>>> itCatalogue = catalogue.entrySet().iterator();
 		while(itCatalogue.hasNext()) {
@@ -185,18 +165,6 @@ public class ConfigVoiture implements ConfigInterface, Observer {
 	@Override
 	public void update(Observable arg0, Object arg1) {
 		// TODO Auto-generated method stub
-
-	}
-
-	public static void main(String[] args) throws Exception {
-		ConfigVoiture cv = new ConfigVoiture();
-		Categorie.initialiserCategories();
-		cv.ajouterPiece("EG100");
-		cv.ajouterPiece("XC");
-		cv.ajouterPiece("IN");
-		
-		//System.out.println(TypePiece.chercherPieceParNom("EG100").getIncompatibilites());
-		//System.out.println(cv.mesIncompatibilites);
 
 	}
 }
