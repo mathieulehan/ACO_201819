@@ -58,7 +58,7 @@ public class ConfigurationTest extends Observable {
 		Categorie.initialiserCategories(); // initialisation des categories
 		ConfigVoiture configV = new ConfigVoiture();
 		configV.ajouterPiece("EG100");
-		Iterator<Piece> it = configV.maConfig.iterator();
+		Iterator<Piece> it = configV.getConfiguration().iterator();
 		while(it.hasNext()) {
 	        Piece p = it.next();
 	        System.out.println(p.getNom());

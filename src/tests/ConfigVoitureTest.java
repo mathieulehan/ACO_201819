@@ -26,14 +26,14 @@ class ConfigVoitureTest {
 	 * @throws ResultatNullException
 	 */
 	@Test
-	void ajout_de_pieces() throws ActionPieceInvalideException, ParametreNullException, ResultatNullException {
+	void ajout_de_pieces() throws ParametreNullException, ResultatNullException, ActionPieceInvalideException {
 		ConfigVoiture cv = new ConfigVoiture();
 		Categorie.initialiserCategories();
 		
 		assertTrue(cv.ajouterPiece("TM5"));
 		assertTrue(cv.ajouterPiece("IN"));
 		//assertNull(cv.ajouterPiece(""));
-		assertEquals(2, cv.maConfig.size());
+		assertEquals(2, cv.getConfiguration().size());
 
 		assertThrows(NullPointerException.class,
 				() -> cv.ajouterPiece(null) );
@@ -57,11 +57,11 @@ class ConfigVoitureTest {
 		assertTrue(cv.ajouterPiece("EG133"));
 		assertTrue(cv.ajouterPiece("XS"));
 		// Ajout de la piece IS car necessaire a la piece XS
-		assertEquals(3, cv.maConfig.size());
+		assertEquals(3, cv.getConfiguration().size());
 		
 		assertTrue(cv.supprimerPiece("IS"));
 		// Suppression de la piece XS car necessaire a la piece IS
-		assertEquals(1, cv.maConfig.size());
+		assertEquals(1, cv.getConfiguration().size());
 		assertThrows(NullPointerException.class,
 				() -> cv.supprimerPiece(null) );
 		assertThrows(ActionPieceInvalideException.class, 
@@ -108,9 +108,9 @@ class ConfigVoitureTest {
 		Categorie.initialiserCategories();
 		assertTrue(cv.ajouterPiece("TSF7"));
 
-		assertEquals(TypePiece.chercherPieceParNom("TSF7"), cv.getPieceCategorie("TRANSMISSION"));
+		assertEquals(TypePiece.chercherPieceParNom("TSF7"), cv.getPieceParCategorie("TRANSMISSION"));
 		assertThrows(ResultatNullException.class, 
-				() -> TypePiece.chercherPieceParNom("PieceLambda").equals(cv.getPieceCategorie("TRANSMISSION")));
+				() -> TypePiece.chercherPieceParNom("PieceLambda").equals(cv.getPieceParCategorie("TRANSMISSION")));
 	}
 	
 	/**

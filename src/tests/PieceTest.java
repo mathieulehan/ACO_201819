@@ -2,7 +2,6 @@ package tests;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-
 import org.junit.jupiter.api.Test;
 
 import classes.piece.Piece;
@@ -14,70 +13,62 @@ class PieceTest {
 	/**
 	 * On teste si la methode getNom() renvoie bien la bonne exception dans le cas ou
 	 * le nom de la piece est null
+	 * 
+	 * On teste si la methode setNom(String nom) renvoie bien la bonne exception dans le cas
+	 * ou on tente de set le nom de la piece a null
 	 * @throws ResultatNullException car le nom de la piece est null
 	 */
 	@Test
-	void getNomRetourneNull() throws ResultatNullException {
+	void getNom_setNom_incorrects() throws ResultatNullException {
 		Piece pieceTest = new Piece(null, "Piece de test");
 		assertThrows(ResultatNullException.class, 
-				()->{pieceTest.getNom();});
-	}
-
-	/**
-	 * On teste si la methode setNom(String nom) renvoie bien la bonne exception dans le cas
-	 * ou on tente de set le nom de la piece a null
-	 */
-	@Test
-	void setNomNull() {
-		Piece pieceTest = new Piece("Piece", "Piece de test");
+				() -> {pieceTest.getNom();});
+		
 		assertThrows(NullPointerException.class, 
-				()->{pieceTest.setNom(null);});
+				() -> {pieceTest.setNom(null);});
 	}
 
 	/**
 	 * On teste si la methode getDescription() renvoie bien la bonne exception dans le cas
 	 * ou la description de la piece est null
+	 * 
+	 * On teste si la methode setNom(String description) renvoie bien la bonne exception dans le cas
+	 * ou on tente de set le description de la piece a null
 	 * @throws ResultatNullException
 	 */
 	@Test
-	void getDescriptionRetourneNull() throws ResultatNullException{
+	void getDescription_setDescription_incorrects() throws ResultatNullException{
 		Piece pieceTest = new Piece("Piece", null);
-		assertThrows(ResultatNullException.class, ()->{pieceTest.getDescription();});
-	}
-
-	/**
-	 * On teste si la methode setNom(String description) renvoie bien la bonne exception dans le cas
-	 * ou on tente de set le description de la piece a null
-	 */
-	@Test
-	void setDescriptionNull() {
-		Piece pieceTest = new Piece("Piece", "Piece de test");
+		assertThrows(ResultatNullException.class, 
+				() -> {pieceTest.getDescription();});
+		
 		assertThrows(NullPointerException.class, 
 				() -> {pieceTest.setDescription(null);});
+
+//		assertThrows(NullPointerException.class, 
+//				() -> {pieceTest.setDescription("");});
 	}
 
 	/**
 	 * On teste si la methode getIncompatibilites() renvoie bien la bonne exception dans le cas
 	 * ou le set d'incompatibilites de la piece est null
+	 * 
+	 * On teste si la methode setIncompatibilites(Set<Piece> incompatibilites) renvoie bien la bonne exception dans le cas
+	 * ou on tente de set les incompatibilites de la piece a null
 	 * @throws ResultatNullException
 	 */
 	@Test
-	void getIncompatibiliteRetourneNull() throws ResultatNullException {
-		Piece pieceTest = new Piece("Piece", null);
+	void getIncompatibilite_setIncompatibilites_incorrect() throws ResultatNullException {
+		Piece pieceTest = new Piece("Piece", "Piece de test");
 		assertThrows(NullPointerException.class, 
 				() -> pieceTest.setIncompatibilites(null));
 		assertTrue(pieceTest.getIncompatibilites().size() == 0);
-	}
-
-	/**
-	 * On teste si la methode setIncompatibilites(Set<Piece> incompatibilites) renvoie bien la bonne exception dans le cas
-	 * ou on tente de set les incompatibilites de la piece a null
-	 */
-	@Test
-	void setIncompatibilitesNull() {
-		Piece pieceTest = new Piece("Piece", "Piece de test");
+		
 		assertThrows(NullPointerException.class,
 				() -> {pieceTest.setIncompatibilites(null);});
+
+//		assertThrows(ParametreNullException.class, 
+//				() -> {pieceTest.setIncompatibilites(new HashSet<>());});
 	}
 
 	/**

@@ -30,17 +30,18 @@ public class Piece implements PieceInterface, GestionCompatibilite, VerifCompati
 		this.incompatibilites = new HashSet<>();
 		this.necessites = new HashSet<>();
 	}
-	
+
 	public String getNom() throws ResultatNullException {
 		if(this.nom == null) throw new ResultatNullException("Le nom de la piece est null");
 		return this.nom;
 	}
-	
+
 	/**
 	 * @param nom le nom de la piece
 	 */
 	public void setNom(String nom) {
 		String nouveauNom = Objects.requireNonNull(nom);
+		// TODO verifier si nom == "" -> Exception
 		this.nom = nouveauNom;
 	}
 
@@ -60,26 +61,24 @@ public class Piece implements PieceInterface, GestionCompatibilite, VerifCompati
 		String nouvelleDescription = Objects.requireNonNull(description);
 		this.description = nouvelleDescription;
 	}
-	
+
 	/**
 	 * @param piecesIncomp les incompatibilites a ajouter a la piece
 	 */
 	@Override
-	public void setIncompatibilites(Set<Piece> piecesIncomp) {
+	public void setIncompatibilites(Set<Piece> piecesIncomp){
 		Set<Piece> nouvellesIncompatibilites = Objects.requireNonNull(piecesIncomp);
-		// TODO verifier si il s'agit d'un Set<piece>
 		this.incompatibilites = nouvellesIncompatibilites;
 	}
-	
+
 	/**
-	 * @throws ResultatNullException si le Set d'incompatibilite de la piece est vide
+	 * @return le set de pieces incompatibles
 	 */
 	@Override
-	public Set<Piece> getIncompatibilites() throws ResultatNullException {
-		//if(this.incompatibilites.isEmpty()) throw new ResultatNullException("Le set d'incompatibilite est vide");
+	public Set<Piece> getIncompatibilites() {
 		return this.incompatibilites;
 	}
-	
+
 	/**
 	 * Ajout d'une incompatibilite
 	 * @param une incompatibilite (non null) a ajouter a la piece
@@ -88,7 +87,6 @@ public class Piece implements PieceInterface, GestionCompatibilite, VerifCompati
 	@Override
 	public void ajoutIncompatibilite(Piece incompatibilite) throws ParametreNullException {
 		Piece nouvelleIncompatilibite = Objects.requireNonNull(incompatibilite);
-		// TODO verifier si il s'agit d'une piece
 		if (this.necessites.contains(nouvelleIncompatilibite)) throw new ParametreNullException("L'incompatibilite en parametre existe deja pour cette piece");
 		this.incompatibilites.add(nouvelleIncompatilibite);
 	}
@@ -101,32 +99,27 @@ public class Piece implements PieceInterface, GestionCompatibilite, VerifCompati
 	@Override
 	public void suppressionIncompatibilite(Piece incompatibilite) throws ParametreNullException {
 		Piece ancienneIncompatilibite = Objects.requireNonNull(incompatibilite);
-		// TODO verifier si il s'agit d'une piece
 		if (!this.incompatibilites.contains(ancienneIncompatilibite)) throw new ParametreNullException("L'incompatibilite en parametre n'existe pas pour cette piece");
 		this.incompatibilites.remove(ancienneIncompatilibite);
 	}
 
 	/**
 	 * @param le Set de necessites a ajouter a la piece
-	 * @throws ParametreNullException 
 	 */
 	@Override
 	public void setNecessites(Set<Piece> necessites) {
 		Set<Piece> nouvellesNecessites = Objects.requireNonNull(necessites);
-		// TODO verifier si il s'agit d'un Set<piece>
 		this.necessites = nouvellesNecessites;
 	}
-	
+
 	/**
-	 * @throws ResultatNullException si le Set de necessite de la piece est vide
 	 * @return le Set de necessites de la piece
 	 */
 	@Override
-	public Set<Piece> getNecessites() throws ResultatNullException {
-		//if(this.necessites.isEmpty()) throw new ResultatNullException("Le set de necessites est vide");
+	public Set<Piece> getNecessites() {
 		return this.necessites;
 	}
-	
+
 	/**
 	 * Ajout d'une necessite
 	 * @param necessite la necessite a ajouter a la piece
@@ -135,7 +128,6 @@ public class Piece implements PieceInterface, GestionCompatibilite, VerifCompati
 	@Override
 	public void ajoutNecessite(Piece necessite) throws ParametreNullException  {
 		Piece nouvelleNecessite = Objects.requireNonNull(necessite);
-		// TODO verifier si il s'agit d'une piece
 		if (this.necessites.contains(nouvelleNecessite)) throw new ParametreNullException("La necessite en parametre existe deja pour cette piece");
 		this.necessites.add(nouvelleNecessite);
 	}
@@ -145,23 +137,21 @@ public class Piece implements PieceInterface, GestionCompatibilite, VerifCompati
 	 * @param necessite la necessite a supprimer de la piece
 	 * @throws ParametreNullException si la piece n'a pas la necessite en parametre
 	 */
-	
+
 	@Override
 	public void suppressionNecessite(Piece necessite) throws ParametreNullException {
 		Piece ancienneNecessite = Objects.requireNonNull(necessite);
-		// TODO verifier si il s'agit d'une piece
 		if (!this.necessites.contains(ancienneNecessite)) throw new ParametreNullException("La necessite en parametre n'existe pas pour cette piece");
 		this.necessites.remove(ancienneNecessite);
 	}
 
 	/**
-	 * On verifie que la piece n'est pas presente dans les incompatibilites de notre configVoiture
-	 * Precondition : Piece non nulle
+	 * On verifie qu'une piece n'est pas incompatibilites avec une autre piece
 	 * @return true si la piece n'est pas presente dans les incompatibilites, false sinon
 	 * @throws ParametreNullException
 	 */
-//	@Override
-//	public boolean estIncompatible (Piece piece) {
-//		return this.incompatibilites.contains(piece);
-//	}
+	public boolean estIncompatible (Piece piece) {
+		Piece autrePiece = Objects.requireNonNull(piece);
+		return this.incompatibilites.contains(autrePiece);
+	}
 }

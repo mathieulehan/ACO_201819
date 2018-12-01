@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import exceptions.ParametreNullException;
 import exceptions.ResultatNullException;
 
 /**
@@ -39,9 +38,8 @@ public class TypePiece {
 	/**
 	 * Initialisation des pieces (objets TypePiece), de leurs incompatibilites et de leurs necessites
 	 * @throws ResultatNullException 
-	 * @throws ParametreNullException 
 	 */
-	public static void initialiserPieces () throws ParametreNullException, ResultatNullException {
+	public static void initialiserPieces () throws ResultatNullException{
 
 		initDonneesBrutes();
 
@@ -57,8 +55,8 @@ public class TypePiece {
 		 * Ajout des incompatibilites et des necessites des pieces instanciees
 		 */
 		for (Piece piece : pieces) {
-			Set<Piece> mesIncompatibilites = new HashSet<Piece>();
-			Set<Piece> mesNecessites = new HashSet<Piece>();
+			Set<Piece> mesIncompatibilites = new HashSet<>();
+			Set<Piece> mesNecessites = new HashSet<>();
 			switch (piece.getNom()) {
 			case "TA5":
 				mesIncompatibilites.add(chercherPieceParNom("EG100"));
@@ -107,6 +105,8 @@ public class TypePiece {
 				break;
 			case "TM5":
 				mesIncompatibilites.add(chercherPieceParNom("IS"));
+				break;
+			default :
 				break;
 			}
 			piece.setIncompatibilites(mesIncompatibilites);

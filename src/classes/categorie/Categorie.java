@@ -24,24 +24,21 @@ import exceptions.ResultatNullException;
  */
 public class Categorie implements CategorieInterface {
 
-	private static Set<String> categories = new HashSet<String>();
-	private static Map<String, List<Piece>> categorieCatalogue = new HashMap<String, List<Piece>>();
+	private static Set<String> categories = new HashSet<>();
+	private static Map<String, List<Piece>> categorieCatalogue = new HashMap<>();
 
 	/**
 	 * @return le set de categories
-	 * @throws ResultatNullException si le Set de categories renvoye est null
 	 */
-	public static Set<String> getCategories() throws ResultatNullException {
-		if(categories == null) throw new ResultatNullException("Le Set de categories est null");
+	public static Set<String> getCategories() {
 		return categories;
 	}
 
 	/**
 	 * Initialisation des cles (categorie) suivies de ses valeurs (pieces associees)
 	 * @throws ResultatNullException 
-	 * @throws ParametreNullException 
 	 */
-	public static void initialiserCategories () throws ParametreNullException, ResultatNullException {
+	public static void initialiserCategories () throws ResultatNullException {
 		TypePiece.initialiserPieces();
 		categories.add("ENGINE");
 		categories.add("TRANSMISSION");
@@ -74,22 +71,19 @@ public class Categorie implements CategorieInterface {
 	/**
 	 * @param la categorie des pieces que l'on souhaite recuperer
 	 * @throws ParametreNullException si la categorie en parametre est null
-	 * @throws ResultatNullException 
 	 */
-	public static List<Piece> getPiecesCategorie(String categorie) throws ParametreNullException, ResultatNullException {
+	public static List<Piece> getPiecesParCategorie(String categorie) throws ParametreNullException {
 		String catNonNull = Objects.requireNonNull(categorie);
 		if (!categorieCatalogue.containsKey(catNonNull)) {
 			throw new ParametreNullException("La categorie en parametre n'existe pas");
 		}
-		return getCategorieCatalogue().get(catNonNull);
+		return categorieCatalogue.get(catNonNull);
 	}
 
 	/**
 	 * @return Chaque categorie avec ses pieces, sous forme de Map
-	 * @throws ResultatNullException si la Map que l'on retourne est null
 	 */
-	public static Map<String, List<Piece>> getCategorieCatalogue() throws ResultatNullException {
-		if(categorieCatalogue == null) throw new ResultatNullException("Il n'y a pas de categorie.");
+	public static Map<String, List<Piece>> getCategorieCatalogue() {
 		return categorieCatalogue;
 	}
 }
