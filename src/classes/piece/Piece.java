@@ -1,11 +1,10 @@
 package classes.piece;
 
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 import exceptions.ParametreNullException;
-import exceptions.PasDIncompatibilitesException;
-import exceptions.PasDeNecessitesException;
 import exceptions.ResultatNullException;
 
 /**
@@ -39,11 +38,10 @@ public class Piece implements PieceInterface, GestionCompatibilite, VerifCompati
 	
 	/**
 	 * @param nom le nom de la piece
-	 * @throws ParametreNullException si le nom donne en parametre est null
 	 */
-	public void setNom(String nom) throws ParametreNullException {
-		if (nom == null) throw new ParametreNullException("Le nom entre en parametre est null");
-		this.nom = nom;
+	public void setNom(String nom) {
+		String nouveauNom = Objects.requireNonNull(nom);
+		this.nom = nouveauNom;
 	}
 
 	/**
@@ -57,102 +55,103 @@ public class Piece implements PieceInterface, GestionCompatibilite, VerifCompati
 
 	/**
 	 * @param description la description souhaitee pour la piece
-	 * @throws ParametreNullException si la description en parametre est null
 	 */
-	public void setDescription(String description) throws ParametreNullException {
-		if (description == null) throw new ParametreNullException("La description en parametre est nulle");
-		this.description = description;
+	public void setDescription(String description) {
+		String nouvelleDescription = Objects.requireNonNull(description);
+		this.description = nouvelleDescription;
 	}
 	
 	/**
 	 * @param piecesIncomp les incompatibilites a ajouter a la piece
-	 * @throws ParametreNullException si le Set d'incompatibilites en parametre est null
 	 */
 	@Override
-	public void setIncompatibilites(Set<Piece> piecesIncomp) throws ParametreNullException {
-		// TODO : DESIGN PATTERN this.incompatibilites = Object.requireNonNull(piecesIncomp);
-		if (piecesIncomp == null) throw new ParametreNullException("Le Set d'incompatibilites en parametre est null");
-		this.incompatibilites = piecesIncomp;
+	public void setIncompatibilites(Set<Piece> piecesIncomp) {
+		Set<Piece> nouvellesIncompatibilites = Objects.requireNonNull(piecesIncomp);
+		// TODO verifier si il s'agit d'un Set<piece>
+		this.incompatibilites = nouvellesIncompatibilites;
 	}
 	
 	/**
-	 * @throws ParametreNullException si la piece a un set d'incompatibilites null
-	 * @throws ResultatNullException si le Set d'incompatibilite de la piece est null
+	 * @throws ResultatNullException si le Set d'incompatibilite de la piece est vide
 	 */
 	@Override
-	public Set<Piece> getIncompatibilites() throws ParametreNullException, ResultatNullException {
-		if(this.incompatibilites.getClass() != HashSet.class) throw new ParametreNullException("Les incompatibilites de la piece ne sont stockees sous forme de Set");
+	public Set<Piece> getIncompatibilites() throws ResultatNullException {
+		//if(this.incompatibilites.isEmpty()) throw new ResultatNullException("Le set d'incompatibilite est vide");
 		return this.incompatibilites;
 	}
 	
 	/**
 	 * Ajout d'une incompatibilite
-	 * @param incompatibilite l'incompatibilite a ajouter a la piece
-	 * @throws ParametreNullException si l'incompatibilite est nulle
+	 * @param une incompatibilite (non null) a ajouter a la piece
+	 * @throws ParametreNullException 
 	 */
 	@Override
 	public void ajoutIncompatibilite(Piece incompatibilite) throws ParametreNullException {
-		if (incompatibilite == null) throw new ParametreNullException("L'incompatibilite en parametre est nulle");
-		this.incompatibilites.add(incompatibilite);
+		Piece nouvelleIncompatilibite = Objects.requireNonNull(incompatibilite);
+		// TODO verifier si il s'agit d'une piece
+		if (this.necessites.contains(nouvelleIncompatilibite)) throw new ParametreNullException("L'incompatibilite en parametre existe deja pour cette piece");
+		this.incompatibilites.add(nouvelleIncompatilibite);
 	}
 
 	/**
 	 * Suppression d'une incompatibilite
-	 * @param incompatibilite l'incompatibilite que l'on souhaite supprimer pour la piece
-	 * @throws PasDIncompatibilitesException si la piece ne possede pas cette incompatibilite
-	 * @throws ParametreNullException si l'incompatibilite en parametre est nulle
+	 * @param une incompatibilite que l'on souhaite supprimer pour la piece
+	 * @throws ParametreNullException si la piece ne possede pas cette incompatibilite
 	 */
 	@Override
-	public void suppressionIncompatibilite(Piece incompatibilite) throws PasDIncompatibilitesException, ParametreNullException {
-		if (incompatibilite == null) throw new ParametreNullException("L'incompatibilite en parametre est nulle");
-		else if (!this.incompatibilites.contains(incompatibilite)) throw new PasDIncompatibilitesException("L'incompatibilite en parametre est nulle");
-		this.incompatibilites.remove(incompatibilite);
+	public void suppressionIncompatibilite(Piece incompatibilite) throws ParametreNullException {
+		Piece ancienneIncompatilibite = Objects.requireNonNull(incompatibilite);
+		// TODO verifier si il s'agit d'une piece
+		if (!this.incompatibilites.contains(ancienneIncompatilibite)) throw new ParametreNullException("L'incompatibilite en parametre n'existe pas pour cette piece");
+		this.incompatibilites.remove(ancienneIncompatilibite);
 	}
 
 	/**
-	 * @param necessites le Set de necessites a ajouter a la piece
-	 * @throws ParametreNullException si le Set de necessites en parametre est null
-	 */
-	@Override
-	public void setNecessites(Set<Piece> necessites) throws ParametreNullException {
-		if (this.necessites == null) throw new ParametreNullException("La necessite en parametre est nulle");
-		this.necessites = necessites;
-	}
-	
-	/**
-	 * @throws ResultatNullException si le Set de necessite de la piece est null
-	 * @return le Set de necessites de la piece
+	 * @param le Set de necessites a ajouter a la piece
 	 * @throws ParametreNullException 
 	 */
 	@Override
-	public Set<Piece> getNecessites() throws ResultatNullException, ParametreNullException {
-		if(this.necessites.getClass() != HashSet.class) throw new ParametreNullException("Les necessites de la piece sont stockees sous forme de Set");
+	public void setNecessites(Set<Piece> necessites) {
+		Set<Piece> nouvellesNecessites = Objects.requireNonNull(necessites);
+		// TODO verifier si il s'agit d'un Set<piece>
+		this.necessites = nouvellesNecessites;
+	}
+	
+	/**
+	 * @throws ResultatNullException si le Set de necessite de la piece est vide
+	 * @return le Set de necessites de la piece
+	 */
+	@Override
+	public Set<Piece> getNecessites() throws ResultatNullException {
+		//if(this.necessites.isEmpty()) throw new ResultatNullException("Le set de necessites est vide");
 		return this.necessites;
 	}
 	
 	/**
 	 * Ajout d'une necessite
 	 * @param necessite la necessite a ajouter a la piece
-	 * @throws ParametreNullException si la necessite en parametre est nulle
+	 * @throws ParametreNullException 
 	 */
 	@Override
-	public void ajoutNecessite(Piece necessite) throws ParametreNullException {
-		if (necessite == null) throw new ParametreNullException("La necessite est parametre est nulle");
-		this.necessites.add(necessite);
+	public void ajoutNecessite(Piece necessite) throws ParametreNullException  {
+		Piece nouvelleNecessite = Objects.requireNonNull(necessite);
+		// TODO verifier si il s'agit d'une piece
+		if (this.necessites.contains(nouvelleNecessite)) throw new ParametreNullException("La necessite en parametre existe deja pour cette piece");
+		this.necessites.add(nouvelleNecessite);
 	}
 
 	/**
 	 * Suppression d'une necessite
 	 * @param necessite la necessite a supprimer de la piece
-	 * @throws ParametreNullException si la necessite en parametre est nulle
-	 * @throws PasDeNecessitesException si la piece n'a pas la necessite en parametre
+	 * @throws ParametreNullException si la piece n'a pas la necessite en parametre
 	 */
 	
 	@Override
-	public void suppressionNecessite(Piece necessite) throws PasDeNecessitesException, ParametreNullException {
-		if (necessite == null) throw new ParametreNullException("La necessite en parametre est nulle");
-		else if (!this.necessites.contains(necessite)) throw new PasDeNecessitesException("La necessite en parametre est nulle");
-		this.necessites.remove(necessite);
+	public void suppressionNecessite(Piece necessite) throws ParametreNullException {
+		Piece ancienneNecessite = Objects.requireNonNull(necessite);
+		// TODO verifier si il s'agit d'une piece
+		if (!this.necessites.contains(ancienneNecessite)) throw new ParametreNullException("La necessite en parametre n'existe pas pour cette piece");
+		this.necessites.remove(ancienneNecessite);
 	}
 
 	/**

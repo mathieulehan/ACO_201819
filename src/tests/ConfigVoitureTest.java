@@ -5,7 +5,6 @@ import static org.junit.jupiter.api.Assertions.*;
 import java.util.Arrays;
 import java.util.HashSet;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import classes.categorie.Categorie;
@@ -17,30 +16,27 @@ import exceptions.ResultatNullException;
 
 class ConfigVoitureTest {
 
-	private ConfigVoiture cv;
-	
-	@BeforeEach
-	public void init () throws ParametreNullException, ResultatNullException {
-		cv = new ConfigVoiture();
-	}
-	
 	/**
 	 * Ajout de pieces dans notre configuration, conditions a verifier :
 	 * - une piece par categorie
 	 * - les incompatibilites
-	 * - ajout des pieces necessaires
+	 * - ajout automatique des pieces necessaires 
 	 * @throws ActionPieceInvalideException
 	 * @throws ParametreNullException
 	 * @throws ResultatNullException
 	 */
 	@Test
 	void ajout_de_pieces() throws ActionPieceInvalideException, ParametreNullException, ResultatNullException {
+		ConfigVoiture cv = new ConfigVoiture();
 		Categorie.initialiserCategories();
 		
 		assertTrue(cv.ajouterPiece("TM5"));
 		assertTrue(cv.ajouterPiece("IN"));
+		//assertNull(cv.ajouterPiece(""));
 		assertEquals(2, cv.maConfig.size());
 
+		assertThrows(NullPointerException.class,
+				() -> cv.ajouterPiece(null) );
 		assertThrows(ActionPieceInvalideException.class, 
 				() -> { cv.ajouterPiece("IH"); }); // Incompatible avec IN
 	}
@@ -55,6 +51,7 @@ class ConfigVoitureTest {
 	 */
 	@Test
 	void suppression_pieces() throws ActionPieceInvalideException, ParametreNullException, ResultatNullException {
+		ConfigVoiture cv = new ConfigVoiture();
 		Categorie.initialiserCategories();
 		
 		assertTrue(cv.ajouterPiece("EG133"));
@@ -65,7 +62,8 @@ class ConfigVoitureTest {
 		assertTrue(cv.supprimerPiece("IS"));
 		// Suppression de la piece XS car necessaire a la piece IS
 		assertEquals(1, cv.maConfig.size());
-		
+		assertThrows(NullPointerException.class,
+				() -> cv.supprimerPiece(null) );
 		assertThrows(ActionPieceInvalideException.class, 
 				() -> cv.ajouterPiece("EH120")); // Incompatible avec EG133
 		assertThrows(ActionPieceInvalideException.class, 
@@ -82,6 +80,7 @@ class ConfigVoitureTest {
 	 */
 	@Test
 	public void verification_categories() throws ResultatNullException, ParametreNullException, ActionPieceInvalideException {
+		ConfigVoiture cv = new ConfigVoiture();
 		Categorie.initialiserCategories();
 		
 		assertTrue(cv.ajouterPiece("EH120")); 
@@ -105,6 +104,7 @@ class ConfigVoitureTest {
 	 */
 	@Test
 	public void categories_en_fonction_pieces_de_ma_configuration() throws ParametreNullException, ResultatNullException, ActionPieceInvalideException {
+		ConfigVoiture cv = new ConfigVoiture();
 		Categorie.initialiserCategories();
 		assertTrue(cv.ajouterPiece("TSF7"));
 
@@ -121,6 +121,7 @@ class ConfigVoitureTest {
 	 */
 	@Test
 	public void pieces_disponibles() throws ActionPieceInvalideException, ParametreNullException, ResultatNullException {
+		ConfigVoiture cv = new ConfigVoiture();
 		Categorie.initialiserCategories();
 		
 		assertTrue(cv.ajouterPiece("XC"));

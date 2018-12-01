@@ -7,10 +7,7 @@ package exceptions;
  */
 public class ResultatNullException extends Exception{
 
-	String message;
-	
 	public ResultatNullException(String message) {
-		super();
-		this.message = message;
+		super(message);
 	}
 }

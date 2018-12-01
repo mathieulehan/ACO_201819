@@ -6,6 +6,7 @@ import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 import classes.piece.Piece;
@@ -15,17 +16,14 @@ import exceptions.ResultatNullException;
 
 /**
  * Classe Categorie, implementant une interface CategorieInterface, s'agissant d'une Map ayant pour : 
- * - Cle : le nom de la categorie (enumeration)
- * - Valeurs (List) : les pieces associees a� une categorie
+ * - Cle : le nom de la categorie
+ * - Valeurs (List) : les pieces associees a une categorie
  * 
  * @author math & chach44
  *
  */
 public class Categorie implements CategorieInterface {
 
-	/**
-	 * Enumeration des categories existantes
-	 */
 	private static Set<String> categories = new HashSet<String>();
 	private static Map<String, List<Piece>> categorieCatalogue = new HashMap<String, List<Piece>>();
 
@@ -79,10 +77,11 @@ public class Categorie implements CategorieInterface {
 	 * @throws ResultatNullException 
 	 */
 	public static List<Piece> getPiecesCategorie(String categorie) throws ParametreNullException, ResultatNullException {
-		if (!categorieCatalogue.containsKey(categorie)) {
+		String catNonNull = Objects.requireNonNull(categorie);
+		if (!categorieCatalogue.containsKey(catNonNull)) {
 			throw new ParametreNullException("La categorie en parametre n'existe pas");
 		}
-		return getCategorieCatalogue().get(categorie);
+		return getCategorieCatalogue().get(catNonNull);
 	}
 
 	/**

@@ -7,10 +7,7 @@ package exceptions;
  */
 public class ParametreNullException extends Exception{
 
-	String message;
-	
 	public ParametreNullException(String message) {
-		super();
-		this.message = message;
+		super(message);
 	}
 }

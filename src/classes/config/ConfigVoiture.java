@@ -9,7 +9,7 @@ import java.util.Map.Entry;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.Set;
-
+import java.util.Objects;
 
 import classes.categorie.Categorie;
 import classes.piece.Piece;
@@ -53,9 +53,8 @@ public class ConfigVoiture implements ConfigInterface, Observer {
 
 	@Override
 	public boolean supprimerPiece(String p) throws ActionPieceInvalideException, ResultatNullException, ParametreNullException {
-		if(p == null) throw new ParametreNullException("Pas de piece en parametre");
-
-		Piece piece = TypePiece.chercherPieceParNom(p);
+		String pieceNonNull = Objects.requireNonNull(p);
+		Piece piece = TypePiece.chercherPieceParNom(pieceNonNull);
 		if(!maConfig.contains(piece) ) throw new ActionPieceInvalideException("Cette piece n'est pas dans votre configuration");
 
 		this.mesIncompatibilites.removeAll(piece.getIncompatibilites()) ;
@@ -65,7 +64,7 @@ public class ConfigVoiture implements ConfigInterface, Observer {
 		return true;
 	}
 	
-	public void supprimerPieceNecessaire(Piece piece) throws ResultatNullException, ParametreNullException, ActionPieceInvalideException {
+	private void supprimerPieceNecessaire(Piece piece) throws ResultatNullException, ParametreNullException, ActionPieceInvalideException {
 		if(piece.getNecessites().size() > 0) {
 			Iterator<Piece> it = piece.getNecessites().iterator();
 			while(it.hasNext()) {
@@ -79,10 +78,8 @@ public class ConfigVoiture implements ConfigInterface, Observer {
 
 	@Override
 	public boolean ajouterPiece(String p) throws ActionPieceInvalideException, ParametreNullException, ResultatNullException {
-		if(p == null) throw new ParametreNullException("Pas de piece en parametre");
-
-		Piece piece = TypePiece.chercherPieceParNom(p);
-		if (mesIncompatibilites.contains(piece)) throw new ActionPieceInvalideException("Piece incompatible");
+		String pieceNonNull = Objects.requireNonNull(p);
+		Piece piece = TypePiece.chercherPieceParNom(pieceNonNull);
 		if (!getPiecesPossibles().contains(piece)) throw new ActionPieceInvalideException("Cette piece n'est pas dans la liste des pieces possibles");
 
 		this.mesIncompatibilites.addAll(piece.getIncompatibilites()) ;
@@ -92,7 +89,7 @@ public class ConfigVoiture implements ConfigInterface, Observer {
 		return true;
 	}
 	
-	public void ajouterPieceNecessaire(Piece piece) throws ResultatNullException, ParametreNullException, ActionPieceInvalideException {
+	private void ajouterPieceNecessaire(Piece piece) throws ResultatNullException, ParametreNullException, ActionPieceInvalideException {
 		if(piece.getNecessites().size() > 0) {
 			Iterator<Piece> it = piece.getNecessites().iterator();
 			while(it.hasNext()) {
@@ -111,12 +108,12 @@ public class ConfigVoiture implements ConfigInterface, Observer {
 	 * @throws ResultatNullException
 	 */
 	private String rechercherCategorieParPiece(Piece piece) throws ResultatNullException {
-		Map<String, List<Piece>> catalogue = Categorie.getCategorieCatalogue();
-		Iterator<Entry<String, List<Piece>>> itCatalogue = catalogue.entrySet().iterator();
-		while(itCatalogue.hasNext()) {
-			Map.Entry<String, List<String>> entry = (Map.Entry) itCatalogue.next();
-			if(entry.getValue().contains(piece)) {
-				return entry.getKey();
+		Map<String, List<Piece>> categories = Categorie.getCategorieCatalogue();
+		Iterator<Entry<String, List<Piece>>> it = categories.entrySet().iterator();
+		while(it.hasNext()) {
+			Map.Entry<String, List<Piece>> catalogueCategories = it.next();
+			if(catalogueCategories.getValue().contains(piece)) {
+				return catalogueCategories.getKey();
 			}
 		}
 		throw new ResultatNullException("Pas de categorie pour cette piece");
@@ -178,7 +175,8 @@ public class ConfigVoiture implements ConfigInterface, Observer {
 		Set<String> categoriesRestantes = getCategoriesRestantes();
 		Iterator<String> it = categoriesRestantes.iterator();
 		while(it.hasNext()) {
-			List<Piece> pieces = Categorie.getPiecesCategorie(it.next().toString());
+			String categorie = it.next().toString();
+			List<Piece> pieces = Categorie.getPiecesCategorie(categorie);
 			pieces.removeAll(mesIncompatibilites);
 			piecesPossibles.addAll(pieces);
 		}
