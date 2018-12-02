@@ -1,11 +1,13 @@
 package classes.config;
 
+import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 
-import classes.categorie.Categorie;
 import classes.piece.Piece;
+import exceptions.ResultatNullException;
 
 /**
  * Classe contenant les donnees : rassemblement de donnees (= de pieces)
@@ -17,37 +19,24 @@ import classes.piece.Piece;
  * @author Charlotte & Thomas
  *
  */
-public class ConfigAppImpl extends Observable implements Configuration, Observer {
-	
-	private ConfigurationTest conf = null;
-	
-	public ConfigAppImpl(ConfigurationTest c) {
-		this.conf = c;
-	}
+public class ConfigAppImpl implements Configuration, Observer {
 
-	public ConfigVoiture getConfiguration() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	
-	private List<ConfigVoiture> configs;
-	
-	public void notificationConfigTest(ConfigurationTest conf) {
-		//modifier ce dont on a besoin à l'aide de la conf
-			
-	}
+	private List<ConfigVoiture> configs = new LinkedList<>();
 
-	/*
-	 * (non-Javadoc)
-	 * @see java.util.Observer#update(java.util.Observable, java.lang.Object)
-	 */
-	@Override
-	public void update(Observable o, Object arg) {
-		// TODO Auto-generated method stub
-		if (o == conf)
-	      {
-	         System.out.println(conf.getPiece());
-	      }
-	}
 
+	public void update(Observable observable, Object o) {
+
+		ConfigVoiture cv = (ConfigVoiture) observable; 
+		configs.add(cv);
+		Iterator<Piece> it = cv.getConfiguration().iterator();
+		System.out.println("Ma configuration de voiture est composée de : ");
+		while(it.hasNext()) {
+			try {
+				System.out.println("- la piece " + it.next().getNom());
+			} catch (ResultatNullException e) {
+				e.printStackTrace();
+			}
+		}
+
+	}
 }

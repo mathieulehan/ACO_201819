@@ -7,7 +7,6 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import java.util.Observable;
-import java.util.Observer;
 import java.util.Set;
 import java.util.Objects;
 
@@ -18,12 +17,12 @@ import exceptions.ActionPieceInvalideException;
 import exceptions.ParametreNullException;
 import exceptions.ResultatNullException;
 
-public class ConfigVoiture implements ConfigInterface, Observer {
+public class ConfigVoiture extends Observable implements ConfigInterface {
 
 	private Set<Piece> maConfig = new HashSet<>();
 	private Set<String> mesCategories = new HashSet<>();
 	private Set<Piece> mesIncompatibilites = new HashSet<>();
-
+	
 	/**
 	 * Si toutes les categories sont presentes dans la configuration, alors cette derniere est complete
 	 * @throws ResultatNullException 
@@ -44,7 +43,7 @@ public class ConfigVoiture implements ConfigInterface, Observer {
 		// TODO Auto-generated method stub
 		return false;
 	}
-	
+
 	public Set<Piece> getConfiguration() {
 		return maConfig;
 	}
@@ -71,9 +70,10 @@ public class ConfigVoiture implements ConfigInterface, Observer {
 		this.mesCategories.remove(rechercherCategorieParPiece(piece)) ;
 		this.maConfig.remove(piece);
 		supprimerPieceNecessaire(piece);
+		notifierObserver();
 		return true;
 	}
-	
+
 	/**
 	 * Supprime les pieces necessaires a une autre automatiquement
 	 * @param piece
@@ -111,9 +111,10 @@ public class ConfigVoiture implements ConfigInterface, Observer {
 		this.mesCategories.add(rechercherCategorieParPiece(piece)) ;
 		this.maConfig.add(piece);
 		ajouterPiecesNecessaires(piece);
+		notifierObserver();
 		return true;
 	}
-	
+
 	/**
 	 * Ajouter les pieces necessaires a une autre automatiquement
 	 * @param piece
@@ -200,17 +201,16 @@ public class ConfigVoiture implements ConfigInterface, Observer {
 		}
 		return piecesPossibles;
 	}
-
-	@Override
-	public void update(Observable arg0, Object arg1) {
-		// TODO Auto-generated method stub
-
+	
+	/**
+	 *  Méthode permettant de notifier tous les observateurs lors d'un changement d'état de la configuration de la voiture
+	 */
+	public void notifierObserver() {
+		setChanged();
+		notifyObservers();
 	}
-	
-	
-	
-	
-	
+
+
 	//	// anciennement dans Piece, pour garder une trace
 	//	public String getPieceCategorie() throws PasDeCategorieException, ParametreNullException, ResultatNullException {
 	//		TypePiece tp = new TypePiece();
