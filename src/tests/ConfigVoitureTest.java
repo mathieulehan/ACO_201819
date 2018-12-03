@@ -11,8 +11,8 @@ import classes.categorie.Categorie;
 import classes.config.ConfigVoiture;
 import classes.piece.TypePiece;
 import exceptions.ActionPieceInvalideException;
-import exceptions.ParametreNullException;
-import exceptions.ResultatNullException;
+import exceptions.ParametreIncorrectException;
+import exceptions.ResultatIncorrectException;
 
 class ConfigVoitureTest {
 
@@ -22,11 +22,11 @@ class ConfigVoitureTest {
 	 * - les incompatibilites
 	 * - ajout automatique des pieces necessaires 
 	 * @throws ActionPieceInvalideException
-	 * @throws ParametreNullException
-	 * @throws ResultatNullException
+	 * @throws ParametreIncorrectException
+	 * @throws ResultatIncorrectException
 	 */
 	@Test
-	void ajout_de_pieces() throws ParametreNullException, ResultatNullException, ActionPieceInvalideException {
+	void ajout_de_pieces() throws ParametreIncorrectException, ResultatIncorrectException, ActionPieceInvalideException {
 		ConfigVoiture cv = new ConfigVoiture();
 		Categorie.initialiserCategories();
 		
@@ -46,11 +46,11 @@ class ConfigVoitureTest {
 	 * - piece presente dans la configuration
 	 * - suppression des pieces necessaires
 	 * @throws ActionPieceInvalideException
-	 * @throws ParametreNullException
-	 * @throws ResultatNullException
+	 * @throws ParametreIncorrectException
+	 * @throws ResultatIncorrectException
 	 */
 	@Test
-	void suppression_pieces() throws ActionPieceInvalideException, ParametreNullException, ResultatNullException {
+	void suppression_pieces() throws ActionPieceInvalideException, ParametreIncorrectException, ResultatIncorrectException {
 		ConfigVoiture cv = new ConfigVoiture();
 		Categorie.initialiserCategories();
 		
@@ -74,12 +74,12 @@ class ConfigVoitureTest {
 	 * Apres une selection de pieces dans notre configuration, on souhaite recuperer :
 	 * - Les categories ou une piece a ete choisie
 	 * - les categories ou aucune piece n'a ete choisie
-	 * @throws ResultatNullException
-	 * @throws ParametreNullException
+	 * @throws ResultatIncorrectException
+	 * @throws ParametreIncorrectException
 	 * @throws ActionPieceInvalideException
 	 */
 	@Test
-	public void verification_categories() throws ResultatNullException, ParametreNullException, ActionPieceInvalideException {
+	public void verification_categories() throws ResultatIncorrectException, ParametreIncorrectException, ActionPieceInvalideException {
 		ConfigVoiture cv = new ConfigVoiture();
 		Categorie.initialiserCategories();
 		
@@ -98,29 +98,29 @@ class ConfigVoitureTest {
 	
 	/**
 	 * Recherche de la categorie d'une piece
-	 * @throws ParametreNullException
-	 * @throws ResultatNullException
+	 * @throws ParametreIncorrectException
+	 * @throws ResultatIncorrectException
 	 * @throws ActionPieceInvalideException
 	 */
 	@Test
-	public void categories_en_fonction_pieces_de_ma_configuration() throws ParametreNullException, ResultatNullException, ActionPieceInvalideException {
+	public void categories_en_fonction_pieces_de_ma_configuration() throws ParametreIncorrectException, ResultatIncorrectException, ActionPieceInvalideException {
 		ConfigVoiture cv = new ConfigVoiture();
 		Categorie.initialiserCategories();
 		assertTrue(cv.ajouterPiece("TSF7"));
 
 		assertEquals(TypePiece.chercherPieceParNom("TSF7"), cv.getPieceParCategorie("TRANSMISSION"));
-		assertThrows(ResultatNullException.class, 
+		assertThrows(ResultatIncorrectException.class, 
 				() -> TypePiece.chercherPieceParNom("PieceLambda").equals(cv.getPieceParCategorie("TRANSMISSION")));
 	}
 	
 	/**
 	 * Recherche des pieces encore disponibles pour notre configuration
 	 * @throws ActionPieceInvalideException
-	 * @throws ParametreNullException
-	 * @throws ResultatNullException
+	 * @throws ParametreIncorrectException
+	 * @throws ResultatIncorrectException
 	 */
 	@Test
-	public void pieces_disponibles() throws ActionPieceInvalideException, ParametreNullException, ResultatNullException {
+	public void pieces_disponibles() throws ActionPieceInvalideException, ParametreIncorrectException, ResultatIncorrectException {
 		ConfigVoiture cv = new ConfigVoiture();
 		Categorie.initialiserCategories();
 		

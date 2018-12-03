@@ -7,7 +7,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import exceptions.ResultatNullException;
+import exceptions.ParametreIncorrectException;
+import exceptions.ResultatIncorrectException;
 
 /**
  * Classe TypePiece sous forme de List avec : 
@@ -37,9 +38,10 @@ public class TypePiece {
 
 	/**
 	 * Initialisation des pieces (objets TypePiece), de leurs incompatibilites et de leurs necessites
-	 * @throws ResultatNullException 
+	 * @throws ParametreIncorrectException 
+	 * @throws ResultatIncorrectException 
 	 */
-	public static void initialiserPieces () throws ResultatNullException{
+	public static void initialiserPieces () throws ResultatIncorrectException, ParametreIncorrectException {
 
 		initDonneesBrutes();
 
@@ -142,15 +144,15 @@ public class TypePiece {
 	 * Methode recherchant parmis la liste des pieces celle dont le nom est passe en parametre
 	 * @param nomPiece
 	 * @return Piece si elle est trouvee
-	 * @throws ResultatNullException
+	 * @throws ResultatIncorrectException
 	 */
-	public static Piece chercherPieceParNom(String nomPiece) throws ResultatNullException {
+	public static Piece chercherPieceParNom(String nomPiece) throws ResultatIncorrectException {
 		for (Piece piece : pieces) {
 			if (piece.getNom().equals(nomPiece)) {
 				return piece;
 			}
 		}
-		throw new ResultatNullException("Piece introuvable par son nom");
+		throw new ResultatIncorrectException("Piece introuvable par son nom");
 
 	}
 

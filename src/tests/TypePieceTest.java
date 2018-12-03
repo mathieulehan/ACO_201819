@@ -10,19 +10,19 @@ import org.junit.jupiter.api.Test;
 
 import classes.piece.Piece;
 import classes.piece.TypePiece;
-import exceptions.ParametreNullException;
-import exceptions.ResultatNullException;
+import exceptions.ParametreIncorrectException;
+import exceptions.ResultatIncorrectException;
 
 class TypePieceTest {
 	
 	/**
 	 * Test verifiant si la methode initialiserPieces fonctionne comme attendu
 	 * On verifie apres execution si toutes les pieces ont etees generees
-	 * @throws ResultatNullException 
-	 * @throws ParametreNullException 
+	 * @throws ResultatIncorrectException 
+	 * @throws ParametreIncorrectException 
 	 */
 	@Test
-	void taille_du_catalogue_Piece() throws ParametreNullException, ResultatNullException {
+	void taille_du_catalogue_Piece() throws ParametreIncorrectException, ResultatIncorrectException {
 		TypePiece.initialiserPieces();
 		
 		assertEquals(18, TypePiece.getPieces().size());
@@ -31,11 +31,11 @@ class TypePieceTest {
 	
 	/**
 	 * On verifie si on obtient bien la bonne description a partir du nom d'une piece
-	 * @throws ResultatNullException
-	 * @throws ParametreNullException 
+	 * @throws ResultatIncorrectException
+	 * @throws ParametreIncorrectException 
 	 */
 	@Test
-	void attribut_piece_TA5() throws ResultatNullException, ParametreNullException {
+	void attribut_piece_TA5() throws ResultatIncorrectException, ParametreIncorrectException {
 		TypePiece.initialiserPieces();
 		
 		assertEquals("Automatic 5 gears", TypePiece.chercherPieceParNom("TA5").getDescription());
@@ -51,24 +51,24 @@ class TypePieceTest {
 	
 	/**
 	 * Si on cherche une piece qui n'existe pas, une exception est levee 
-	 * @throws ResultatNullException 
-	 * @throws ParametreNullException 
+	 * @throws ResultatIncorrectException 
+	 * @throws ParametreIncorrectException 
 	 */
 	@Test
-	void chercher_piece_inexistance() throws ParametreNullException, ResultatNullException {
+	void chercher_piece_inexistance() throws ParametreIncorrectException, ResultatIncorrectException {
 		TypePiece.initialiserPieces();
 		
-		assertThrows(ResultatNullException.class, 
+		assertThrows(ResultatIncorrectException.class, 
 				() -> TypePiece.getPieces().contains(TypePiece.chercherPieceParNom("INEXISTANTE")));
 	}
 
 	/**
 	 * Si on cherche une piece qui n'existe pas, on recoit un null 
-	 * @throws ResultatNullException 
-	 * @throws ParametreNullException 
+	 * @throws ResultatIncorrectException 
+	 * @throws ParametreIncorrectException 
 	 */
 	@Test
-	void chercher_piece_existance() throws ResultatNullException, ParametreNullException {
+	void chercher_piece_existance() throws ResultatIncorrectException, ParametreIncorrectException {
 		TypePiece.initialiserPieces();
 		
 		assertTrue(TypePiece.getPieces().contains(TypePiece.chercherPieceParNom("XM")));

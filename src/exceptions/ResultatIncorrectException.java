@@ -5,9 +5,9 @@ package exceptions;
  * @author mathi
  *
  */
-public class ResultatNullException extends Exception{
+public class ResultatIncorrectException extends Exception{
 
-	public ResultatNullException(String message) {
+	public ResultatIncorrectException(String message) {
 		super(message);
 	}
 }

@@ -6,13 +6,13 @@ import classes.categorie.Categorie;
 import classes.config.ConfigAppImpl;
 import classes.config.ConfigVoiture;
 import exceptions.ActionPieceInvalideException;
-import exceptions.ParametreNullException;
-import exceptions.ResultatNullException;
+import exceptions.ParametreIncorrectException;
+import exceptions.ResultatIncorrectException;
 
 class ConfigAppImplTest {
 
 	@Test
-	void observer_observable_test() throws ResultatNullException, ActionPieceInvalideException, ParametreNullException {
+	void observer_observable_test() throws ResultatIncorrectException, ActionPieceInvalideException, ParametreIncorrectException {
 		ConfigVoiture observable = new ConfigVoiture();
 		ConfigAppImpl observer = new ConfigAppImpl();
 		Categorie.initialiserCategories();

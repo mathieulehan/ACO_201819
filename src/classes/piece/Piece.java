@@ -4,8 +4,8 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
-import exceptions.ParametreNullException;
-import exceptions.ResultatNullException;
+import exceptions.ParametreIncorrectException;
+import exceptions.ResultatIncorrectException;
 
 /**
  * Classe possedant des methodes permettant de gerer les pieces
@@ -23,34 +23,47 @@ public class Piece implements PieceInterface, GestionCompatibilite, VerifCompati
 	 * Constructeur
 	 * @param nom le nom de la piece
 	 * @param description la description de la piece
+	 * @throws ParametreIncorrectException si nom de piece deja existant 
 	 */
-	public Piece(String nom, String description) {
-		this.nom = nom;
-		this.description = description;
+	public Piece(String nom, String description) throws ParametreIncorrectException {
+		String nouveauNom = Objects.requireNonNull(nom);
+		String nouvelleDescription = Objects.requireNonNull(description);
+		if(nouveauNom == "") throw new ParametreIncorrectException("Le nom de la nouvelle piece est incorrect");
+		for(Piece p : TypePiece.getPieces()) {
+			if(nouveauNom == p.getNom()) {
+				throw new ParametreIncorrectException("Le nom de la nouvelle piece existe de ja ");
+			}
+		}
+		this.nom = nouveauNom;
+		this.description = nouvelleDescription;
 		this.incompatibilites = new HashSet<>();
 		this.necessites = new HashSet<>();
 	}
 
-	public String getNom() throws ResultatNullException {
-		if(this.nom == null) throw new ResultatNullException("Le nom de la piece est null");
+	public String getNom() {
 		return this.nom;
 	}
 
 	/**
 	 * @param nom le nom de la piece
+	 * @throws ParametreIncorrectException 
+	 * @throws ResultatIncorrectException 
 	 */
-	public void setNom(String nom) {
+	public void setNom(String nom) throws ParametreIncorrectException {
 		String nouveauNom = Objects.requireNonNull(nom);
-		// TODO verifier si nom == "" -> Exception
+		if(nouveauNom == "") throw new ParametreIncorrectException("Le nom de la nouvelle piece est incorrect");
+		for(Piece p : TypePiece.getPieces()) {
+			if(nouveauNom == p.getNom()) {
+				throw new ParametreIncorrectException("Le nom de la nouvelle piece existe deja");
+			}
+		}
 		this.nom = nouveauNom;
 	}
 
 	/**
 	 * @return la description de la piece
-	 * @throws ResultatNullException si la description de la piece est null
 	 */
-	public String getDescription() throws ResultatNullException {
-		if(this.description == null) throw new ResultatNullException("La description de la piece est null");
+	public String getDescription() {
 		return this.description;
 	}
 
@@ -82,24 +95,24 @@ public class Piece implements PieceInterface, GestionCompatibilite, VerifCompati
 	/**
 	 * Ajout d'une incompatibilite
 	 * @param une incompatibilite (non null) a ajouter a la piece
-	 * @throws ParametreNullException 
+	 * @throws ParametreIncorrectException 
 	 */
 	@Override
-	public void ajoutIncompatibilite(Piece incompatibilite) throws ParametreNullException {
+	public void ajoutIncompatibilite(Piece incompatibilite) throws ParametreIncorrectException {
 		Piece nouvelleIncompatilibite = Objects.requireNonNull(incompatibilite);
-		if (this.necessites.contains(nouvelleIncompatilibite)) throw new ParametreNullException("L'incompatibilite en parametre existe deja pour cette piece");
+		if (this.incompatibilites.contains(nouvelleIncompatilibite)) throw new ParametreIncorrectException("L'incompatibilite en parametre existe deja pour cette piece");
 		this.incompatibilites.add(nouvelleIncompatilibite);
 	}
 
 	/**
 	 * Suppression d'une incompatibilite
 	 * @param une incompatibilite que l'on souhaite supprimer pour la piece
-	 * @throws ParametreNullException si la piece ne possede pas cette incompatibilite
+	 * @throws ParametreIncorrectException si la piece ne possede pas cette incompatibilite
 	 */
 	@Override
-	public void suppressionIncompatibilite(Piece incompatibilite) throws ParametreNullException {
+	public void suppressionIncompatibilite(Piece incompatibilite) throws ParametreIncorrectException {
 		Piece ancienneIncompatilibite = Objects.requireNonNull(incompatibilite);
-		if (!this.incompatibilites.contains(ancienneIncompatilibite)) throw new ParametreNullException("L'incompatibilite en parametre n'existe pas pour cette piece");
+		if (!this.incompatibilites.contains(ancienneIncompatilibite)) throw new ParametreIncorrectException("L'incompatibilite en parametre n'existe pas pour cette piece");
 		this.incompatibilites.remove(ancienneIncompatilibite);
 	}
 
@@ -123,32 +136,31 @@ public class Piece implements PieceInterface, GestionCompatibilite, VerifCompati
 	/**
 	 * Ajout d'une necessite
 	 * @param necessite la necessite a ajouter a la piece
-	 * @throws ParametreNullException 
+	 * @throws ParametreIncorrectException 
 	 */
 	@Override
-	public void ajoutNecessite(Piece necessite) throws ParametreNullException  {
+	public void ajoutNecessite(Piece necessite) throws ParametreIncorrectException  {
 		Piece nouvelleNecessite = Objects.requireNonNull(necessite);
-		if (this.necessites.contains(nouvelleNecessite)) throw new ParametreNullException("La necessite en parametre existe deja pour cette piece");
+		if (this.necessites.contains(nouvelleNecessite)) throw new ParametreIncorrectException("La necessite en parametre existe deja pour cette piece");
 		this.necessites.add(nouvelleNecessite);
 	}
 
 	/**
 	 * Suppression d'une necessite
 	 * @param necessite la necessite a supprimer de la piece
-	 * @throws ParametreNullException si la piece n'a pas la necessite en parametre
+	 * @throws ParametreIncorrectException si la piece n'a pas la necessite en parametre
 	 */
 
 	@Override
-	public void suppressionNecessite(Piece necessite) throws ParametreNullException {
+	public void suppressionNecessite(Piece necessite) throws ParametreIncorrectException {
 		Piece ancienneNecessite = Objects.requireNonNull(necessite);
-		if (!this.necessites.contains(ancienneNecessite)) throw new ParametreNullException("La necessite en parametre n'existe pas pour cette piece");
+		if (!this.necessites.contains(ancienneNecessite)) throw new ParametreIncorrectException("La necessite en parametre n'existe pas pour cette piece");
 		this.necessites.remove(ancienneNecessite);
 	}
 
 	/**
 	 * On verifie qu'une piece n'est pas incompatibilites avec une autre piece
 	 * @return true si la piece n'est pas presente dans les incompatibilites, false sinon
-	 * @throws ParametreNullException
 	 */
 	public boolean estIncompatible (Piece piece) {
 		Piece autrePiece = Objects.requireNonNull(piece);

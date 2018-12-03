@@ -14,8 +14,8 @@ import classes.categorie.Categorie;
 import classes.piece.Piece;
 import classes.piece.TypePiece;
 import exceptions.ActionPieceInvalideException;
-import exceptions.ParametreNullException;
-import exceptions.ResultatNullException;
+import exceptions.ParametreIncorrectException;
+import exceptions.ResultatIncorrectException;
 
 public class ConfigVoiture extends Observable implements ConfigInterface {
 
@@ -25,10 +25,10 @@ public class ConfigVoiture extends Observable implements ConfigInterface {
 	
 	/**
 	 * Si toutes les categories sont presentes dans la configuration, alors cette derniere est complete
-	 * @throws ResultatNullException 
+	 * @throws ResultatIncorrectException 
 	 */
 	@Override
-	public boolean estComplet() throws ResultatNullException {
+	public boolean estComplet() throws ResultatIncorrectException {
 		return (this.mesCategories.size() == Categorie.getCategories().size());
 	}
 
@@ -43,7 +43,7 @@ public class ConfigVoiture extends Observable implements ConfigInterface {
 		// TODO Auto-generated method stub
 		return false;
 	}
-
+	
 	public Set<Piece> getConfiguration() {
 		return maConfig;
 	}
@@ -57,11 +57,11 @@ public class ConfigVoiture extends Observable implements ConfigInterface {
 	 * @param piece
 	 * @return true si la piece est supprimee de ma configuration, false sinon
 	 * @throws ActionPieceInvalideException 
-	 * @throws ResultatNullException 
-	 * @throws ParametreNullException si la piece n'est pas dans ma configuration
+	 * @throws ResultatIncorrectException 
+	 * @throws ParametreIncorrectException si la piece n'est pas dans ma configuration
 	 */
 	@Override
-	public boolean supprimerPiece(String p) throws ActionPieceInvalideException, ResultatNullException, ParametreNullException {
+	public boolean supprimerPiece(String p) throws ActionPieceInvalideException, ResultatIncorrectException, ParametreIncorrectException {
 		String pieceNonNull = Objects.requireNonNull(p);
 		Piece piece = TypePiece.chercherPieceParNom(pieceNonNull);
 		if(!maConfig.contains(piece) ) throw new ActionPieceInvalideException("Cette piece n'est pas dans votre configuration");
@@ -77,11 +77,11 @@ public class ConfigVoiture extends Observable implements ConfigInterface {
 	/**
 	 * Supprime les pieces necessaires a une autre automatiquement
 	 * @param piece
-	 * @throws ResultatNullException
-	 * @throws ParametreNullException si piece trouvable
+	 * @throws ResultatIncorrectException
+	 * @throws ParametreIncorrectException si piece trouvable
 	 * @throws ActionPieceInvalideException si la piece n'est pas dans ma configuration
 	 */
-	private void supprimerPieceNecessaire(Piece piece) throws ResultatNullException, ParametreNullException, ActionPieceInvalideException {
+	private void supprimerPieceNecessaire(Piece piece) throws ResultatIncorrectException, ParametreIncorrectException, ActionPieceInvalideException {
 		if(!piece.getNecessites().isEmpty()) {
 			Iterator<Piece> it = piece.getNecessites().iterator();
 			while(it.hasNext()) {
@@ -97,12 +97,12 @@ public class ConfigVoiture extends Observable implements ConfigInterface {
 	 * Ajouter une piece dans ma configuration
 	 * @param piece
 	 * @return true si la piece est ajoutee a ma configuration, false sinon
-	 * @throws ResultatNullException 
-	 * @throws ParametreNullException
+	 * @throws ResultatIncorrectException 
+	 * @throws ParametreIncorrectException
 	 * @throws ActionPieceInvalideException si la piece est deja dans ma configuration
 	 */
 	@Override
-	public boolean ajouterPiece(String p) throws ActionPieceInvalideException, ResultatNullException, ParametreNullException {
+	public boolean ajouterPiece(String p) throws ActionPieceInvalideException, ResultatIncorrectException, ParametreIncorrectException {
 		String pieceNonNull = Objects.requireNonNull(p);
 		Piece piece = TypePiece.chercherPieceParNom(pieceNonNull);
 		if (!getPiecesPossibles().contains(piece)) throw new ActionPieceInvalideException("Cette piece n'est pas dans la liste des pieces possibles");
@@ -118,11 +118,11 @@ public class ConfigVoiture extends Observable implements ConfigInterface {
 	/**
 	 * Ajouter les pieces necessaires a une autre automatiquement
 	 * @param piece
-	 * @throws ResultatNullException
-	 * @throws ParametreNullException si piece introuvable
+	 * @throws ResultatIncorrectException
+	 * @throws ParametreIncorrectException si piece introuvable
 	 * @throws ActionPieceInvalideException si la piece est deja dans ma configuration 
 	 */
-	private void ajouterPiecesNecessaires(Piece piece) throws ResultatNullException, ActionPieceInvalideException, ParametreNullException {
+	private void ajouterPiecesNecessaires(Piece piece) throws ResultatIncorrectException, ActionPieceInvalideException, ParametreIncorrectException {
 		if(!piece.getNecessites().isEmpty()) {
 			Iterator<Piece> it = piece.getNecessites().iterator();
 			while(it.hasNext()) {
@@ -138,9 +138,9 @@ public class ConfigVoiture extends Observable implements ConfigInterface {
 	 * Recherche de la categorie associee a une piece
 	 * @param piece
 	 * @return la categorie d'une piece si elle existe
-	 * @throws ResultatNullException si la piece n'appartient a aucune categorie
+	 * @throws ResultatIncorrectException si la piece n'appartient a aucune categorie
 	 */
-	private String rechercherCategorieParPiece(Piece piece) throws ResultatNullException {
+	private String rechercherCategorieParPiece(Piece piece) throws ResultatIncorrectException {
 		Map<String, List<Piece>> categories = Categorie.getCategorieCatalogue();
 		Iterator<Entry<String, List<Piece>>> it = categories.entrySet().iterator();
 		while(it.hasNext()) {
@@ -149,7 +149,7 @@ public class ConfigVoiture extends Observable implements ConfigInterface {
 				return catalogueCategories.getKey();
 			}
 		}
-		throw new ResultatNullException("Pas de categorie pour cette piece");
+		throw new ResultatIncorrectException("Pas de categorie pour cette piece");
 	}
 
 	/**
@@ -166,11 +166,11 @@ public class ConfigVoiture extends Observable implements ConfigInterface {
 	/**
 	 * Renvoie une piece par categorie 
 	 * TODO une piece max par categorie ou deux possible ?
-	 * @throws ResultatNullException si aucune piece n'a ete choisi dans cette categorie
-	 * @throws ParametreNullException si categorie inexistante
+	 * @throws ResultatIncorrectException si aucune piece n'a ete choisi dans cette categorie
+	 * @throws ParametreIncorrectException si categorie inexistante
 	 */
 	@Override
-	public Piece getPieceParCategorie(String categorie) throws ParametreNullException, ResultatNullException  {
+	public Piece getPieceParCategorie(String categorie) throws ParametreIncorrectException, ResultatIncorrectException  {
 		List<Piece> piecesCategorie = Categorie.getPiecesParCategorie(categorie);
 		Iterator<Piece> it = piecesCategorie.iterator();
 		while(it.hasNext()) {
@@ -179,17 +179,17 @@ public class ConfigVoiture extends Observable implements ConfigInterface {
 				return piece;
 			}
 		}
-		throw new ResultatNullException("Aucune piece n'a été selectionné dans cette categorie");
+		throw new ResultatIncorrectException("Aucune piece n'a été selectionné dans cette categorie");
 	}
 
 	/**
 	 * Recupere un set de toutes les pieces que l'on peut encore ajouter a ma configuration
 	 * @return un set de pieces
-	 * @throws ParametreNullException
-	 * @throws ResultatNullException
+	 * @throws ParametreIncorrectException
+	 * @throws ResultatIncorrectException
 	 */
 	@Override
-	public Set<Piece> getPiecesPossibles() throws ResultatNullException, ParametreNullException {
+	public Set<Piece> getPiecesPossibles() throws ResultatIncorrectException, ParametreIncorrectException {
 		Set<Piece> piecesPossibles = new HashSet<>();
 		Set<String> categoriesRestantes = getCategoriesRestantes();
 		Iterator<String> it = categoriesRestantes.iterator();

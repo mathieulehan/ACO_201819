@@ -6,8 +6,8 @@ import java.util.Observable;
 import classes.categorie.Categorie;
 import classes.piece.Piece;
 import exceptions.ActionPieceInvalideException;
-import exceptions.ParametreNullException;
-import exceptions.ResultatNullException;
+import exceptions.ParametreIncorrectException;
+import exceptions.ResultatIncorrectException;
 
 /**
  * Exemple d'une configuration avec une piece pour le moment
@@ -50,11 +50,11 @@ public class ConfigurationTest extends Observable {
 	/**
 	 * main
 	 * @param args
-	 * @throws ResultatNullException 
-	 * @throws ParametreNullException
+	 * @throws ResultatIncorrectException 
+	 * @throws ParametreIncorrectException
 	 * @throws ActionPieceInvalideException 
 	 */
-	public static void main(String[] args) throws ParametreNullException, ResultatNullException, ActionPieceInvalideException {
+	public static void main(String[] args) throws ParametreIncorrectException, ResultatIncorrectException, ActionPieceInvalideException {
 		Categorie.initialiserCategories(); // initialisation des categories
 		ConfigVoiture configV = new ConfigVoiture();
 		configV.ajouterPiece("EG100");

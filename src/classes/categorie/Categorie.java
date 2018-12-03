@@ -11,8 +11,8 @@ import java.util.Set;
 
 import classes.piece.Piece;
 import classes.piece.TypePiece;
-import exceptions.ParametreNullException;
-import exceptions.ResultatNullException;
+import exceptions.ParametreIncorrectException;
+import exceptions.ResultatIncorrectException;
 
 /**
  * Classe Categorie, implementant une interface CategorieInterface, s'agissant d'une Map ayant pour : 
@@ -36,9 +36,10 @@ public class Categorie implements CategorieInterface {
 
 	/**
 	 * Initialisation des cles (categorie) suivies de ses valeurs (pieces associees)
-	 * @throws ResultatNullException 
+	 * @throws ResultatIncorrectException 
+	 * @throws ParametreIncorrectException 
 	 */
-	public static void initialiserCategories () throws ResultatNullException {
+	public static void initialiserCategories () throws ResultatIncorrectException, ParametreIncorrectException {
 		TypePiece.initialiserPieces();
 		categories.add("ENGINE");
 		categories.add("TRANSMISSION");
@@ -70,12 +71,12 @@ public class Categorie implements CategorieInterface {
 
 	/**
 	 * @param la categorie des pieces que l'on souhaite recuperer
-	 * @throws ParametreNullException si la categorie en parametre est null
+	 * @throws ParametreIncorrectException si la categorie en parametre est null
 	 */
-	public static List<Piece> getPiecesParCategorie(String categorie) throws ParametreNullException {
+	public static List<Piece> getPiecesParCategorie(String categorie) throws ParametreIncorrectException {
 		String catNonNull = Objects.requireNonNull(categorie);
 		if (!categorieCatalogue.containsKey(catNonNull)) {
-			throw new ParametreNullException("La categorie en parametre n'existe pas");
+			throw new ParametreIncorrectException("La categorie en parametre n'existe pas");
 		}
 		return categorieCatalogue.get(catNonNull);
 	}
