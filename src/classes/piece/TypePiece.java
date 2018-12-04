@@ -49,7 +49,6 @@ public class TypePiece {
 		 * Initialisation du notre catalogue de pieces
 		 */
 		for (String nomPiece : cataloguePiecesStandards.keySet()) {
-			System.out.println(nomPiece);
 			Piece nouvellePiece = new Piece(nomPiece, cataloguePiecesStandards.get(nomPiece));
 			pieces.add(nouvellePiece);
 		}
@@ -115,7 +114,6 @@ public class TypePiece {
 			piece.setIncompatibilites(mesIncompatibilites);
 			piece.setNecessites(mesNecessites);
 		}
-		System.out.println("�a plante avant");
 	}
 
 	/**

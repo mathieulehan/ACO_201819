@@ -5,12 +5,13 @@ import static org.junit.jupiter.api.Assertions.*;
 import java.util.Arrays;
 import java.util.HashSet;
 
-import org.junit.Before;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import classes.categorie.Categorie;
 import classes.config.ConfigVoiture;
+import classes.piece.Piece;
 import classes.piece.TypePiece;
 import exceptions.ActionPieceInvalideException;
 import exceptions.ParametreIncorrectException;
@@ -18,16 +19,20 @@ import exceptions.ResultatIncorrectException;
 
 class ConfigVoitureTest {
 	
-	ConfigVoiture cv = new ConfigVoiture();
+	ConfigVoiture cv;
 	
 	@BeforeAll
 	static void init() throws ParametreIncorrectException, ResultatIncorrectException {
 		Categorie.initialiserCategories();
 	}
 	
-	@Before
-	void init2() throws ResultatIncorrectException, ParametreIncorrectException {
+	@BeforeEach
+	private void init2() throws ResultatIncorrectException, ParametreIncorrectException {
 		cv = new ConfigVoiture();
+		System.out.println("COINCOINCOIN");
+		for(Piece p: cv.getPiecesPossibles()) {
+			System.out.println(p.getNom());
+		}
 	}
 
 	/**
@@ -78,6 +83,7 @@ class ConfigVoitureTest {
 				() -> cv.ajouterPiece("EH120")); // Incompatible avec EG133
 		assertThrows(ActionPieceInvalideException.class, 
 				() -> cv.supprimerPiece("EH120")); // Piece non ajoutee dans la configuration
+		
 	}
 	
 	/**
@@ -90,11 +96,9 @@ class ConfigVoitureTest {
 	 */
 	@Test
 	public void verification_categories() throws ResultatIncorrectException, ParametreIncorrectException, ActionPieceInvalideException {
-		
 		assertTrue(cv.ajouterPiece("EH120")); 
 		// Ajout de la piece TC120 car necessaire a la piece EH120
 		assertTrue(cv.ajouterPiece("XM"));
-		
 		HashSet<String> categoriesSouhaitees = new HashSet<>();
 		categoriesSouhaitees.addAll( Arrays.asList("EXTERIOR", "TRANSMISSION", "ENGINE"));
 		assertEquals(categoriesSouhaitees, cv.getMesCategories());
@@ -102,6 +106,7 @@ class ConfigVoitureTest {
 		HashSet<String> categoriesRestantes = new HashSet<>();
 		categoriesRestantes.addAll( Arrays.asList("INTERIOR"));
 		assertEquals(categoriesRestantes, cv.getCategoriesRestantes());
+		
 	}
 	
 	/**
@@ -112,6 +117,24 @@ class ConfigVoitureTest {
 	 */
 	@Test
 	public void categories_en_fonction_pieces_de_ma_configuration() throws ParametreIncorrectException, ResultatIncorrectException, ActionPieceInvalideException {
+		
+//		System.out.println("Aled");
+//		int nbPiece = 0;
+//		for(Piece p: cv.getPiecesPossibles()) {
+//			System.out.println(p.getNom());
+//			nbPiece++;
+//		}
+//		System.out.println(nbPiece);
+//		
+//		System.out.println("Mes incompatibilites :");
+//		for(Piece p: cv.getMesIncompatibilites()) {
+//			System.out.println(p.getNom());
+//		}
+//
+//		System.out.println("Mes categories restantes :");
+//		System.out.println(cv.getCategoriesRestantes());
+//		System.out.println("Ma configuration actuelle :");
+//		System.out.println(cv.getConfiguration());
 		assertTrue(cv.ajouterPiece("TSF7"));
 
 		assertEquals(TypePiece.chercherPieceParNom("TSF7"), cv.getPieceParCategorie("TRANSMISSION"));

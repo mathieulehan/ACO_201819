@@ -19,9 +19,9 @@ import exceptions.ResultatIncorrectException;
 
 public class ConfigVoiture extends Observable implements ConfigInterface {
 
-	private Set<Piece> maConfig = new HashSet<>();
-	private Set<String> mesCategories = new HashSet<>();
-	private Set<Piece> mesIncompatibilites = new HashSet<>();
+	private Set<Piece> maConfig;
+	private Set<String> mesCategories;
+	private Set<Piece> mesIncompatibilites;
 	
 	public ConfigVoiture(){
 		this.maConfig = new HashSet<>();
@@ -112,7 +112,7 @@ public class ConfigVoiture extends Observable implements ConfigInterface {
 		String pieceNonNull = Objects.requireNonNull(p);
 		Piece piece = TypePiece.chercherPieceParNom(pieceNonNull);
 		if (!getPiecesPossibles().contains(piece)) throw new ActionPieceInvalideException("Cette piece n'est pas dans la liste des pieces possibles");
-
+		
 		this.mesIncompatibilites.addAll(piece.getIncompatibilites()) ;
 		this.mesCategories.add(rechercherCategorieParPiece(piece)) ;
 		this.maConfig.add(piece);
@@ -152,7 +152,9 @@ public class ConfigVoiture extends Observable implements ConfigInterface {
 		while(it.hasNext()) {
 			Map.Entry<String, List<Piece>> catalogueCategories = it.next();
 			if(catalogueCategories.getValue().contains(piece)) {
-				return catalogueCategories.getKey();
+				String res = "";
+				res += catalogueCategories.getKey();
+				return res;
 			}
 		}
 		throw new ResultatIncorrectException("Pas de categorie pour cette piece");
@@ -164,9 +166,10 @@ public class ConfigVoiture extends Observable implements ConfigInterface {
 	 */
 	@Override
 	public Set<String> getCategoriesRestantes() {
-		Set<String> categories = Categorie.getCategories();
-		categories.removeAll(this.mesCategories);
-		return categories;
+		Set<String> lesCategories = new HashSet<>();
+		lesCategories.addAll(Categorie.getCategories());
+		lesCategories.removeAll(this.mesCategories);
+		return lesCategories;
 	}
 
 	/**
@@ -181,11 +184,11 @@ public class ConfigVoiture extends Observable implements ConfigInterface {
 		Iterator<Piece> it = piecesCategorie.iterator();
 		while(it.hasNext()) {
 			Piece piece = it.next();
-			if(maConfig.contains(piece)) {				
+			if(maConfig.contains(piece)) {		
 				return piece;
 			}
 		}
-		throw new ResultatIncorrectException("Aucune piece n'a �t� selectionn� dans cette categorie");
+		throw new ResultatIncorrectException("Aucune piece n'a ete selectionnee dans cette categorie");
 	}
 
 	/**
@@ -209,11 +212,15 @@ public class ConfigVoiture extends Observable implements ConfigInterface {
 	}
 	
 	/**
-	 *  M�thode permettant de notifier tous les observateurs lors d'un changement d'�tat de la configuration de la voiture
+	 *  Methode permettant de notifier tous les observateurs lors d'un changement d'etat de la configuration de la voiture
 	 */
 	public void notifierObserver() {
 		setChanged();
 		notifyObservers();
+	}
+	
+	public Set<Piece> getMesIncompatibilites(){
+		return this.mesIncompatibilites;
 	}
 
 
