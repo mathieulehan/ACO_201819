@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.HashSet;
 
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import classes.categorie.Categorie;
@@ -12,6 +13,12 @@ import exceptions.ParametreIncorrectException;
 import exceptions.ResultatIncorrectException;
 
 class PieceTest {
+	
+	
+	@BeforeAll
+	static void init() throws ParametreIncorrectException, ResultatIncorrectException {
+		Categorie.initialiserCategories();
+	}
 
 	/**
 	 * Erreur de constructeur dans le cas ou :
@@ -43,7 +50,6 @@ class PieceTest {
 	 */
 	@Test
 	public void modification_nom_incorrects() throws ParametreIncorrectException, ResultatIncorrectException {
-		Categorie.initialiserCategories(); // Il faut instancier les categories pour pouvoir tester l'insertion des doublons
 		Piece pieceTest = new Piece("Piece", "Piece de test");
 		assertThrows(NullPointerException.class, 
 				() -> {pieceTest.setNom(null);});

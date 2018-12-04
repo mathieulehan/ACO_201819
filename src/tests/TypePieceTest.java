@@ -73,27 +73,4 @@ class TypePieceTest {
 		
 		assertTrue(TypePiece.getPieces().contains(TypePiece.chercherPieceParNom("XM")));
 	}
-	
-	@Test
-	void getIncompatibilites() throws ParametreNullException, ResultatNullException {
-		System.out.println("Coin ____________________________");
-		TypePiece.initialiserPieces();
-		System.out.println("Couin");
-		Piece maPiece;
-		List<Piece> pieces = TypePiece.getPieces();
-		for (Piece piece : pieces) {
-			if(piece.getNom().equals("EG100")) {
-				maPiece = piece;
-			}
-		}
-		System.out.println("CoinCoinCoinCoin");
-		System.out.println("CouinCouinCouinCouin");
-//		Set<Piece> mesIncompatibilites = new HashSet();
-//		mesIncompatibilites.add(TypePiece.chercherPieceParNom("TA5"));
-//		mesIncompatibilites.add(TypePiece.chercherPieceParNom("TSF7"));
-//		mesIncompatibilites.add(TypePiece.chercherPieceParNom("XM"));
-//		mesIncompatibilites.add(TypePiece.chercherPieceParNom("XS"));
-//		mesIncompatibilites.add(TypePiece.chercherPieceParNom("IS"));
-		assertTrue(TypePiece.chercherPieceParNom("EG100").getNom() == "EG100");
-	}
 }

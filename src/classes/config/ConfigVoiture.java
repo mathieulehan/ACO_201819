@@ -23,6 +23,12 @@ public class ConfigVoiture extends Observable implements ConfigInterface {
 	private Set<String> mesCategories = new HashSet<>();
 	private Set<Piece> mesIncompatibilites = new HashSet<>();
 	
+	public ConfigVoiture(){
+		this.maConfig = new HashSet<>();
+		this.mesCategories = new HashSet<>();
+		this.mesIncompatibilites = new HashSet<>();
+	}
+	
 	/**
 	 * Si toutes les categories sont presentes dans la configuration, alors cette derniere est complete
 	 * @throws ResultatIncorrectException 

@@ -2,7 +2,7 @@ package tests;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import classes.categorie.Categorie;
 import exceptions.ParametreIncorrectException;
@@ -10,9 +10,9 @@ import exceptions.ResultatIncorrectException;
 
 class CategorieTest {
 
-			
-	@BeforeEach
-	void init() throws ParametreIncorrectException, ResultatIncorrectException {
+
+	@BeforeAll
+	static void init() throws ParametreIncorrectException, ResultatIncorrectException {
 		Categorie.initialiserCategories();
 	}
 	

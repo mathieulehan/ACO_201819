@@ -5,6 +5,8 @@ import static org.junit.jupiter.api.Assertions.*;
 import java.util.Arrays;
 import java.util.HashSet;
 
+import org.junit.Before;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import classes.categorie.Categorie;
@@ -15,6 +17,18 @@ import exceptions.ParametreIncorrectException;
 import exceptions.ResultatIncorrectException;
 
 class ConfigVoitureTest {
+	
+	ConfigVoiture cv = new ConfigVoiture();
+	
+	@BeforeAll
+	static void init() throws ParametreIncorrectException, ResultatIncorrectException {
+		Categorie.initialiserCategories();
+	}
+	
+	@Before
+	void init2() throws ResultatIncorrectException, ParametreIncorrectException {
+		cv = new ConfigVoiture();
+	}
 
 	/**
 	 * Ajout de pieces dans notre configuration, conditions a verifier :
@@ -27,8 +41,6 @@ class ConfigVoitureTest {
 	 */
 	@Test
 	void ajout_de_pieces() throws ParametreIncorrectException, ResultatIncorrectException, ActionPieceInvalideException {
-		ConfigVoiture cv = new ConfigVoiture();
-		Categorie.initialiserCategories();
 		
 		assertTrue(cv.ajouterPiece("TM5"));
 		assertTrue(cv.ajouterPiece("IN"));
@@ -51,8 +63,6 @@ class ConfigVoitureTest {
 	 */
 	@Test
 	void suppression_pieces() throws ActionPieceInvalideException, ParametreIncorrectException, ResultatIncorrectException {
-		ConfigVoiture cv = new ConfigVoiture();
-		Categorie.initialiserCategories();
 		
 		assertTrue(cv.ajouterPiece("EG133"));
 		assertTrue(cv.ajouterPiece("XS"));
@@ -80,8 +90,6 @@ class ConfigVoitureTest {
 	 */
 	@Test
 	public void verification_categories() throws ResultatIncorrectException, ParametreIncorrectException, ActionPieceInvalideException {
-		ConfigVoiture cv = new ConfigVoiture();
-		Categorie.initialiserCategories();
 		
 		assertTrue(cv.ajouterPiece("EH120")); 
 		// Ajout de la piece TC120 car necessaire a la piece EH120
@@ -104,8 +112,6 @@ class ConfigVoitureTest {
 	 */
 	@Test
 	public void categories_en_fonction_pieces_de_ma_configuration() throws ParametreIncorrectException, ResultatIncorrectException, ActionPieceInvalideException {
-		ConfigVoiture cv = new ConfigVoiture();
-		Categorie.initialiserCategories();
 		assertTrue(cv.ajouterPiece("TSF7"));
 
 		assertEquals(TypePiece.chercherPieceParNom("TSF7"), cv.getPieceParCategorie("TRANSMISSION"));
@@ -121,8 +127,6 @@ class ConfigVoitureTest {
 	 */
 	@Test
 	public void pieces_disponibles() throws ActionPieceInvalideException, ParametreIncorrectException, ResultatIncorrectException {
-		ConfigVoiture cv = new ConfigVoiture();
-		Categorie.initialiserCategories();
 		
 		assertTrue(cv.ajouterPiece("XC"));
 		assertTrue(cv.ajouterPiece("TM5"));
