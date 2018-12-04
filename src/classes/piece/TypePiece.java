@@ -7,9 +7,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import classes.categorie.Categorie;
-import exceptions.ParametreNullException;
-import exceptions.ResultatNullException;
+import exceptions.ParametreIncorrectException;
+import exceptions.ResultatIncorrectException;
 
 /**
  * Classe TypePiece sous forme de List avec : 
@@ -39,11 +38,11 @@ public class TypePiece {
 
 	/**
 	 * Initialisation des pieces (objets TypePiece), de leurs incompatibilites et de leurs necessites
-	 * @throws ResultatNullException 
-	 * @throws ParametreNullException 
+	 * @throws ParametreIncorrectException 
+	 * @throws ResultatIncorrectException 
 	 */
-	public static void initialiserPieces () throws ParametreNullException, ResultatNullException {
-		
+	public static void initialiserPieces () throws ResultatIncorrectException, ParametreIncorrectException {
+
 		initDonneesBrutes();
 
 		/**
@@ -54,25 +53,21 @@ public class TypePiece {
 			Piece nouvellePiece = new Piece(nomPiece, cataloguePiecesStandards.get(nomPiece));
 			pieces.add(nouvellePiece);
 		}
-		
 
-		System.out.println(chercherPieceParNom("EG100").getNom());
-		
 		/**
 		 * Ajout des incompatibilites et des necessites des pieces instanciees
 		 */
 		for (Piece piece : pieces) {
-			Set<Piece> mesIncompatibilites = new HashSet();
-			Set<Piece> mesNecessites = new HashSet();
-			String nomPiece = piece.getNom();
-			switch (nomPiece) {
+			Set<Piece> mesIncompatibilites = new HashSet<>();
+			Set<Piece> mesNecessites = new HashSet<>();
+			switch (piece.getNom()) {
 			case "TA5":
 				mesIncompatibilites.add(chercherPieceParNom("EG100"));
 				break;
 			case "TSF7":
 				mesIncompatibilites.add(chercherPieceParNom("EG100"));
-				mesIncompatibilites.add(chercherPieceParNom("EG110"));
 				mesIncompatibilites.add(chercherPieceParNom("EG133"));
+				mesIncompatibilites.add(chercherPieceParNom("ED110"));
 				break;
 			case "XC":
 				mesIncompatibilites.add(chercherPieceParNom("EG210"));
@@ -114,11 +109,13 @@ public class TypePiece {
 			case "TM5":
 				mesIncompatibilites.add(chercherPieceParNom("IS"));
 				break;
+			default :
+				break;
 			}
 			piece.setIncompatibilites(mesIncompatibilites);
 			piece.setNecessites(mesNecessites);
 		}
-		System.out.println("ça plante avant");
+		System.out.println("ï¿½a plante avant");
 	}
 
 	/**
@@ -144,20 +141,21 @@ public class TypePiece {
 		cataloguePiecesStandards.put("IH", "High-end interior");
 		cataloguePiecesStandards.put("IS", "Sport-finish");
 	}
-	
+
 	/**
 	 * Methode recherchant parmis la liste des pieces celle dont le nom est passe en parametre
 	 * @param nomPiece
 	 * @return Piece si elle est trouvee
-	 * @throws ResultatNullException
+	 * @throws ResultatIncorrectException
 	 */
-	public static Piece chercherPieceParNom(String nomPiece) throws ResultatNullException {
+	public static Piece chercherPieceParNom(String nomPiece) throws ResultatIncorrectException {
 		for (Piece piece : pieces) {
 			if (piece.getNom().equals(nomPiece)) {
 				return piece;
 			}
 		}
-		throw new ResultatNullException("Piece introuvable par son nom");
+		throw new ResultatIncorrectException("Piece introuvable par son nom");
+
 	}
 
 }

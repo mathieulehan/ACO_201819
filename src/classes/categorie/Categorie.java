@@ -6,44 +6,40 @@ import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 import classes.piece.Piece;
 import classes.piece.TypePiece;
-import exceptions.ParametreNullException;
-import exceptions.ResultatNullException;
+import exceptions.ParametreIncorrectException;
+import exceptions.ResultatIncorrectException;
 
 /**
  * Classe Categorie, implementant une interface CategorieInterface, s'agissant d'une Map ayant pour : 
- * - Cle : le nom de la categorie (enumeration)
- * - Valeurs (List) : les pieces associees a� une categorie
+ * - Cle : le nom de la categorie
+ * - Valeurs (List) : les pieces associees a une categorie
  * 
  * @author math & chach44
  *
  */
 public class Categorie implements CategorieInterface {
 
-	/**
-	 * Enumeration des categories existantes
-	 */
-	private static Set<String> categories = new HashSet<String>();
-	private static Map<String, List<Piece>> categorieCatalogue = new HashMap<String, List<Piece>>();
+	private static Set<String> categories = new HashSet<>();
+	private static Map<String, List<Piece>> categorieCatalogue = new HashMap<>();
 
 	/**
 	 * @return le set de categories
-	 * @throws ResultatNullException si le Set de categories renvoye est null
 	 */
-	public static Set<String> getCategories() throws ResultatNullException {
-		if(categories == null) throw new ResultatNullException("Le Set de categories est null");
+	public static Set<String> getCategories() {
 		return categories;
 	}
 
 	/**
 	 * Initialisation des cles (categorie) suivies de ses valeurs (pieces associees)
-	 * @throws ResultatNullException 
-	 * @throws ParametreNullException 
+	 * @throws ResultatIncorrectException 
+	 * @throws ParametreIncorrectException 
 	 */
-	public static void initialiserCategories () throws ParametreNullException, ResultatNullException {
+	public static void initialiserCategories () throws ResultatIncorrectException, ParametreIncorrectException {
 		TypePiece.initialiserPieces();
 		categories.add("ENGINE");
 		categories.add("TRANSMISSION");
@@ -74,23 +70,21 @@ public class Categorie implements CategorieInterface {
 	}
 
 	/**
-	 * @param la categorie des pieces que l'on souhaite r�cup�rer
-	 * @throws ParametreNullException si la categorie en parametre est null
-	 * @throws ResultatNullException 
+	 * @param la categorie des pieces que l'on souhaite recuperer
+	 * @throws ParametreIncorrectException si la categorie en parametre est null
 	 */
-	public static List<Piece> getPiecesCategorie(String categorie) throws ParametreNullException, ResultatNullException {
-		if (categories.contains(categorie)) {
-			throw new ParametreNullException("La cat�gorie en param�tre n'existe pas");
+	public static List<Piece> getPiecesParCategorie(String categorie) throws ParametreIncorrectException {
+		String catNonNull = Objects.requireNonNull(categorie);
+		if (!categorieCatalogue.containsKey(catNonNull)) {
+			throw new ParametreIncorrectException("La categorie en parametre n'existe pas");
 		}
-		return getCategorieCatalogue().get(categorie);
+		return categorieCatalogue.get(catNonNull);
 	}
 
 	/**
 	 * @return Chaque categorie avec ses pieces, sous forme de Map
-	 * @throws ResultatNullException si la Map que l'on retourne est null
 	 */
-	public static Map<String, List<Piece>> getCategorieCatalogue() throws ResultatNullException {
-		if(categorieCatalogue == null) throw new ResultatNullException("Il n'y a pas de categorie.");
+	public static Map<String, List<Piece>> getCategorieCatalogue() {
 		return categorieCatalogue;
 	}
 }

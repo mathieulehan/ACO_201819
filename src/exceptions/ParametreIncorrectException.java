@@ -5,12 +5,9 @@ package exceptions;
  * @author mathi
  *
  */
-public class ParametreNullException extends Exception{
+public class ParametreIncorrectException extends Exception{
 
-	String message;
-	
-	public ParametreNullException(String message) {
-		super();
-		this.message = message;
+	public ParametreIncorrectException(String message) {
+		super(message);
 	}
 }

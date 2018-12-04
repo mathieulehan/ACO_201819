@@ -5,9 +5,9 @@ import java.util.Observable;
 
 import classes.categorie.Categorie;
 import classes.piece.Piece;
-import classes.piece.TypePiece;
-import exceptions.ParametreNullException;
-import exceptions.ResultatNullException;
+import exceptions.ActionPieceInvalideException;
+import exceptions.ParametreIncorrectException;
+import exceptions.ResultatIncorrectException;
 
 /**
  * Exemple d'une configuration avec une piece pour le moment
@@ -50,20 +50,18 @@ public class ConfigurationTest extends Observable {
 	/**
 	 * main
 	 * @param args
-	 * @throws ResultatNullException 
-	 * @throws ParametreNullException 
+	 * @throws ResultatIncorrectException 
+	 * @throws ParametreIncorrectException
+	 * @throws ActionPieceInvalideException 
 	 */
-	public static void main(String[] args) throws ParametreNullException, ResultatNullException {
-		TypePiece tp = new TypePiece();
-		tp.initialiserPieces(); //initialisation des pieces
-		Categorie c = new Categorie();
-		c.initialiserCategorie(); // initialisation des categories
-		
+	public static void main(String[] args) throws ParametreIncorrectException, ResultatIncorrectException, ActionPieceInvalideException {
+		Categorie.initialiserCategories(); // initialisation des categories
 		ConfigVoiture configV = new ConfigVoiture();
-		Iterator<Piece> it = configV.maConfig.iterator();
+		configV.ajouterPiece("EG100");
+		Iterator<Piece> it = configV.getConfiguration().iterator();
 		while(it.hasNext()) {
 	        Piece p = it.next();
-	        System.out.println(p);
+	        System.out.println(p.getNom());
 		}
 		
 		//Il me faut toutes les pieces par categorie 
