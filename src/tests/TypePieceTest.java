@@ -6,14 +6,30 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import java.util.Arrays;
 import java.util.HashSet;
 
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import classes.categorie.Categorie;
+import classes.config.ConfigVoiture;
 import classes.piece.Piece;
 import classes.piece.TypePiece;
 import exceptions.ParametreIncorrectException;
 import exceptions.ResultatIncorrectException;
 
 class TypePieceTest {
+	
+	ConfigVoiture cv = new ConfigVoiture();
+	
+	@BeforeAll
+	static void init() throws ResultatIncorrectException, ParametreIncorrectException {
+		Categorie.initialiserCategories();
+	}
+	
+	@BeforeEach
+	private void init2() throws ResultatIncorrectException, ParametreIncorrectException {
+		this.cv = new ConfigVoiture();
+	}
 	
 	/**
 	 * Test verifiant si la methode initialiserPieces fonctionne comme attendu
@@ -23,7 +39,6 @@ class TypePieceTest {
 	 */
 	@Test
 	void taille_du_catalogue_Piece() throws ParametreIncorrectException, ResultatIncorrectException {
-		TypePiece.initialiserPieces();
 		
 		assertEquals(18, TypePiece.getPieces().size());
 		assertFalse(TypePiece.getPieces().isEmpty());
@@ -36,7 +51,6 @@ class TypePieceTest {
 	 */
 	@Test
 	void attribut_piece_TA5() throws ResultatIncorrectException, ParametreIncorrectException {
-		TypePiece.initialiserPieces();
 		
 		assertEquals("Automatic 5 gears", TypePiece.chercherPieceParNom("TA5").getDescription());
 		assertEquals("TA5", TypePiece.chercherPieceParNom("TA5").getNom());
@@ -56,7 +70,6 @@ class TypePieceTest {
 	 */
 	@Test
 	void chercher_piece_inexistance() throws ParametreIncorrectException, ResultatIncorrectException {
-		TypePiece.initialiserPieces();
 		
 		assertThrows(ResultatIncorrectException.class, 
 				() -> TypePiece.getPieces().contains(TypePiece.chercherPieceParNom("INEXISTANTE")));
@@ -69,7 +82,6 @@ class TypePieceTest {
 	 */
 	@Test
 	void chercher_piece_existance() throws ResultatIncorrectException, ParametreIncorrectException {
-		TypePiece.initialiserPieces();
 		
 		assertTrue(TypePiece.getPieces().contains(TypePiece.chercherPieceParNom("XM")));
 	}

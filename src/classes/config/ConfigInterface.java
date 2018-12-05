@@ -16,18 +16,6 @@ public interface ConfigInterface {
 	 * @throws ResultatIncorrectException 
 	 */
 	public boolean estComplet() throws ResultatIncorrectException, ParametreIncorrectException;
-
-	/**
-	 * Verifie que la configuration courante est valide
-	 * @return
-	 */
-	public boolean estValide();
-	
-	/**
-	 * Verifie que la configuration courante est observable
-	 * @return
-	 */
-	public boolean estObservable();
 	
 	/**
 	 * Supprimer une piece de ma configuration

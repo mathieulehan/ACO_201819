@@ -28,11 +28,7 @@ class ConfigVoitureTest {
 	
 	@BeforeEach
 	private void init2() throws ResultatIncorrectException, ParametreIncorrectException {
-		cv = new ConfigVoiture();
-		System.out.println("COINCOINCOIN");
-		for(Piece p: cv.getPiecesPossibles()) {
-			System.out.println(p.getNom());
-		}
+		this.cv = new ConfigVoiture();
 	}
 
 	/**
@@ -47,15 +43,15 @@ class ConfigVoitureTest {
 	@Test
 	void ajout_de_pieces() throws ParametreIncorrectException, ResultatIncorrectException, ActionPieceInvalideException {
 		
-		assertTrue(cv.ajouterPiece("TM5"));
-		assertTrue(cv.ajouterPiece("IN"));
-		//assertNull(cv.ajouterPiece(""));
-		assertEquals(2, cv.getConfiguration().size());
+		assertTrue(this.cv.ajouterPiece("TM5"));
+		assertTrue(this.cv.ajouterPiece("IN"));
+		//assertNull(this.cv.ajouterPiece(""));
+		assertEquals(2, this.cv.getConfiguration().size());
 
 		assertThrows(NullPointerException.class,
-				() -> cv.ajouterPiece(null) );
+				() -> this.cv.ajouterPiece(null) );
 		assertThrows(ActionPieceInvalideException.class, 
-				() -> { cv.ajouterPiece("IH"); }); // Incompatible avec IN
+				() -> { this.cv.ajouterPiece("IH"); }); // Incompatible avec IN
 	}
 	
 	/**
@@ -69,20 +65,20 @@ class ConfigVoitureTest {
 	@Test
 	void suppression_pieces() throws ActionPieceInvalideException, ParametreIncorrectException, ResultatIncorrectException {
 		
-		assertTrue(cv.ajouterPiece("EG133"));
-		assertTrue(cv.ajouterPiece("XS"));
+		assertTrue(this.cv.ajouterPiece("EG133"));
+		assertTrue(this.cv.ajouterPiece("XS"));
 		// Ajout de la piece IS car necessaire a la piece XS
-		assertEquals(3, cv.getConfiguration().size());
+		assertEquals(3, this.cv.getConfiguration().size());
 		
-		assertTrue(cv.supprimerPiece("IS"));
+		assertTrue(this.cv.supprimerPiece("IS"));
 		// Suppression de la piece XS car necessaire a la piece IS
-		assertEquals(1, cv.getConfiguration().size());
+		assertEquals(1, this.cv.getConfiguration().size());
 		assertThrows(NullPointerException.class,
-				() -> cv.supprimerPiece(null) );
+				() -> this.cv.supprimerPiece(null) );
 		assertThrows(ActionPieceInvalideException.class, 
-				() -> cv.ajouterPiece("EH120")); // Incompatible avec EG133
+				() -> this.cv.ajouterPiece("EH120")); // Incompatible avec EG133
 		assertThrows(ActionPieceInvalideException.class, 
-				() -> cv.supprimerPiece("EH120")); // Piece non ajoutee dans la configuration
+				() -> this.cv.supprimerPiece("EH120")); // Piece non ajoutee dans la configuration
 		
 	}
 	
@@ -96,16 +92,16 @@ class ConfigVoitureTest {
 	 */
 	@Test
 	public void verification_categories() throws ResultatIncorrectException, ParametreIncorrectException, ActionPieceInvalideException {
-		assertTrue(cv.ajouterPiece("EH120")); 
+		assertTrue(this.cv.ajouterPiece("EH120")); 
 		// Ajout de la piece TC120 car necessaire a la piece EH120
-		assertTrue(cv.ajouterPiece("XM"));
+		assertTrue(this.cv.ajouterPiece("XM"));
 		HashSet<String> categoriesSouhaitees = new HashSet<>();
 		categoriesSouhaitees.addAll( Arrays.asList("EXTERIOR", "TRANSMISSION", "ENGINE"));
-		assertEquals(categoriesSouhaitees, cv.getMesCategories());
+		assertEquals(categoriesSouhaitees, this.cv.getMesCategories());
 		
 		HashSet<String> categoriesRestantes = new HashSet<>();
 		categoriesRestantes.addAll( Arrays.asList("INTERIOR"));
-		assertEquals(categoriesRestantes, cv.getCategoriesRestantes());
+		assertEquals(categoriesRestantes, this.cv.getCategoriesRestantes());
 		
 	}
 	
@@ -118,28 +114,11 @@ class ConfigVoitureTest {
 	@Test
 	public void categories_en_fonction_pieces_de_ma_configuration() throws ParametreIncorrectException, ResultatIncorrectException, ActionPieceInvalideException {
 		
-//		System.out.println("Aled");
-//		int nbPiece = 0;
-//		for(Piece p: cv.getPiecesPossibles()) {
-//			System.out.println(p.getNom());
-//			nbPiece++;
-//		}
-//		System.out.println(nbPiece);
-//		
-//		System.out.println("Mes incompatibilites :");
-//		for(Piece p: cv.getMesIncompatibilites()) {
-//			System.out.println(p.getNom());
-//		}
-//
-//		System.out.println("Mes categories restantes :");
-//		System.out.println(cv.getCategoriesRestantes());
-//		System.out.println("Ma configuration actuelle :");
-//		System.out.println(cv.getConfiguration());
-		assertTrue(cv.ajouterPiece("TSF7"));
+		assertTrue(this.cv.ajouterPiece("TSF7"));
 
-		assertEquals(TypePiece.chercherPieceParNom("TSF7"), cv.getPieceParCategorie("TRANSMISSION"));
+		assertEquals(TypePiece.chercherPieceParNom("TSF7"), this.cv.getPieceParCategorie("TRANSMISSION"));
 		assertThrows(ResultatIncorrectException.class, 
-				() -> TypePiece.chercherPieceParNom("PieceLambda").equals(cv.getPieceParCategorie("TRANSMISSION")));
+				() -> TypePiece.chercherPieceParNom("PieceLambda").equals(this.cv.getPieceParCategorie("TRANSMISSION")));
 	}
 	
 	/**
@@ -151,11 +130,11 @@ class ConfigVoitureTest {
 	@Test
 	public void pieces_disponibles() throws ActionPieceInvalideException, ParametreIncorrectException, ResultatIncorrectException {
 		
-		assertTrue(cv.ajouterPiece("XC"));
-		assertTrue(cv.ajouterPiece("TM5"));
-		assertTrue(cv.ajouterPiece("ED110"));
-		assertTrue(cv.getPiecesPossibles().contains(TypePiece.chercherPieceParNom("IN")));
-		assertFalse(cv.getPiecesPossibles().contains(TypePiece.chercherPieceParNom("IS")));
+		assertTrue(this.cv.ajouterPiece("XC"));
+		assertTrue(this.cv.ajouterPiece("TM5"));
+		assertTrue(this.cv.ajouterPiece("ED110"));
+		assertTrue(this.cv.getPiecesPossibles().contains(TypePiece.chercherPieceParNom("IN")));
+		assertFalse(this.cv.getPiecesPossibles().contains(TypePiece.chercherPieceParNom("IS")));
 	}
 
 }

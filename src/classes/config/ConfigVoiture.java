@@ -2,6 +2,7 @@ package classes.config;
 
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -36,18 +37,6 @@ public class ConfigVoiture extends Observable implements ConfigInterface {
 	@Override
 	public boolean estComplet() throws ResultatIncorrectException {
 		return (this.mesCategories.size() == Categorie.getCategories().size());
-	}
-
-	@Override
-	public boolean estValide() {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean estObservable() {
-		// TODO Auto-generated method stub
-		return false;
 	}
 	
 	public Set<Piece> getConfiguration() {
@@ -109,6 +98,7 @@ public class ConfigVoiture extends Observable implements ConfigInterface {
 	 */
 	@Override
 	public boolean ajouterPiece(String p) throws ActionPieceInvalideException, ResultatIncorrectException, ParametreIncorrectException {
+		if(estComplet()) throw new ActionPieceInvalideException("La configuration de la voiture est terminee");
 		String pieceNonNull = Objects.requireNonNull(p);
 		Piece piece = TypePiece.chercherPieceParNom(pieceNonNull);
 		if (!getPiecesPossibles().contains(piece)) throw new ActionPieceInvalideException("Cette piece n'est pas dans la liste des pieces possibles");
@@ -204,7 +194,8 @@ public class ConfigVoiture extends Observable implements ConfigInterface {
 		Iterator<String> it = categoriesRestantes.iterator();
 		while(it.hasNext()) {
 			String categorie = it.next();
-			List<Piece> pieces = Categorie.getPiecesParCategorie(categorie);
+			List<Piece> pieces = new LinkedList();
+			pieces.addAll(Categorie.getPiecesParCategorie(categorie));
 			pieces.removeAll(mesIncompatibilites);
 			piecesPossibles.addAll(pieces);
 		}
