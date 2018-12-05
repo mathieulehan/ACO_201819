@@ -164,7 +164,6 @@ public class ConfigVoiture extends Observable implements ConfigInterface {
 
 	/**
 	 * Renvoie une piece par categorie 
-	 * TODO une piece max par categorie ou deux possible ?
 	 * @throws ResultatIncorrectException si aucune piece n'a ete choisi dans cette categorie
 	 * @throws ParametreIncorrectException si categorie inexistante
 	 */
@@ -194,7 +193,7 @@ public class ConfigVoiture extends Observable implements ConfigInterface {
 		Iterator<String> it = categoriesRestantes.iterator();
 		while(it.hasNext()) {
 			String categorie = it.next();
-			List<Piece> pieces = new LinkedList();
+			List<Piece> pieces = new LinkedList<>();
 			pieces.addAll(Categorie.getPiecesParCategorie(categorie));
 			pieces.removeAll(mesIncompatibilites);
 			piecesPossibles.addAll(pieces);
