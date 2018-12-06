@@ -99,7 +99,7 @@ public class ConfigVoiture extends Observable implements ConfigInterface {
 	 * @param piece
 	 * @return true si la piece est ajoutee a ma configuration, false sinon
 	 * @throws ResultatIncorrectException 
-	 * @throwhttp://marketplace.eclipse.org/marketplace-client-intro?mpc_install=2568658s ParametreIncorrectException
+	 * @throws ParametreIncorrectException
 	 * @throws ActionPieceInvalideException si la piece est deja dans ma configuration
 	 */
 	@Override
@@ -213,11 +213,6 @@ public class ConfigVoiture extends Observable implements ConfigInterface {
 	public void notifierObserver() {
 		setChanged();
 		notifyObservers();
-		try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            System.out.println("Error Occurred.");
-        }
 	}
 	
 	public Set<Piece> getMesIncompatibilites(){

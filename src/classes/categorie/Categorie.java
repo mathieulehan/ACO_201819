@@ -19,10 +19,10 @@ import exceptions.ResultatIncorrectException;
  * - Cle : le nom de la categorie
  * - Valeurs (List) : les pieces associees a une categorie
  * 
- * @author math & chach44
+ * @author YMCA
  *
  */
-public class Categorie implements CategorieInterface {
+public class Categorie {
 
 	private static Set<String> categories = new HashSet<>();
 	private static Map<String, List<Piece>> categorieCatalogue = new HashMap<>();
@@ -35,7 +35,7 @@ public class Categorie implements CategorieInterface {
 	}
 
 	/**
-	 * Initialisation des cles (categorie) suivies de ses valeurs (pieces associees)
+	 * Initialisation des cles (categorie) suivies de leurs valeurs (pieces associees)
 	 * @throws ResultatIncorrectException 
 	 * @throws ParametreIncorrectException 
 	 */
@@ -72,6 +72,7 @@ public class Categorie implements CategorieInterface {
 	/**
 	 * @param la categorie des pieces que l'on souhaite recuperer
 	 * @throws ParametreIncorrectException si la categorie en parametre est null
+	 * @return Liste de pieces correspondant a la categorie en parametre
 	 */
 	public static List<Piece> getPiecesParCategorie(String categorie) throws ParametreIncorrectException {
 		String catNonNull = Objects.requireNonNull(categorie);

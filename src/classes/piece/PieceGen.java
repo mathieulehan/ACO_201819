@@ -2,7 +2,7 @@ package classes.piece;
 
 /**
  * 
- * @author GR4
+ * @author YMCA
  *
  */
 public class PieceGen {

@@ -2,7 +2,7 @@ package exceptions;
 
 /**
  * 
- * @author GR4
+ * @author YMCA
  *
  */
 public class ActionPieceInvalideException extends Exception {

@@ -6,11 +6,14 @@ import org.junit.jupiter.api.Test;
 
 /**
  * 
- * @author GR4
+ * @author YMCA
  *
  */
 class FabricGenTest {
 
+	/**
+	 * Sans commentaire
+	 */
 	@Test
 	void test() {
 		fail("Not yet implemented");

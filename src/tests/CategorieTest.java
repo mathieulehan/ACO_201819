@@ -16,6 +16,11 @@ import exceptions.ResultatIncorrectException;
 class CategorieTest {
 
 
+	/**
+	 * Initialise toutes les categories et leurs pieces pour tous les tests
+	 * @throws ParametreIncorrectException
+	 * @throws ResultatIncorrectException
+	 */
 	@BeforeAll
 	static void init() throws ParametreIncorrectException, ResultatIncorrectException {
 		Categorie.initialiserCategories();

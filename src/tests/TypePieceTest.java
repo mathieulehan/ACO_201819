@@ -26,11 +26,21 @@ class TypePieceTest {
 	
 	ConfigVoiture cv = new ConfigVoiture();
 	
+	/**
+	 * Initialise toutes les categories et leurs pieces pour tous les tests
+	 * @throws ParametreIncorrectException
+	 * @throws ResultatIncorrectException
+	 */
 	@BeforeAll
 	static void init() throws ResultatIncorrectException, ParametreIncorrectException {
 		Categorie.initialiserCategories();
 	}
 	
+	/**
+	 * Reinitialise la configuration pour chaque test
+	 * @throws ResultatIncorrectException
+	 * @throws ParametreIncorrectException
+	 */
 	@BeforeEach
 	private void init2() throws ResultatIncorrectException, ParametreIncorrectException {
 		this.cv = new ConfigVoiture();

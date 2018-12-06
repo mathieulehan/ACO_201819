@@ -6,7 +6,7 @@ import exceptions.ResultatIncorrectException;
 
 /**
  * 
- * @author GR4
+ * @author YMCA
  *
  */
 public interface VerifCompatibilite {

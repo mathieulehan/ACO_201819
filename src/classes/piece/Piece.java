@@ -9,7 +9,7 @@ import exceptions.ResultatIncorrectException;
 
 /**
  * Classe possedant des methodes permettant de gerer les pieces
- * @author GR4
+ * @author YMCA
  *
  */
 public class Piece implements PieceInterface, GestionCompatibilite, VerifCompatibilite {
@@ -135,7 +135,7 @@ public class Piece implements PieceInterface, GestionCompatibilite, VerifCompati
 
 	/**
 	 * Ajout d'une necessite
-	 * @param necessite la necessite a ajouter a la piece
+	 * @param la necessite a ajouter a la piece
 	 * @throws ParametreIncorrectException 
 	 */
 	@Override
@@ -147,10 +147,9 @@ public class Piece implements PieceInterface, GestionCompatibilite, VerifCompati
 
 	/**
 	 * Suppression d'une necessite
-	 * @param necessite la necessite a supprimer de la piece
+	 * @param la necessite a supprimer de la piece
 	 * @throws ParametreIncorrectException si la piece n'a pas la necessite en parametre
 	 */
-
 	@Override
 	public void suppressionNecessite(Piece necessite) throws ParametreIncorrectException {
 		Piece ancienneNecessite = Objects.requireNonNull(necessite);
@@ -159,7 +158,7 @@ public class Piece implements PieceInterface, GestionCompatibilite, VerifCompati
 	}
 
 	/**
-	 * On verifie qu'une piece n'est pas incompatibilites avec une autre piece
+	 * On verifie qu'une piece n'est pas incompatible avec une autre piece
 	 * @return true si la piece n'est pas presente dans les incompatibilites, false sinon
 	 */
 	public boolean estIncompatible (Piece piece) {

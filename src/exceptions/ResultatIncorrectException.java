@@ -2,7 +2,7 @@ package exceptions;
 
 /**
  * Exception generee quant un resultat de methode est detecte comme null alors que la postcondition ne le permet pas
- * @author GR4
+ * @author YMCA
  *
  */
 public class ResultatIncorrectException extends Exception{

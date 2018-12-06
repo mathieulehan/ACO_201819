@@ -18,18 +18,28 @@ import exceptions.ResultatIncorrectException;
 
 /**
  * 
- * @author GR4
+ * @author YMCA
  *
  */
 class ConfigVoitureTest {
 
 	ConfigVoiture cv;
 
+	/**
+	 * Initialise toutes les categories et leurs pieces pour tous les tests
+	 * @throws ParametreIncorrectException
+	 * @throws ResultatIncorrectException
+	 */
 	@BeforeAll
 	static void init() throws ParametreIncorrectException, ResultatIncorrectException {
 		Categorie.initialiserCategories();
 	}
 
+	/**
+	 * Reinitialise la configuration pour chaque test
+	 * @throws ResultatIncorrectException
+	 * @throws ParametreIncorrectException
+	 */
 	@BeforeEach
 	private void init2() throws ResultatIncorrectException, ParametreIncorrectException {
 		this.cv = new ConfigVoiture();
@@ -49,7 +59,8 @@ class ConfigVoitureTest {
 
 		assertTrue(this.cv.ajouterPiece("TM5"));
 		assertTrue(this.cv.ajouterPiece("IN"));
-		//assertNull(this.cv.ajouterPiece(""));
+		assertThrows(ResultatIncorrectException.class,
+				() -> this.cv.ajouterPiece("") );
 		assertEquals(2, this.cv.getConfiguration().size());
 
 		assertThrows(NullPointerException.class,
@@ -88,7 +99,7 @@ class ConfigVoitureTest {
 
 	/**
 	 * Apres une selection de pieces dans notre configuration, on souhaite recuperer :
-	 * - les categories ou aucune piece n'a ete choisie
+	 * - les categories dans lesquelles aucune piece n'a ete choisie
 	 * @throws ResultatIncorrectException
 	 * @throws ParametreIncorrectException
 	 * @throws ActionPieceInvalideException
