@@ -2,7 +2,7 @@ package classes.config;
 
 /**
  * 
- * @author GR4
+ * @author YMCA
  *
  */
 public interface Configuration {

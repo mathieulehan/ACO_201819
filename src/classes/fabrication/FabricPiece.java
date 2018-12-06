@@ -2,7 +2,7 @@ package classes.fabrication;
 
 /**
  * 
- * @author GR4
+ * @author YMCA
  *
  */
 public class FabricPiece {
