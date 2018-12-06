@@ -58,7 +58,10 @@ class ConfigVoitureTest {
 	void ajout_de_pieces() throws ParametreIncorrectException, ResultatIncorrectException, ActionPieceInvalideException {
 
 		assertTrue(this.cv.ajouterPiece("TM5"));
+		assertTrue(this.cv.getConfiguration().contains(TypePiece.chercherPieceParNom("TM5")));
 		assertTrue(this.cv.ajouterPiece("IN"));
+		assertTrue(this.cv.getConfiguration().contains(TypePiece.chercherPieceParNom("TM5")));
+		assertTrue(this.cv.getConfiguration().contains(TypePiece.chercherPieceParNom("IN")));
 		assertThrows(ResultatIncorrectException.class,
 				() -> this.cv.ajouterPiece("") );
 		assertEquals(2, this.cv.getConfiguration().size());
@@ -67,6 +70,7 @@ class ConfigVoitureTest {
 				() -> this.cv.ajouterPiece(null) );
 		assertThrows(ActionPieceInvalideException.class, 
 				() -> { this.cv.ajouterPiece("IH"); }); // Incompatible avec IN
+		assertFalse(this.cv.getConfiguration().contains(TypePiece.chercherPieceParNom("IH")));
 	}
 
 	/**
