@@ -1,89 +1,88 @@
 package classes.config;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
-import java.util.Iterator;
 import java.util.Observable;
+import java.util.Set;
 
-import classes.categorie.Categorie;
 import classes.piece.Piece;
 import exceptions.ActionPieceInvalideException;
 import exceptions.ParametreIncorrectException;
 import exceptions.ResultatIncorrectException;
 
 /**
- * Exemple d'une configuration avec une piece pour le moment
- * Cette classe est une classe Observable
- * @author GR4
+ * Classe en lien avec l'utilisateur, il s'agit du point d'entree de l'application
+ * Elle cree et recupere la configuration en cours (ainsi que ses pieces associees)
+ * 
+ * Cette classe est observee par ConfigApplImpl et lui envoie les changements d'etats de la configuration courante
+ * 
+ * @author YMCA
  *
  */
 public class ConfigurationTest extends Observable {
 	
-	private int piece = 0;
+	private ConfigVoiture cv;
 	
 	/**
-	 * Exemple !! C'est juste une configuration avec une seule piece
-	 * @param p
+	 * Creation d'une nouvelle configuration par l'utilisateur (ConfigVoiture)
+	 * @throws ResultatIncorrectException
+	 * @throws ParametreIncorrectException
 	 */
-	public ConfigurationTest(int p) {
-		this.piece = p;
+	public ConfigurationTest() throws ResultatIncorrectException, ParametreIncorrectException {
+		this.cv = new ConfigVoiture();
 	}
 	
 	/**
-	 * Ajoute une nouvelle piece a la place de l'anciene
-	 * @param p
-	 */
-	public void setPiece(int p)
-	   {
-	      this.piece = p;
-	      setChanged();
-	      notifyObservers();
-	   }
-	
-	/**
-	 * Recupere la piece de la config
-	 * @return
-	 */
-	public int getPiece()
-	   {
-	      return this.piece;
-	   }
-	
-	/**
-	 * main
-	 * @param args
-	 * @throws ResultatIncorrectException 
+	 * L'utilisateur ajoute une piece dans sa configuration
+	 * @param la piece a ajoute
+	 * @throws ActionPieceInvalideException
+	 * @throws ResultatIncorrectException
 	 * @throws ParametreIncorrectException
-	 * @throws ActionPieceInvalideException 
 	 */
-	public static void main(String[] args) throws ParametreIncorrectException, ResultatIncorrectException, ActionPieceInvalideException {
-		Categorie.initialiserCategories(); // initialisation des categories & des pieces
-		ConfigVoiture configV = new ConfigVoiture();
-		configV.ajouterPiece("EG100");
-		Iterator<Piece> it = configV.getConfiguration().iterator();
-		while(it.hasNext()) {
-	        Piece p = it.next();
-	        System.out.println(p.getNom());
-		}
-		
-		//Il me faut toutes les pieces par categorie 
-		//que je puisse choisir une piece dans une categorie et la mettre dans ma configuration actuelle
-		//mettre une configuration de base 
-		
+	public void actionAjouterPiece(String p) throws ActionPieceInvalideException, ResultatIncorrectException, ParametreIncorrectException {
+		this.cv.ajouterPiece(p);
+		notifierObserver();
+	}
+	
+	/**
+	 * L'utilisateur supprime une piece de sa configuration
+	 * @param la piece a supprime
+	 * @throws ActionPieceInvalideException
+	 * @throws ResultatIncorrectException
+	 * @throws ParametreIncorrectException
+	 */
+	public void actionSupprimerPiece(String p) throws ActionPieceInvalideException, ResultatIncorrectException, ParametreIncorrectException {
+		this.cv.supprimerPiece(p);
+		notifierObserver();
+	}
+	
+	/**
+	 * Recupere la configuration en cours de l'utilisateur
+	 * @return un set de pieces
+	 */
+	public Set<Piece> actionGetConfiguration() {
+		return this.cv.getConfiguration();
 	}
 	
 	/**
 	 * Configuration de base
-	 * @param cv
 	 * @throws ParametreIncorrectException 
 	 * @throws ResultatIncorrectException 
 	 * @throws ActionPieceInvalideException 
 	 */
-	public void setConfigExemple(ConfigVoiture cv) throws ActionPieceInvalideException, ResultatIncorrectException, ParametreIncorrectException {
+	public void getConfigurationStandard() throws ActionPieceInvalideException, ResultatIncorrectException, ParametreIncorrectException {
 		cv.ajouterPiece("EG133");
 		cv.ajouterPiece("XS");
 		// Ajout de la piece IS car necessaire a la piece XS
 		cv.ajouterPiece("TA5");
+		
+		notifierObserver();
+	}
+	
+	/**
+	 *  Methode permettant de notifier l'observateur (ConfigAppImpl) d'un changement d'etat de la configuration de la voiture
+	 */
+	public void notifierObserver() {
+		setChanged();
+		notifyObservers();
 	}
 
 }
