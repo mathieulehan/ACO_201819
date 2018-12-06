@@ -17,6 +17,11 @@ import classes.piece.TypePiece;
 import exceptions.ParametreIncorrectException;
 import exceptions.ResultatIncorrectException;
 
+/**
+ * 
+ * @author GR4
+ *
+ */
 class TypePieceTest {
 	
 	ConfigVoiture cv = new ConfigVoiture();

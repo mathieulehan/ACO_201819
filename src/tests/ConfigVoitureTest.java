@@ -16,6 +16,11 @@ import exceptions.ActionPieceInvalideException;
 import exceptions.ParametreIncorrectException;
 import exceptions.ResultatIncorrectException;
 
+/**
+ * 
+ * @author GR4
+ *
+ */
 class ConfigVoitureTest {
 
 	ConfigVoiture cv;

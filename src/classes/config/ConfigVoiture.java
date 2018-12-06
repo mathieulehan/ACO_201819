@@ -18,6 +18,12 @@ import exceptions.ActionPieceInvalideException;
 import exceptions.ParametreIncorrectException;
 import exceptions.ResultatIncorrectException;
 
+/**
+ * Classe ConfigVoiture, effectue tous les changements sur la configuration actuelle :
+ * Ajout & suppression de pieces, incompatibilites, necessites, categories
+ * @author GR4
+ *
+ */
 public class ConfigVoiture extends Observable implements ConfigInterface {
 
 	private Set<Piece> maConfig;
@@ -93,7 +99,7 @@ public class ConfigVoiture extends Observable implements ConfigInterface {
 	 * @param piece
 	 * @return true si la piece est ajoutee a ma configuration, false sinon
 	 * @throws ResultatIncorrectException 
-	 * @throws ParametreIncorrectException
+	 * @throwhttp://marketplace.eclipse.org/marketplace-client-intro?mpc_install=2568658s ParametreIncorrectException
 	 * @throws ActionPieceInvalideException si la piece est deja dans ma configuration
 	 */
 	@Override
@@ -207,6 +213,11 @@ public class ConfigVoiture extends Observable implements ConfigInterface {
 	public void notifierObserver() {
 		setChanged();
 		notifyObservers();
+		try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            System.out.println("Error Occurred.");
+        }
 	}
 	
 	public Set<Piece> getMesIncompatibilites(){

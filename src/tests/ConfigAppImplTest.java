@@ -9,6 +9,11 @@ import exceptions.ActionPieceInvalideException;
 import exceptions.ParametreIncorrectException;
 import exceptions.ResultatIncorrectException;
 
+/**
+ * 
+ * @author GR4
+ *
+ */
 class ConfigAppImplTest {
 
 	@Test

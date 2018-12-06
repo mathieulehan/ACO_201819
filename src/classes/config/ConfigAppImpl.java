@@ -16,22 +16,24 @@ import classes.piece.Piece;
  * Cette classe est une classe Observer (qui recupere les donnees de ConfigurationTest)
  * ET Observable (Qui envoie les donnees a ConfigVoiture)
  * 
- * @author Charlotte & Thomas
+ * @author GR4
  *
  */
 public class ConfigAppImpl implements Configuration, Observer {
 
-	private List<ConfigVoiture> configs = new LinkedList<>();
+//	private List<ConfigVoiture> configs = new LinkedList<>(); // Gestion de plusieurs configurations pas dans la v1
 
 
 	public void update(Observable observable, Object o) {
 
-		ConfigVoiture cv = (ConfigVoiture) observable; 
-		configs.add(cv);
+		ConfigVoiture cv = (ConfigVoiture) observable;
+//		if(!configs.contains(cv)) {
+//			configs.add(cv);
+//		}
 		Iterator<Piece> it = cv.getConfiguration().iterator();
-		System.out.println("Ma configuration de voiture est composée de : ");
+		System.out.println("Ma configuration de voiture est composée de :");
 		while(it.hasNext()) {
-			System.out.println("- la piece " + it.next().getNom());
+			System.out.println(" - la piece " + it.next().getNom());
 		}
 
 	}

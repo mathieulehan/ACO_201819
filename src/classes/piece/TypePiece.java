@@ -17,7 +17,7 @@ import exceptions.ResultatIncorrectException;
  * - les pieces incompatibles
  * - les pieces necessaires 
  * 
- * @author math & chach44
+ * @author GR4
  *
  */
 public class TypePiece {

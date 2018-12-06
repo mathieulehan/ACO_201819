@@ -4,6 +4,11 @@ import java.util.Set;
 
 import exceptions.ResultatIncorrectException;
 
+/**
+ * 
+ * @author GR4
+ *
+ */
 public interface VerifCompatibilite {
 
 	public Set<Piece> getIncompatibilites() throws ResultatIncorrectException;

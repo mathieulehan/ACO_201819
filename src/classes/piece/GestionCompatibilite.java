@@ -4,6 +4,11 @@ import java.util.Set;
 
 import exceptions.ParametreIncorrectException;
 
+/**
+ * 
+ * @author GR4
+ *
+ */
 public interface GestionCompatibilite {
 
 	public void setIncompatibilites(Set<Piece> incompatibilites) throws ParametreIncorrectException;

@@ -9,7 +9,7 @@ import exceptions.ResultatIncorrectException;
 
 /**
  * Classe possedant des methodes permettant de gerer les pieces
- * @author mathi & chach44 & yann
+ * @author GR4
  *
  */
 public class Piece implements PieceInterface, GestionCompatibilite, VerifCompatibilite {

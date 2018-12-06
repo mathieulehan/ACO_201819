@@ -8,6 +8,11 @@ import classes.categorie.Categorie;
 import exceptions.ParametreIncorrectException;
 import exceptions.ResultatIncorrectException;
 
+/**
+ * 
+ * @author GR4
+ *
+ */
 class CategorieTest {
 
 

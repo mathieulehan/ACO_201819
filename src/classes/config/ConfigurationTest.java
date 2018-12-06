@@ -1,5 +1,7 @@
 package classes.config;
 
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.util.Iterator;
 import java.util.Observable;
 
@@ -12,7 +14,7 @@ import exceptions.ResultatIncorrectException;
 /**
  * Exemple d'une configuration avec une piece pour le moment
  * Cette classe est une classe Observable
- * @author Thomas
+ * @author GR4
  *
  */
 public class ConfigurationTest extends Observable {
@@ -55,7 +57,7 @@ public class ConfigurationTest extends Observable {
 	 * @throws ActionPieceInvalideException 
 	 */
 	public static void main(String[] args) throws ParametreIncorrectException, ResultatIncorrectException, ActionPieceInvalideException {
-		Categorie.initialiserCategories(); // initialisation des categories
+		Categorie.initialiserCategories(); // initialisation des categories & des pieces
 		ConfigVoiture configV = new ConfigVoiture();
 		configV.ajouterPiece("EG100");
 		Iterator<Piece> it = configV.getConfiguration().iterator();
@@ -66,8 +68,22 @@ public class ConfigurationTest extends Observable {
 		
 		//Il me faut toutes les pieces par categorie 
 		//que je puisse choisir une piece dans une categorie et la mettre dans ma configuration actuelle
-		//il faut mettre a jour en fonction des incompatibilites
 		//mettre une configuration de base 
+		
+	}
+	
+	/**
+	 * Configuration de base
+	 * @param cv
+	 * @throws ParametreIncorrectException 
+	 * @throws ResultatIncorrectException 
+	 * @throws ActionPieceInvalideException 
+	 */
+	public void setConfigExemple(ConfigVoiture cv) throws ActionPieceInvalideException, ResultatIncorrectException, ParametreIncorrectException {
+		cv.ajouterPiece("EG133");
+		cv.ajouterPiece("XS");
+		// Ajout de la piece IS car necessaire a la piece XS
+		cv.ajouterPiece("TA5");
 	}
 
 }

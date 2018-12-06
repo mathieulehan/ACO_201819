@@ -12,6 +12,11 @@ import classes.piece.Piece;
 import exceptions.ParametreIncorrectException;
 import exceptions.ResultatIncorrectException;
 
+/**
+ * 
+ * @author GR4
+ *
+ */
 class PieceTest {
 	
 	
