@@ -15,7 +15,7 @@ import exceptions.ParametreIncorrectException;
 import exceptions.ResultatIncorrectException;
 
 /**
- * Classe Categorie, implementant une interface CategorieInterface, s'agissant d'une Map ayant pour : 
+ * Classe Categorie est une Map ayant pour : 
  * - Cle : le nom de la categorie
  * - Valeurs (List) : les pieces associees a une categorie
  * 
