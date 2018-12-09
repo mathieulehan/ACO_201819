@@ -7,11 +7,8 @@ import java.util.Arrays;
 import java.util.HashSet;
 
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import classes.categorie.Categorie;
-import classes.config.ConfigVoiture;
 import classes.piece.Piece;
 import classes.piece.TypePiece;
 import exceptions.ParametreIncorrectException;
@@ -24,8 +21,6 @@ import exceptions.ResultatIncorrectException;
  */
 class TypePieceTest {
 	
-	ConfigVoiture cv = new ConfigVoiture();
-	
 	/**
 	 * Initialise toutes les categories et leurs pieces pour tous les tests
 	 * @throws ParametreIncorrectException
@@ -33,15 +28,7 @@ class TypePieceTest {
 	 */
 	@BeforeAll
 	static void init() throws ResultatIncorrectException, ParametreIncorrectException  {
-		Categorie.initialiserCategories();
-	}
-	
-	/**
-	 * Reinitialise la configuration pour chaque test
-	 */
-	@BeforeEach
-	private void init2() {
-		this.cv = new ConfigVoiture();
+		TypePiece.initialiserPieces();
 	}
 	
 	/**
