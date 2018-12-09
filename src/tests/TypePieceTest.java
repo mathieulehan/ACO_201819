@@ -22,7 +22,7 @@ import exceptions.ResultatIncorrectException;
 class TypePieceTest {
 	
 	/**
-	 * Initialise toutes les categories et leurs pieces pour tous les tests
+	 * Initialise les pieces pour tous les tests
 	 * @throws ParametreIncorrectException
 	 * @throws ResultatIncorrectException
 	 */

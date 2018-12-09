@@ -7,8 +7,8 @@ import java.util.HashSet;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-import classes.categorie.Categorie;
 import classes.piece.Piece;
+import classes.piece.TypePiece;
 import exceptions.ParametreIncorrectException;
 import exceptions.ResultatIncorrectException;
 
@@ -26,7 +26,7 @@ class PieceTest {
 	 */
 	@BeforeAll
 	static void init() throws ParametreIncorrectException, ResultatIncorrectException {
-		Categorie.initialiserCategories();
+		TypePiece.initialiserPieces();
 	}
 
 	/**
