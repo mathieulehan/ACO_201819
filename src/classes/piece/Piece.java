@@ -5,7 +5,6 @@ import java.util.Objects;
 import java.util.Set;
 
 import exceptions.ParametreIncorrectException;
-import exceptions.ResultatIncorrectException;
 
 /**
  * Classe possedant des methodes permettant de gerer les pieces
@@ -31,7 +30,7 @@ public class Piece implements PieceInterface, GestionCompatibilite, VerifCompati
 		if(nouveauNom == "") throw new ParametreIncorrectException("Le nom de la nouvelle piece est incorrect");
 		for(Piece p : TypePiece.getPieces()) {
 			if(nouveauNom == p.getNom()) {
-				throw new ParametreIncorrectException("Le nom de la nouvelle piece existe de ja ");
+				throw new ParametreIncorrectException("Le nom de la nouvelle piece existe deja ");
 			}
 		}
 		this.nom = nouveauNom;
@@ -40,15 +39,13 @@ public class Piece implements PieceInterface, GestionCompatibilite, VerifCompati
 		this.necessites = new HashSet<>();
 	}
 
+	/**
+	 * @return le nom de la piece
+	 */
 	public String getNom() {
 		return this.nom;
 	}
-
-	/**
-	 * @param nom le nom de la piece
-	 * @throws ParametreIncorrectException 
-	 * @throws ResultatIncorrectException 
-	 */
+	
 	public void setNom(String nom) throws ParametreIncorrectException {
 		String nouveauNom = Objects.requireNonNull(nom);
 		if(nouveauNom == "") throw new ParametreIncorrectException("Le nom de la nouvelle piece est incorrect");

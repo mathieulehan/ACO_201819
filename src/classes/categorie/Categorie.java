@@ -70,6 +70,7 @@ public class Categorie {
 	}
 
 	/**
+	 * Recuperer la liste de pieces d'une categorie
 	 * @param la categorie des pieces que l'on souhaite recuperer
 	 * @throws ParametreIncorrectException si la categorie en parametre est null
 	 * @return Liste de pieces correspondant a la categorie en parametre

@@ -55,7 +55,7 @@ public class ConfigurationTest extends Observable {
 	}
 	
 	/**
-	 * Recupere la configuration en cours de l'utilisateur
+	 * L'utilisateur recupere sa configuration en cours
 	 * @return un set de pieces
 	 */
 	public Set<Piece> actionGetConfiguration() {
@@ -63,7 +63,31 @@ public class ConfigurationTest extends Observable {
 	}
 	
 	/**
-	 * Configuration de base
+	 * L'utilisateur affiche les categories restantes de sa configuration
+	 * @return un set de categories
+	 */
+	public Set<String> actionGetCategoriesRestantes() {
+		return this.cv.getCategoriesRestantes();
+	}
+	
+	/**
+	 * L'utilisateur affiche les pieces incompatibles à sa configuration courante
+	 * @return un set de pieces
+	 */
+	public Set<Piece> actionGetPiecesIncompatibles() {
+		return this.cv.getMesIncompatibilites();
+	}
+	
+	/**
+	 * L'utilisateur souhaite valider sa configuration 
+	 * @return true si la configuration comporte 4 pieces compatibles (une piece dans chaque categorie), false sinon
+	 */
+	public boolean actionValidationConfiguration() {
+		return this.cv.estComplet();
+	}
+	
+	/**
+	 * L'utilisateur souhaite utiliser une configuration de base
 	 * @throws ParametreIncorrectException 
 	 * @throws ResultatIncorrectException 
 	 * @throws ActionPieceInvalideException 

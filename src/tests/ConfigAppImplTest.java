@@ -2,6 +2,8 @@ package tests;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.util.HashSet;
+
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -9,6 +11,7 @@ import org.junit.jupiter.api.Test;
 import classes.categorie.Categorie;
 import classes.config.ConfigAppImpl;
 import classes.config.ConfigurationTest;
+import classes.piece.TypePiece;
 import exceptions.ActionPieceInvalideException;
 import exceptions.ParametreIncorrectException;
 import exceptions.ResultatIncorrectException;
@@ -82,5 +85,58 @@ class ConfigAppImplTest {
 
 		this.observable.getConfigurationStandard();
 		assertEquals(4, this.observable.actionGetConfiguration().size());
+		
+		assertTrue(this.observable.actionGetConfiguration().contains(TypePiece.chercherPieceParNom("EG133")));
+		assertTrue(this.observable.actionGetConfiguration().contains(TypePiece.chercherPieceParNom("XS")));
+		assertTrue(this.observable.actionGetConfiguration().contains(TypePiece.chercherPieceParNom("IS")));
+		assertTrue(this.observable.actionGetConfiguration().contains(TypePiece.chercherPieceParNom("TA5")));
+
+		assertFalse(this.observable.actionGetConfiguration().contains(TypePiece.chercherPieceParNom("EH120")));
+	}
+	
+	
+	/**
+	 * L'utilisateur souhaite voir les categories restantes dans sa configuration
+	 * @throws ActionPieceInvalideException
+	 * @throws ResultatIncorrectException
+	 * @throws ParametreIncorrectException
+	 */
+	@Test
+	public void voir_list_categories_restantes() throws ActionPieceInvalideException, ResultatIncorrectException, ParametreIncorrectException {
+
+		this.observable.getConfigurationStandard();
+		this.observable.actionSupprimerPiece("TA5");
+		
+		HashSet<String> categoriesRestantes = new HashSet<>();
+		categoriesRestantes.add("TRANSMISSION");
+		assertEquals(categoriesRestantes, this.observable.actionGetCategoriesRestantes());
+	}
+	
+	
+	/**
+	 * L'utilisateur a une configuration valide
+	 * @throws ActionPieceInvalideException
+	 * @throws ResultatIncorrectException
+	 * @throws ParametreIncorrectException
+	 */
+	@Test
+	public void configuration_valide() throws ActionPieceInvalideException, ResultatIncorrectException, ParametreIncorrectException {
+
+		this.observable.getConfigurationStandard();
+		assertTrue(this.observable.actionValidationConfiguration());
+	}
+	
+	/**
+	 * L'utilisateur a une configuration invalide
+	 * @throws ActionPieceInvalideException
+	 * @throws ResultatIncorrectException
+	 * @throws ParametreIncorrectException
+	 */
+	@Test
+	public void configuration_invalide() throws ActionPieceInvalideException, ResultatIncorrectException, ParametreIncorrectException {
+
+		this.observable.getConfigurationStandard();
+		this.observable.actionSupprimerPiece("TA5");
+		assertFalse(this.observable.actionValidationConfiguration());
 	}
 }

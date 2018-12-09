@@ -71,7 +71,7 @@ public class ConfigVoiture implements ConfigInterface {
 	 * Ajouter les pieces necessaires a une autre automatiquement
 	 * @param la piece
 	 * @throws ResultatIncorrectException
-	 * @throws ParametreIncorrectException si piece introuvable
+	 * @throws ParametreIncorrectException
 	 * @throws ActionPieceInvalideException si la piece est deja dans ma configuration 
 	 */
 	private void ajouterPiecesNecessaires(Piece piece) throws ResultatIncorrectException, ActionPieceInvalideException, ParametreIncorrectException {
@@ -92,11 +92,10 @@ public class ConfigVoiture implements ConfigInterface {
 	 * @return true si la piece est supprimee de ma configuration, false sinon
 	 * @throws ActionPieceInvalideException si la piece n'est pas dans ma configuration
 	 * @throws ResultatIncorrectException 
-	 * @throws ParametreIncorrectException
 	 * @throws ActionPieceInvalideException si la piece est deja dans ma configuration
 	 */
 	@Override
-	public boolean supprimerPiece(String p) throws ActionPieceInvalideException, ResultatIncorrectException, ParametreIncorrectException {
+	public boolean supprimerPiece(String p) throws ActionPieceInvalideException, ResultatIncorrectException {
 		String pieceNonNull = Objects.requireNonNull(p);
 		Piece piece = TypePiece.chercherPieceParNom(pieceNonNull);
 		if(!maConfig.contains(piece) ) throw new ActionPieceInvalideException("Cette piece n'est pas dans votre configuration");
@@ -112,10 +111,9 @@ public class ConfigVoiture implements ConfigInterface {
 	 * Supprime les pieces necessaires a une autre automatiquement
 	 * @param la piece
 	 * @throws ResultatIncorrectException
-	 * @throws ParametreIncorrectException si piece trouvable
 	 * @throws ActionPieceInvalideException si la piece n'est pas dans ma configuration
 	 */
-	private void supprimerPieceNecessaire(Piece piece) throws ResultatIncorrectException, ParametreIncorrectException, ActionPieceInvalideException {
+	private void supprimerPieceNecessaire(Piece piece) throws ResultatIncorrectException, ActionPieceInvalideException {
 		if(!piece.getNecessites().isEmpty()) {
 			Iterator<Piece> it = piece.getNecessites().iterator();
 			while(it.hasNext()) {
