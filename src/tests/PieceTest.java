@@ -34,11 +34,9 @@ class PieceTest {
 	 * - Nom de piece ou description null 	-> NullPointerException
 	 * - Nom de piece egal a "" 			-> ParametreIncorrectException
 	 * - Nom de piece deja utilisee 		-> ParametreIncorrectException
-	 * @throws ParametreIncorrectException 
-	 * @throws ResultatIncorrectException 
 	 */
 	@Test
-	public void constructeur_piece_incorrects() throws ParametreIncorrectException, ResultatIncorrectException {
+	public void constructeur_piece_incorrect() {
 		assertThrows(NullPointerException.class, 
 				() -> {new Piece(null, "Piece de test");});
 		assertThrows(ParametreIncorrectException.class, 
@@ -55,10 +53,9 @@ class PieceTest {
 	 * - Nom de piece egal a "" 	-> ParametreIncorrectException
 	 * - Nom de piece deja utilisee -> ParametreIncorrectException
 	 * @throws ParametreIncorrectException 
-	 * @throws ResultatIncorrectException 
 	 */
 	@Test
-	public void modification_nom_incorrects() throws ParametreIncorrectException, ResultatIncorrectException {
+	public void modification_nom_incorrecte() throws ParametreIncorrectException {
 		Piece pieceTest = new Piece("Piece", "Piece de test");
 		assertThrows(NullPointerException.class, 
 				() -> {pieceTest.setNom(null);});
@@ -74,7 +71,7 @@ class PieceTest {
 	 * @throws ParametreIncorrectException 
 	 */
 	@Test
-	public void modification_description_incorrect() throws ParametreIncorrectException {
+	public void modification_description_incorrecte() throws ParametreIncorrectException {
 		Piece pieceTest = new Piece("Piece", "Piece de test");
 		assertThrows(NullPointerException.class, 
 				() -> {pieceTest.setDescription(null);});
@@ -84,11 +81,10 @@ class PieceTest {
 	/**
 	 * On initialise un set d'incompatibilites grace au setter, le set peut etre vide
 	 * Si le parametre du setter est null -> NullPointerException
-	 * @throws ResultatIncorrectException
 	 * @throws ParametreIncorrectException 
 	 */
 	@Test
-	public void modification_incompatibilites_incorrect() throws ParametreIncorrectException {
+	public void modification_incompatibilites_incorrecte() throws ParametreIncorrectException {
 		Piece pieceTest = new Piece("Piece", "Piece de test");
 		assertThrows(NullPointerException.class, 
 				() -> pieceTest.setIncompatibilites(null));
@@ -102,11 +98,10 @@ class PieceTest {
 	/**
 	 * On initialise un set de necessites grace au setter, le set peut etre vide
 	 * Si le parametre du setter est null -> NullPointerException
-	 * @throws ResultatIncorrectException
 	 * @throws ParametreIncorrectException 
 	 */
 	@Test
-	public void modification_necessites_incorrect() throws ResultatIncorrectException, ParametreIncorrectException {
+	public void modification_necessites_incorrecte() throws ParametreIncorrectException {
 		Piece pieceTest = new Piece("Piece", "Piece de test");
 		assertThrows(NullPointerException.class, 
 				() -> pieceTest.setIncompatibilites(null));
@@ -121,7 +116,7 @@ class PieceTest {
 	 * @throws ParametreIncorrectException 
 	 */
 	@Test
-	void ajout_incompatibilite_valide() throws ParametreIncorrectException  {
+	void ajout_incompatibilite_valide() throws ParametreIncorrectException {
 		Piece pieceTest = new Piece("Piece", "Piece de test");
 		assertTrue(pieceTest.getIncompatibilites().size() == 0);
 		
@@ -142,7 +137,7 @@ class PieceTest {
 	 * @throws ParametreIncorrectException
 	 */
 	@Test
-	void ajout_necessite_valide() throws ParametreIncorrectException{
+	void ajout_necessite_valide() throws ParametreIncorrectException {
 		Piece pieceTest = new Piece("Piece", "Piece de test");
 		assertTrue(pieceTest.getNecessites().size() == 0);
 		
@@ -224,7 +219,7 @@ class PieceTest {
 	 * @throws ParametreIncorrectException 
 	 */
 	@Test
-	void suppression_incompatibilite_necessite_incorrect() throws ParametreIncorrectException {
+	void suppression_incompatibilite_necessite_incorrecte() throws ParametreIncorrectException {
 		Piece pieceTest = new Piece("Piece", "Piece de test");
 
 		Piece incompatibilite = new Piece("Incompatibilite", "Incompatibilte de test");
