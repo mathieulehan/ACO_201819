@@ -162,6 +162,7 @@ public class Piece implements GestionCompatibilite, VerifCompatibilite {
 	 * On verifie qu'une piece n'est pas incompatible avec une autre piece
 	 * @return true si la piece n'est pas presente dans les incompatibilites, false sinon
 	 */
+	@Override
 	public boolean estIncompatible (Piece piece) {
 		Piece autrePiece = Objects.requireNonNull(piece);
 		return this.incompatibilites.contains(autrePiece);

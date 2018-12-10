@@ -249,4 +249,21 @@ class PieceTest {
 		assertThrows(NullPointerException.class, 
 				() -> {pieceTest.suppressionNecessite(null);});
 	}
+	
+	/**
+	 * Verification de la methode permettant de savoir si deux pieces sont incompatibles entre elles
+	 * @throws ResultatIncorrectException 
+	 */
+	@Test
+	public void piece_estIncompatible() throws ResultatIncorrectException {
+		Piece EG100 = TypePiece.chercherPieceParNom("EG100");
+		Piece TSF7 = TypePiece.chercherPieceParNom("TSF7");
+		Piece TM5 = TypePiece.chercherPieceParNom("TM5");
+		
+		assertTrue(EG100.estIncompatible(TSF7));
+		assertFalse(EG100.estIncompatible(TM5));
+		assertFalse(TSF7.estIncompatible(TM5));
+		
+		
+	}
 }
