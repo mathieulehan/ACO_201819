@@ -6,6 +6,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.function.Consumer;
+import java.util.function.Supplier;
 
 import exceptions.ParametreIncorrectException;
 import exceptions.ResultatIncorrectException;
@@ -27,7 +29,8 @@ public class TypePiece {
 	 * Donnees brutes dans un catalogue, il s'agit des pieces standards
 	 */
 	private static Map<String, String> cataloguePiecesStandards  = new HashMap<>();
-
+	private static Map<String, Integer> cataloguePrixPieces  = new HashMap<>();
+	
 	/**
 	 * Getter de la liste de Piece 
 	 * @return List de piece
@@ -44,13 +47,23 @@ public class TypePiece {
 	public static void initialiserPieces () throws ResultatIncorrectException, ParametreIncorrectException {
 
 		initDonneesBrutes();
-
+		
+		Set<String> colors = new HashSet<>();
+		colors.add("red");
+		colors.add("white");
+		colors.add("blue");
+		
 		/**
 		 * Initialisation du notre catalogue de pieces
 		 */
 		for (String nomPiece : cataloguePiecesStandards.keySet()) {
-			Piece nouvellePiece = new Piece(nomPiece, cataloguePiecesStandards.get(nomPiece));
+			Piece nouvellePiece = new Piece(nomPiece, cataloguePiecesStandards.get(nomPiece), cataloguePrixPieces.get(nomPiece));
 			pieces.add(nouvellePiece);
+			// V2 try : Consumer & Supplier
+			Consumer<String> c = System.out::println; // Syso lors du setPropriete
+			Supplier<String> s = () -> new String(); // valeur par defaut
+			String valeur = "white";
+			nouvellePiece.ajoutPropriete("couleur", s, c, valeur, colors); // creation de la propriete
 		}
 
 		/**
@@ -121,23 +134,41 @@ public class TypePiece {
 	 */
 	private static void initDonneesBrutes () {
 		cataloguePiecesStandards.put("EG100", "Gasoline 100kW");
+		cataloguePrixPieces.put("EG100", 1);
 		cataloguePiecesStandards.put("EG133", "Gasoline 133kW");
+		cataloguePrixPieces.put("EG133", 2);
 		cataloguePiecesStandards.put("EG210", "Gasoline 210kW");
+		cataloguePrixPieces.put("EG210", 3);
 		cataloguePiecesStandards.put("ED110", "Diesel 110kW");
+		cataloguePrixPieces.put("ED110", 4);
 		cataloguePiecesStandards.put("ED180", "Diesel 180kW");
+		cataloguePrixPieces.put("ED180", 5);
 		cataloguePiecesStandards.put("EH120", "Gasoline/electric hybrid 120kW");
+		cataloguePrixPieces.put("EH120", 6);
 		cataloguePiecesStandards.put("TM5", "Manual 5 gears");
+		cataloguePrixPieces.put("TM5", 7);
 		cataloguePiecesStandards.put("TM6", "Manual 6 gears");
+		cataloguePrixPieces.put("TM6", 8);
 		cataloguePiecesStandards.put("TA5", "Automatic 5 gears");
+		cataloguePrixPieces.put("TA5", 9);
 		cataloguePiecesStandards.put("TS6", "Sequential 6 gears");
+		cataloguePrixPieces.put("TS6", 10);
 		cataloguePiecesStandards.put("TSF7", "Sequential 7 gears 4 wheels drive");
+		cataloguePrixPieces.put("TSF7", 11);
 		cataloguePiecesStandards.put("TC120", "Converter 120kW max");
+		cataloguePrixPieces.put("TC120", 12);
 		cataloguePiecesStandards.put("XC", "Classic paint");
+		cataloguePrixPieces.put("XC", 13);
 		cataloguePiecesStandards.put("XM", "Metallic paint");
+		cataloguePrixPieces.put("XM", 14);
 		cataloguePiecesStandards.put("XS", "Red paint and sport decoration");
+		cataloguePrixPieces.put("XS", 15);
 		cataloguePiecesStandards.put("IN",  "Standard interior");
+		cataloguePrixPieces.put("IN", 16);
 		cataloguePiecesStandards.put("IH", "High-end interior");
+		cataloguePrixPieces.put("IH", 17);
 		cataloguePiecesStandards.put("IS", "Sport-finish");
+		cataloguePrixPieces.put("IS", 18);
 	}
 
 	/**

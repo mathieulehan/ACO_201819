@@ -1,11 +1,16 @@
 package classes.piece;
 
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.Set;
+import java.util.function.Consumer;
+import java.util.function.Supplier;
 
 import exceptions.ParametreIncorrectException;
-import exceptions.ResultatIncorrectException;
 
 /**
  * Classe possedant des methodes permettant de gerer les pieces
@@ -18,37 +23,116 @@ public class Piece implements PieceInterface, GestionCompatibilite, VerifCompati
 	private String description;
 	private Set<Piece> incompatibilites;
 	private Set<Piece> necessites;
+	private double prix;
+	
+	private class Propriete{
+		public final Supplier<String> getter;
+		public final Consumer<String> setter;
+		public String valeur;
+		public final Set<String> valeursPossibles;
+		public Propriete(Supplier<String> getter, Consumer<String> setter, String valeur, Set<String> valeursPossibles){
+			this.getter = getter;
+			this.setter = setter;
+			this.valeur = valeur;
+			this.valeursPossibles = valeursPossibles;
+		}
+	}
+	
+	private Map<String, Propriete> proprietes = new HashMap<>();
 
+	protected void ajoutPropriete(String nom, Supplier<String> getter, Consumer<String> setter, String valeur, Set<String> valeursPossibles) {
+		proprietes.put(nom, new Propriete(getter, setter, valeur, valeursPossibles));
+	}
+	
+	@Override
+	public Set<String> getNomsPropriete(){
+		return Collections.unmodifiableSet(proprietes.keySet());
+	}
+	
+	@Override
+	public Optional<String> getPropriete(String nomPropriete){
+		Objects.requireNonNull(nomPropriete);
+		if(proprietes.containsKey(nomPropriete)) {
+//			return Optional.of(proprietes.get(nomPropriete).getter.get());
+			return Optional.of(proprietes.get(nomPropriete).valeur);
+		}
+		return Optional.empty();
+	}
+	
+	@Override
+	public void setPropriete(String nomPropriete, String valeurPropriete) {
+		Objects.requireNonNull(nomPropriete);
+		Objects.requireNonNull(valeurPropriete);
+		if((proprietes.containsKey(nomPropriete)) && (proprietes.get(nomPropriete).setter != null) && getValeursProprietePossibles(nomPropriete).contains(valeurPropriete)) {
+			proprietes.get(nomPropriete).setter.accept(valeurPropriete);
+			proprietes.get(nomPropriete).valeur = valeurPropriete;
+		}
+		else {
+			throw new IllegalArgumentException("nom ou valeur invalide pour : " + nomPropriete);
+		}
+	}
+	
+	@Override
+	public Set<String> getValeursProprietePossibles(String nomPropriete){
+		if(proprietes.containsKey(nomPropriete)) {
+			return Collections.unmodifiableSet(proprietes.get(nomPropriete).valeursPossibles);
+		}
+		return Collections.emptySet();
+	}
+	
+	protected double getPrice() {
+		if(this.getNomsPropriete().contains("couleur")) {
+			String couleur = this.getPropriete("couleur").get();
+			switch(couleur) {
+			case "blue": return 500;
+			case "red": return 400;
+			case "white": return 0;
+			default: return 0;
+			}
+		}
+		return 0;
+	}
+
+	public double getPrix() {
+		return prix;
+	}
+
+	public void setPrix(double prix) {
+		this.prix = prix;
+	}
+	
+	
+	// V1 __________________________________________________________________________________
+	
 	/**
 	 * Constructeur
 	 * @param nom le nom de la piece
 	 * @param description la description de la piece
 	 * @throws ParametreIncorrectException si nom de piece deja existant 
 	 */
-	public Piece(String nom, String description) throws ParametreIncorrectException {
+	public Piece(String nom, String description, int nouveauPrix) throws ParametreIncorrectException {
 		String nouveauNom = Objects.requireNonNull(nom);
 		String nouvelleDescription = Objects.requireNonNull(description);
 		if(nouveauNom == "") throw new ParametreIncorrectException("Le nom de la nouvelle piece est incorrect");
 		for(Piece p : TypePiece.getPieces()) {
 			if(nouveauNom == p.getNom()) {
-				throw new ParametreIncorrectException("Le nom de la nouvelle piece existe de ja ");
+				throw new ParametreIncorrectException("Le nom de la nouvelle piece existe deja ");
 			}
 		}
 		this.nom = nouveauNom;
 		this.description = nouvelleDescription;
+		this.prix = nouveauPrix;
 		this.incompatibilites = new HashSet<>();
 		this.necessites = new HashSet<>();
 	}
 
+	/**
+	 * @return le nom de la piece
+	 */
 	public String getNom() {
 		return this.nom;
 	}
-
-	/**
-	 * @param nom le nom de la piece
-	 * @throws ParametreIncorrectException 
-	 * @throws ResultatIncorrectException 
-	 */
+	
 	public void setNom(String nom) throws ParametreIncorrectException {
 		String nouveauNom = Objects.requireNonNull(nom);
 		if(nouveauNom == "") throw new ParametreIncorrectException("Le nom de la nouvelle piece est incorrect");
@@ -165,4 +249,5 @@ public class Piece implements PieceInterface, GestionCompatibilite, VerifCompati
 		Piece autrePiece = Objects.requireNonNull(piece);
 		return this.incompatibilites.contains(autrePiece);
 	}
+
 }

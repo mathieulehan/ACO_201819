@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Test;
 
 import classes.categorie.Categorie;
 import classes.piece.Piece;
+import classes.piece.TypePiece;
 import exceptions.ParametreIncorrectException;
 import exceptions.ResultatIncorrectException;
 
@@ -40,13 +41,22 @@ class PieceTest {
 	@Test
 	public void constructeur_piece_incorrects() throws ParametreIncorrectException, ResultatIncorrectException {
 		assertThrows(NullPointerException.class, 
-				() -> {new Piece(null, "Piece de test");});
+				() -> {new Piece(null, "Piece de test", 1);});
 		assertThrows(ParametreIncorrectException.class, 
-				() -> {new Piece("", "Piece de test");});
+				() -> {new Piece("", "Piece de test", 1);});
 		assertThrows(ParametreIncorrectException.class, 
-				() -> {new Piece("EG100", "Piece de test");});
+				() -> {new Piece("EG100", "Piece de test", 1);});
 		assertThrows(NullPointerException.class, 
-				() -> {new Piece("Piece", null);});
+				() -> {new Piece("Piece", null, 1);});
+		System.out.println(TypePiece.chercherPieceParNom("TA5").getNomsPropriete());
+		System.out.println(TypePiece.chercherPieceParNom("TA5").getPropriete("couleur").get());
+		TypePiece.chercherPieceParNom("TA5").setPropriete("couleur", "red");
+		System.out.println(TypePiece.chercherPieceParNom("TA5").getValeursProprietePossibles("couleur"));
+		System.out.println(TypePiece.chercherPieceParNom("TA5").getPropriete("couleur").get());
+		TypePiece.chercherPieceParNom("TA5").setPropriete("couleur", "blue");
+		System.out.println(TypePiece.chercherPieceParNom("TA5").getValeursProprietePossibles("couleur"));
+		System.out.println(TypePiece.chercherPieceParNom("TA5").getPropriete("couleur").get());
+		System.out.println(TypePiece.chercherPieceParNom("TA5").getPrix());
 	}
 	
 	/**
@@ -59,7 +69,7 @@ class PieceTest {
 	 */
 	@Test
 	public void modification_nom_incorrects() throws ParametreIncorrectException, ResultatIncorrectException {
-		Piece pieceTest = new Piece("Piece", "Piece de test");
+		Piece pieceTest = new Piece("Piece", "Piece de test", 1);
 		assertThrows(NullPointerException.class, 
 				() -> {pieceTest.setNom(null);});
 		assertThrows(ParametreIncorrectException.class, 
@@ -75,7 +85,7 @@ class PieceTest {
 	 */
 	@Test
 	public void modification_description_incorrect() throws ParametreIncorrectException {
-		Piece pieceTest = new Piece("Piece", "Piece de test");
+		Piece pieceTest = new Piece("Piece", "Piece de test", 1);
 		assertThrows(NullPointerException.class, 
 				() -> {pieceTest.setDescription(null);});
 		assertEquals(pieceTest.getDescription(), "Piece de test");
@@ -89,7 +99,7 @@ class PieceTest {
 	 */
 	@Test
 	public void modification_incompatibilites_incorrect() throws ParametreIncorrectException {
-		Piece pieceTest = new Piece("Piece", "Piece de test");
+		Piece pieceTest = new Piece("Piece", "Piece de test", 1);
 		assertThrows(NullPointerException.class, 
 				() -> pieceTest.setIncompatibilites(null));
 		assertTrue(pieceTest.getIncompatibilites().size() == 0);
@@ -107,7 +117,7 @@ class PieceTest {
 	 */
 	@Test
 	public void modification_necessites_incorrect() throws ResultatIncorrectException, ParametreIncorrectException {
-		Piece pieceTest = new Piece("Piece", "Piece de test");
+		Piece pieceTest = new Piece("Piece", "Piece de test", 1);
 		assertThrows(NullPointerException.class, 
 				() -> pieceTest.setIncompatibilites(null));
 		assertTrue(pieceTest.getIncompatibilites().size() == 0);
@@ -122,15 +132,15 @@ class PieceTest {
 	 */
 	@Test
 	void ajout_incompatibilite_valide() throws ParametreIncorrectException  {
-		Piece pieceTest = new Piece("Piece", "Piece de test");
+		Piece pieceTest = new Piece("Piece", "Piece de test", 1);
 		assertTrue(pieceTest.getIncompatibilites().size() == 0);
 		
-		Piece incompatibilite = new Piece("Incompatibilite", "Incompatibilte de test");
+		Piece incompatibilite = new Piece("Incompatibilite", "Incompatibilte de test", 1);
 		pieceTest.ajoutIncompatibilite(incompatibilite);
 		assertTrue(pieceTest.getIncompatibilites().size() == 1);
 		assertTrue(pieceTest.getIncompatibilites().contains(incompatibilite));
 		
-		Piece incompatibilite2 = new Piece("Deuxieme incompatibilite", "Incompatibilite de test");
+		Piece incompatibilite2 = new Piece("Deuxieme incompatibilite", "Incompatibilite de test", 1);
 		pieceTest.ajoutIncompatibilite(incompatibilite2);
 		assertTrue(pieceTest.getIncompatibilites().size() == 2);
 		assertTrue(pieceTest.getIncompatibilites().contains(incompatibilite) 
@@ -143,15 +153,15 @@ class PieceTest {
 	 */
 	@Test
 	void ajout_necessite_valide() throws ParametreIncorrectException{
-		Piece pieceTest = new Piece("Piece", "Piece de test");
+		Piece pieceTest = new Piece("Piece", "Piece de test", 1);
 		assertTrue(pieceTest.getNecessites().size() == 0);
 		
-		Piece necessite = new Piece("Necessite", "Necessite de test");
+		Piece necessite = new Piece("Necessite", "Necessite de test", 1);
 		pieceTest.ajoutNecessite(necessite);
 		assertTrue(pieceTest.getNecessites().size() == 1);
 		assertTrue(pieceTest.getNecessites().contains(necessite));
 		
-		Piece necessite2 = new Piece("Deuxieme necessite", "Necessite de test");
+		Piece necessite2 = new Piece("Deuxieme necessite", "Necessite de test", 1);
 		pieceTest.ajoutNecessite(necessite2);
 		assertTrue(pieceTest.getNecessites().size() == 2);
 		assertTrue((pieceTest.getNecessites().contains(necessite) 
@@ -166,16 +176,16 @@ class PieceTest {
 	 */
 	@Test
 	void ajout_incompatibilite_necessite_incorrect() throws ParametreIncorrectException {
-		Piece pieceTest = new Piece("Piece", "Piece de test");
+		Piece pieceTest = new Piece("Piece", "Piece de test", 1);
 
-		Piece incompatibilite = new Piece("Incompatibilite", "Incompatibilte de test");
+		Piece incompatibilite = new Piece("Incompatibilite", "Incompatibilte de test", 1);
 		pieceTest.ajoutIncompatibilite(incompatibilite);
 		assertThrows(ParametreIncorrectException.class,
 				() -> pieceTest.ajoutIncompatibilite(incompatibilite)); // Piece deja ajoutee, donc elle ne s'ajoute pas
 		assertThrows(NullPointerException.class, 
 				() -> {pieceTest.ajoutIncompatibilite(null);}); 
 
-		Piece necessite = new Piece("Necessite", "Necessite de test");
+		Piece necessite = new Piece("Necessite", "Necessite de test", 1);
 		pieceTest.ajoutNecessite(necessite);
 		assertThrows(ParametreIncorrectException.class,
 				() -> pieceTest.ajoutNecessite(necessite)); // Piece deja ajoutee, donc elle ne s'ajoute pas
@@ -189,10 +199,10 @@ class PieceTest {
 	 */
 	@Test
 	void suppression_incompatibilite_valide() throws ParametreIncorrectException {
-		Piece pieceTest = new Piece("Piece", "Piece de test");
+		Piece pieceTest = new Piece("Piece", "Piece de test", 1);
 		assertTrue(pieceTest.getIncompatibilites().size() == 0);
 		
-		Piece incompatibilite = new Piece("Incompatibilite", "Incompatibilite de test");
+		Piece incompatibilite = new Piece("Incompatibilite", "Incompatibilite de test", 1);
 		pieceTest.ajoutIncompatibilite(incompatibilite);
 		assertTrue(pieceTest.getIncompatibilites().size() == 1);
 		
@@ -206,10 +216,10 @@ class PieceTest {
 	 */
 	@Test
 	void suppression_necessite_valide() throws ParametreIncorrectException {
-		Piece pieceTest = new Piece("Piece", "Piece de test");
+		Piece pieceTest = new Piece("Piece", "Piece de test", 1);
 		assertTrue(pieceTest.getNecessites().size() == 0);
 		
-		Piece necessite = new Piece("Necessites", "Necessites de test");
+		Piece necessite = new Piece("Necessites", "Necessites de test", 1);
 		pieceTest.ajoutNecessite(necessite);
 		assertTrue(pieceTest.getNecessites().size() == 1);
 		
@@ -225,15 +235,15 @@ class PieceTest {
 	 */
 	@Test
 	void suppression_incompatibilite_necessite_incorrect() throws ParametreIncorrectException {
-		Piece pieceTest = new Piece("Piece", "Piece de test");
+		Piece pieceTest = new Piece("Piece", "Piece de test", 1);
 
-		Piece incompatibilite = new Piece("Incompatibilite", "Incompatibilte de test");
+		Piece incompatibilite = new Piece("Incompatibilite", "Incompatibilte de test", 1);
 		assertThrows(ParametreIncorrectException.class,
 				() -> pieceTest.suppressionIncompatibilite(incompatibilite)); // Piece jamais ajoutee
 		assertThrows(NullPointerException.class, 
 				() -> {pieceTest.suppressionIncompatibilite(null);});
 
-		Piece necessite = new Piece("Necessite", "Necessite de test");
+		Piece necessite = new Piece("Necessite", "Necessite de test", 1);
 		assertThrows(ParametreIncorrectException.class,
 				() -> pieceTest.suppressionNecessite(necessite)); // Piece jamais ajoutee
 		assertThrows(NullPointerException.class, 
