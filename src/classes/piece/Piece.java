@@ -110,7 +110,7 @@ public class Piece implements PieceInterface, GestionCompatibilite, VerifCompati
 	 * @param description la description de la piece
 	 * @throws ParametreIncorrectException si nom de piece deja existant 
 	 */
-	public Piece(String nom, String description, Double double1) throws ParametreIncorrectException {
+	public Piece(String nom, String description, Double prix) throws ParametreIncorrectException {
 		String nouveauNom = Objects.requireNonNull(nom);
 		String nouvelleDescription = Objects.requireNonNull(description);
 		if(nouveauNom == "") throw new ParametreIncorrectException("Le nom de la nouvelle piece est incorrect");
@@ -121,7 +121,7 @@ public class Piece implements PieceInterface, GestionCompatibilite, VerifCompati
 		}
 		this.nom = nouveauNom;
 		this.description = nouvelleDescription;
-		this.prix = double1;
+		this.prix = prix;
 		this.incompatibilites = new HashSet<>();
 		this.necessites = new HashSet<>();
 	}
