@@ -2,6 +2,7 @@ package tests;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.util.Arrays;
 import java.util.HashSet;
 
 import org.junit.jupiter.api.BeforeAll;
@@ -11,6 +12,7 @@ import org.junit.jupiter.api.Test;
 import classes.categorie.Categorie;
 import classes.config.ConfigAppImpl;
 import classes.config.ConfigurationTest;
+import classes.piece.Piece;
 import classes.piece.TypePiece;
 import exceptions.ActionPieceInvalideException;
 import exceptions.ParametreIncorrectException;
@@ -73,6 +75,24 @@ class ConfigAppImplTest {
 		// Suppression de la piece EH120 car necessaire a la piece TC120
 		assertEquals(0, this.observable.actionGetConfiguration().size());
 	}
+	
+	/**
+	 * Ajouter la piece EG100 et voir les incompatibilites
+	 * @throws ActionPieceInvalideException
+	 * @throws ParametreIncorrectException
+	 * @throws ResultatIncorrectException
+	 */
+	@Test
+	void getIncompatibilites() throws ActionPieceInvalideException, ResultatIncorrectException, ParametreIncorrectException {
+
+		this.observable.actionAjouterPiece("XC");
+
+		HashSet<Piece> incompatilibitesSouhaitees = new HashSet<>();
+		incompatilibitesSouhaitees.addAll(Arrays.asList(TypePiece.chercherPieceParNom("EG210")));
+		assertEquals(incompatilibitesSouhaitees, this.observable.actionGetPiecesIncompatibles());
+
+	}
+	
 	
 	/**
 	 * L'utilisateur souhaite instancier la configuration existant deja 

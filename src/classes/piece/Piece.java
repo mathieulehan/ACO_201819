@@ -11,7 +11,7 @@ import exceptions.ParametreIncorrectException;
  * @author YMCA
  *
  */
-public class Piece implements PieceInterface, GestionCompatibilite, VerifCompatibilite {
+public class Piece implements GestionCompatibilite, VerifCompatibilite {
 
 	private String nom;
 	private String description;
@@ -46,6 +46,10 @@ public class Piece implements PieceInterface, GestionCompatibilite, VerifCompati
 		return this.nom;
 	}
 	
+	/**
+	 * @param le nom de la piece
+	 * @throws ParametreIncorrectException
+	 */
 	public void setNom(String nom) throws ParametreIncorrectException {
 		String nouveauNom = Objects.requireNonNull(nom);
 		if(nouveauNom == "") throw new ParametreIncorrectException("Le nom de la nouvelle piece est incorrect");

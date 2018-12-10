@@ -79,6 +79,21 @@ class PieceTest {
 	}
 	
 	/**
+	 * Setter de nom et de description valide
+	 * @throws ParametreIncorrectException 
+	 */
+	@Test
+	public void modification_nom_description_correcte() throws ParametreIncorrectException {
+		Piece pieceTest = new Piece("Piece", "Piece de test");
+
+		pieceTest.setNom("Nouveau nom");
+		assertEquals(pieceTest.getNom(), "Nouveau nom");
+		
+		pieceTest.setDescription("Nouvelle description");
+		assertEquals(pieceTest.getDescription(), "Nouvelle description");
+	}
+	
+	/**
 	 * On initialise un set d'incompatibilites grace au setter, le set peut etre vide
 	 * Si le parametre du setter est null -> NullPointerException
 	 * @throws ParametreIncorrectException 

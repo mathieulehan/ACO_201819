@@ -2,9 +2,14 @@ package tests;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.util.Arrays;
+import java.util.LinkedList;
+
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import classes.categorie.Categorie;
+import classes.piece.Piece;
+import classes.piece.TypePiece;
 import exceptions.ParametreIncorrectException;
 import exceptions.ResultatIncorrectException;
 
@@ -21,7 +26,7 @@ class CategorieTest {
 	 * @throws ResultatIncorrectException
 	 */
 	@BeforeAll
-	static void init() throws ResultatIncorrectException, ParametreIncorrectException {
+	public static void init() throws ResultatIncorrectException, ParametreIncorrectException {
 		Categorie.initialiserCategories();
 	}
 	
@@ -29,7 +34,7 @@ class CategorieTest {
 	 * On verifie si l'initialisation de la Map<Categories, List<String>> categorieCatalogue se deroule comme prevu
 	 */
 	@Test
-	void catalogue_categorie_non_vide() {
+	public void catalogue_categorie_non_vide() {
 		assertFalse(Categorie.getCategorieCatalogue().isEmpty());
 	}
 	
@@ -37,7 +42,7 @@ class CategorieTest {
 	 * On verifie si on a bien le bon nombre de categories qui a ete genere
 	 */
 	@Test
-	void taille_catalogue_categorie_valide() {
+	public void taille_catalogue_categorie_valide() {
 		assertTrue(Categorie.getCategorieCatalogue().size() == 4);
 	}
 	
@@ -45,7 +50,7 @@ class CategorieTest {
 	 * On verifie si la categorie ENGINE est bien presente dans la Map
 	 */
 	@Test
-	void categorie_engine_existante() {
+	public void categorie_engine_existante() {
 		assertTrue(Categorie.getCategories().contains("ENGINE"));
 	}
 	
@@ -53,7 +58,23 @@ class CategorieTest {
 	 * On verifie si la categorie WHEEL est bien presente dans la Map
 	 */
 	@Test
-	void categorie_wheel_inexistante() {
+	public void categorie_wheel_inexistante() {
 		assertFalse(Categorie.getCategories().contains("WHEEL"));
+	}
+	
+	/**
+	 * Recuperer les pieces en fonction du categorie
+	 * @throws ResultatIncorrectException
+	 * @throws ParametreIncorrectException
+	 */
+	@Test
+	public void recuperer_piece_par_categorie() throws ResultatIncorrectException, ParametreIncorrectException {
+		LinkedList<Piece> piecesAttendues = new LinkedList<Piece>(Arrays.asList(TypePiece.chercherPieceParNom("XC"),
+																				TypePiece.chercherPieceParNom("XM"), 
+																				TypePiece.chercherPieceParNom("XS")));
+		assertEquals(piecesAttendues, Categorie.getPiecesParCategorie("EXTERIOR"));
+		
+		assertThrows(ParametreIncorrectException.class,
+				() -> Categorie.getPiecesParCategorie("WHEEL"));
 	}
 }

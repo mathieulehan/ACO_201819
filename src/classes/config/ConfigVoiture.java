@@ -131,18 +131,18 @@ public class ConfigVoiture implements ConfigInterface {
 	 * @return la categorie d'une piece si elle existe
 	 * @throws ResultatIncorrectException si la piece n'appartient a aucune categorie
 	 */
-	private String rechercherCategorieParPiece(Piece piece) throws ResultatIncorrectException {
+	private String rechercherCategorieParPiece(Piece piece)  {
 		Map<String, List<Piece>> categories = Categorie.getCategorieCatalogue();
 		Iterator<Entry<String, List<Piece>>> it = categories.entrySet().iterator();
+		String res = "";
 		while(it.hasNext()) {
 			Map.Entry<String, List<Piece>> catalogueCategories = it.next();
 			if(catalogueCategories.getValue().contains(piece)) {
-				String res = "";
 				res += catalogueCategories.getKey();
-				return res;
 			}
 		}
-		throw new ResultatIncorrectException("Pas de categorie pour cette piece");
+		return res;
+
 	}
 
 	/**

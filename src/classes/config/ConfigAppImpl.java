@@ -13,7 +13,7 @@ import classes.piece.Piece;
  * @author YMCA
  *
  */
-public class ConfigAppImpl implements Configuration, Observer {
+public class ConfigAppImpl implements Observer {
 	
 	/**
 	 * A chaque changement d'etat de la classe ConfigurationTest, l'observateur est mise a jour

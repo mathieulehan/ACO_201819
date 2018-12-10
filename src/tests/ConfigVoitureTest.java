@@ -11,6 +11,7 @@ import org.junit.jupiter.api.Test;
 
 import classes.categorie.Categorie;
 import classes.config.ConfigVoiture;
+import classes.piece.Piece;
 import classes.piece.TypePiece;
 import exceptions.ActionPieceInvalideException;
 import exceptions.ParametreIncorrectException;
@@ -66,11 +67,34 @@ class ConfigVoitureTest {
 				() -> this.cv.ajouterPiece("") );
 		assertEquals(2, this.cv.getConfiguration().size());
 
+		//GetIncompatibilté
+
 		assertThrows(NullPointerException.class,
 				() -> this.cv.ajouterPiece(null) );
 		assertThrows(ActionPieceInvalideException.class, 
 				() -> { this.cv.ajouterPiece("IH"); }); // Incompatible avec IN
 		assertFalse(this.cv.getConfiguration().contains(TypePiece.chercherPieceParNom("IH")));
+	}
+
+	/**
+	 * Ajouter la piece EG100 et voir les incompatibilites
+	 * @throws ActionPieceInvalideException
+	 * @throws ParametreIncorrectException
+	 * @throws ResultatIncorrectException
+	 */
+	@Test
+	void getIncompatibilites() throws ActionPieceInvalideException, ResultatIncorrectException, ParametreIncorrectException {
+
+		assertTrue(this.cv.ajouterPiece("EG100"));
+
+		HashSet<Piece> incompatilibitesSouhaitees = new HashSet<>();
+		incompatilibitesSouhaitees.addAll(Arrays.asList(TypePiece.chercherPieceParNom("TA5"), 
+														TypePiece.chercherPieceParNom("TSF7"), 
+														TypePiece.chercherPieceParNom("XM"), 
+														TypePiece.chercherPieceParNom("XS"), 
+														TypePiece.chercherPieceParNom("IS")));
+		assertEquals(incompatilibitesSouhaitees, this.cv.getMesIncompatibilites());
+
 	}
 
 	/**
@@ -122,6 +146,9 @@ class ConfigVoitureTest {
 		HashSet<String> categoriesRestantes2 = new HashSet<>();
 		categoriesRestantes2.addAll( Arrays.asList("INTERIOR", "ENGINE", "TRANSMISSION"));
 		assertEquals(categoriesRestantes2, this.cv.getCategoriesRestantes());
+
+		assertThrows(ResultatIncorrectException.class,
+				() -> this.cv.getPieceParCategorie("INTERIOR"));
 	}
 
 
@@ -178,16 +205,16 @@ class ConfigVoitureTest {
 		assertTrue(this.cv.getPiecesPossibles().contains(TypePiece.chercherPieceParNom("IN")));
 		assertFalse(this.cv.getPiecesPossibles().contains(TypePiece.chercherPieceParNom("IS")));
 	}
-	
+
 	@Test
 	public void configuration_complete() throws ActionPieceInvalideException, ResultatIncorrectException, ParametreIncorrectException {
-		
+
 		assertTrue(this.cv.ajouterPiece("ED110"));
 		assertTrue(this.cv.ajouterPiece("TA5"));
 		assertTrue(this.cv.ajouterPiece("XM"));
 		assertTrue(this.cv.ajouterPiece("IH"));
 		assertTrue(this.cv.estComplet());
-		
+
 		assertThrows(ActionPieceInvalideException.class, 
 				() -> this.cv.ajouterPiece("EH120")); // Configuration terminee
 
