@@ -29,7 +29,7 @@ public class TypePiece {
 	 * Donnees brutes dans un catalogue, il s'agit des pieces standards
 	 */
 	private static Map<String, String> cataloguePiecesStandards  = new HashMap<>();
-	private static Map<String, Integer> cataloguePrixPieces  = new HashMap<>();
+	private static Map<String, Double> cataloguePrixPieces  = new HashMap<>();
 	
 	/**
 	 * Getter de la liste de Piece 
@@ -134,41 +134,41 @@ public class TypePiece {
 	 */
 	private static void initDonneesBrutes () {
 		cataloguePiecesStandards.put("EG100", "Gasoline 100kW");
-		cataloguePrixPieces.put("EG100", 1);
+		cataloguePrixPieces.put("EG100", 1.0);
 		cataloguePiecesStandards.put("EG133", "Gasoline 133kW");
-		cataloguePrixPieces.put("EG133", 2);
+		cataloguePrixPieces.put("EG133", 2.0);
 		cataloguePiecesStandards.put("EG210", "Gasoline 210kW");
-		cataloguePrixPieces.put("EG210", 3);
+		cataloguePrixPieces.put("EG210", 3.0);
 		cataloguePiecesStandards.put("ED110", "Diesel 110kW");
-		cataloguePrixPieces.put("ED110", 4);
+		cataloguePrixPieces.put("ED110", 4.0);
 		cataloguePiecesStandards.put("ED180", "Diesel 180kW");
-		cataloguePrixPieces.put("ED180", 5);
+		cataloguePrixPieces.put("ED180", 5.0);
 		cataloguePiecesStandards.put("EH120", "Gasoline/electric hybrid 120kW");
-		cataloguePrixPieces.put("EH120", 6);
+		cataloguePrixPieces.put("EH120", 6.0);
 		cataloguePiecesStandards.put("TM5", "Manual 5 gears");
-		cataloguePrixPieces.put("TM5", 7);
+		cataloguePrixPieces.put("TM5", 7.0);
 		cataloguePiecesStandards.put("TM6", "Manual 6 gears");
-		cataloguePrixPieces.put("TM6", 8);
+		cataloguePrixPieces.put("TM6", 8.0);
 		cataloguePiecesStandards.put("TA5", "Automatic 5 gears");
-		cataloguePrixPieces.put("TA5", 9);
+		cataloguePrixPieces.put("TA5", 9.0);
 		cataloguePiecesStandards.put("TS6", "Sequential 6 gears");
-		cataloguePrixPieces.put("TS6", 10);
+		cataloguePrixPieces.put("TS6", 10.0);
 		cataloguePiecesStandards.put("TSF7", "Sequential 7 gears 4 wheels drive");
-		cataloguePrixPieces.put("TSF7", 11);
+		cataloguePrixPieces.put("TSF7", 11.0);
 		cataloguePiecesStandards.put("TC120", "Converter 120kW max");
-		cataloguePrixPieces.put("TC120", 12);
+		cataloguePrixPieces.put("TC120", 12.0);
 		cataloguePiecesStandards.put("XC", "Classic paint");
-		cataloguePrixPieces.put("XC", 13);
+		cataloguePrixPieces.put("XC", 13.0);
 		cataloguePiecesStandards.put("XM", "Metallic paint");
-		cataloguePrixPieces.put("XM", 14);
+		cataloguePrixPieces.put("XM", 14.0);
 		cataloguePiecesStandards.put("XS", "Red paint and sport decoration");
-		cataloguePrixPieces.put("XS", 15);
+		cataloguePrixPieces.put("XS", 15.0);
 		cataloguePiecesStandards.put("IN",  "Standard interior");
-		cataloguePrixPieces.put("IN", 16);
+		cataloguePrixPieces.put("IN", 16.0);
 		cataloguePiecesStandards.put("IH", "High-end interior");
-		cataloguePrixPieces.put("IH", 17);
+		cataloguePrixPieces.put("IH", 17.0);
 		cataloguePiecesStandards.put("IS", "Sport-finish");
-		cataloguePrixPieces.put("IS", 18);
+		cataloguePrixPieces.put("IS", 18.0);
 	}
 
 	/**

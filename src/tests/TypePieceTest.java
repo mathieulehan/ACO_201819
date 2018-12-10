@@ -24,7 +24,7 @@ import exceptions.ResultatIncorrectException;
  */
 class TypePieceTest {
 	
-	ConfigVoiture cv = new ConfigVoiture();
+	ConfigVoiture cv;
 	
 	/**
 	 * Initialise toutes les categories et leurs pieces pour tous les tests
@@ -69,6 +69,9 @@ class TypePieceTest {
 		
 		assertEquals("Automatic 5 gears", TypePiece.chercherPieceParNom("TA5").getDescription());
 		assertEquals("TA5", TypePiece.chercherPieceParNom("TA5").getNom());
+		
+		Double prixAttendu = new Double(9.0);
+		assertTrue(prixAttendu == TypePiece.chercherPieceParNom("TA5").getPrix());
 		
 		HashSet<Piece> incompatibiliteSouhaitee = new HashSet<>();
 		incompatibiliteSouhaitee.addAll( Arrays.asList(TypePiece.chercherPieceParNom("EG100")));
