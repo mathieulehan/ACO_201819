@@ -21,7 +21,7 @@ import exceptions.ResultatIncorrectException;
 class CategorieTest {
 
 	/**
-	 * Initialise toutes les categories et leurs pieces pour tous les tests
+	 * Lance l'initialisation des categories et de leurs pieces au lancement de la classe de test
 	 * @throws ParametreIncorrectException
 	 * @throws ResultatIncorrectException
 	 */
@@ -31,7 +31,7 @@ class CategorieTest {
 	}
 	
 	/**
-	 * Catalogue de categorie non null
+	 * Catalogue de categorie non vide
 	 * Taille catalogue de categorie == 4
 	 */
 	@Test

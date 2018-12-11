@@ -20,7 +20,7 @@ import exceptions.ResultatIncorrectException;
 class PieceTest {
 	
 	/**
-	 * Initialise toutes les categories et leurs pieces pour tous les tests
+	 * Au lancement de la classe de test, on initialise les categories et les pieces existantes
 	 * @throws ParametreIncorrectException
 	 * @throws ResultatIncorrectException
 	 */
@@ -29,6 +29,10 @@ class PieceTest {
 		TypePiece.initialiserPieces();
 	}
 
+	/**
+	 * Differentes verification de bon fonctionnement des getters et setters de la classe Piece
+	 * @throws ParametreIncorrectException
+	 */
 	@Test
 	public void testSetterGetter() throws ParametreIncorrectException {
 		Piece pieceX = new Piece("X", "Description X");
@@ -53,7 +57,7 @@ class PieceTest {
 	}
 	
 	/**
-	 * Ajout d'une incompatibilite pour une piece
+	 * L'utilisateur ajoute une incompatibilite a une piece
 	 * @throws ParametreIncorrectException 
 	 */
 	@Test
@@ -74,7 +78,7 @@ class PieceTest {
 	}
 	
 	/**	 
-	 * Ajout d'une necessite pour une piece
+	 * L'utilisateur ajoute une necessite pour une piece
 	 * @throws ParametreIncorrectException
 	 */
 	@Test
@@ -95,7 +99,7 @@ class PieceTest {
 	}
 	
 	/**
-	 * Suppression d'une incompatibilite pour une piece
+	 * L'utilisateur supprime une incompatibilite pour une piece
 	 * @throws ParametreIncorrectException 
 	 */
 	@Test
@@ -112,7 +116,7 @@ class PieceTest {
 	}
 	
 	/**
-	 * Suppression d'une incompatibilite pour une piece
+	 * On doit pouvoir ajouter et supprimer une necessite pour une piece donnee
 	 * @throws ParametreIncorrectException 
 	 */
 	@Test
@@ -129,7 +133,7 @@ class PieceTest {
 	}
 	
 	/**
-	 * Verification de la methode permettant de savoir si deux pieces sont incompatibles entre elles
+	 * La methode estIncompatible doit permettre de savoir si des pieces sont incompatibles entre elles
 	 * @throws ResultatIncorrectException 
 	 */
 	@Test
@@ -139,6 +143,19 @@ class PieceTest {
 		assertFalse(TypePiece.chercherPieceParNom("TSF7").estIncompatible(TypePiece.chercherPieceParNom("TM5")));		
 	}
 
+	/**
+	 * On ne doit pas pouvoir : 
+	 * - creer une piece avec une description nulle
+	 * - crer une piece avec un nom null
+	 * - creer une piece avec un nom vide
+	 * - creer une piece avec un nom deja pris par une autre piece
+	 * - changer le nom d'une piece a null
+	 * - changer le nom d'une piece pour un nom vide
+	 * - changer le nom d'une piece pour le nom d'une piece deja existante
+	 * - changer la description d'une piece a null
+	 * - changer les incompatibilite s d'une piece a nulls
+	 * @throws ParametreIncorrectException
+	 */
 	@Test
 	public void testExpectedException() throws ParametreIncorrectException {
 

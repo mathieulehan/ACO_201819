@@ -28,11 +28,21 @@ class ConfigAppImplTest {
 	ConfigurationTest observable;
 	ConfigAppImpl observer;
 
+	/**
+	 * Lance l'initialisation des categories et de leurs pieces au lancement de la classe de test
+	 * @throws ParametreIncorrectException
+	 * @throws ResultatIncorrectException
+	 */
 	@BeforeAll
 	static void init() throws ParametreIncorrectException, ResultatIncorrectException {
 		Categorie.initialiserCategories();
 	}
 
+	/**
+	 * Avant chaque test de la classe, va reinitialiser la configuration
+	 * @throws ResultatIncorrectException
+	 * @throws ParametreIncorrectException
+	 */
 	@BeforeEach
 	private void init2() throws ResultatIncorrectException, ParametreIncorrectException {
 		this.observable = new ConfigurationTest();
@@ -42,7 +52,8 @@ class ConfigAppImplTest {
 	
 	
 	/**
-	 * L'utilsateur ajoute une piece dans sa configuration (ajout des pieces necessaires automatique)
+	 * L'utilsateur ajoute une piece dans sa configuration
+	 * Les pieces necessaires a la piece ajouteee doivent etre ajoutees automatiquement
 	 * @throws ResultatIncorrectException
 	 * @throws ActionPieceInvalideException
 	 * @throws ParametreIncorrectException
@@ -51,14 +62,18 @@ class ConfigAppImplTest {
 	public void testActionAjouterPiece() throws ResultatIncorrectException, ActionPieceInvalideException, ParametreIncorrectException {
 
 		this.observable.actionAjouterPiece("XS");
+		// On doit avoir 2 pieces dans la config, la piece XS ayant une necessite
 		assertEquals(2, this.observable.actionGetConfiguration().size());
 		
 		this.observable.actionAjouterPiece("TA5");
+		// La piece TA5 n'ayant pas de necessite, on se retrouve avec 3 pieces dans la config
 		assertEquals(3, this.observable.actionGetConfiguration().size());
 	}
 	
 	/**
-	 * L'utilisateur supprime une piece de sa configuration (suppression des pieces necessaires automatique)
+	 * L'utilisateur supprime une piece de sa configuration
+	 * Les pieces necessaires qui avaient etees ajoutees automatiquement
+	 * devront etre supprimees
 	 * @throws ResultatIncorrectException
 	 * @throws ActionPieceInvalideException
 	 * @throws ParametreIncorrectException
@@ -71,6 +86,7 @@ class ConfigAppImplTest {
 		assertEquals(3, this.observable.actionGetConfiguration().size());
 
 		this.observable.actionSupprimerPiece("IS");
+		// Il ne doit rester qu'une piece, la piece IS ayant une necessite, supprimee automatiquement
 		assertEquals(1, this.observable.actionGetConfiguration().size());
 
 		HashSet<Piece> incompatilibitesSouhaitees = new HashSet<>();
@@ -79,7 +95,7 @@ class ConfigAppImplTest {
 	}	
 	
 	/**
-	 * L'utilisateur souhaite voir les categories restantes dans sa configuration
+	 * L'utilisateur demande a voir les categories restantes dans sa configuration
 	 * @throws ActionPieceInvalideException
 	 * @throws ResultatIncorrectException
 	 * @throws ParametreIncorrectException
@@ -92,7 +108,7 @@ class ConfigAppImplTest {
 		assertEquals(categoriesRestantes, this.observable.actionGetCategoriesRestantes());
 
 		this.observable.actionAjouterPiece("TC120");
-		
+		// On a rajoute une piece, qui a une necessite, on a donc plus que deux pieces de deux categories a rajouter a la configuration
 		HashSet<String> categoriesRestantes2 = new HashSet<>();
 		categoriesRestantes2.addAll(Arrays.asList("INTERIOR", "EXTERIOR"));
 		assertEquals(categoriesRestantes2, this.observable.actionGetCategoriesRestantes());
@@ -117,7 +133,7 @@ class ConfigAppImplTest {
 	}	
 	
 	/**
-	 * L'utilisateur a une configuration invalide
+	 *La configuration de l'utilisateur est invalide
 	 * @throws ActionPieceInvalideException
 	 * @throws ResultatIncorrectException
 	 * @throws ParametreIncorrectException
@@ -134,6 +150,13 @@ class ConfigAppImplTest {
 		assertFalse(this.observable.actionValidationConfiguration());
 	}
 	
+	/**
+	 * L'utilisateur souhaite ajouter une piece inexistante
+	 * et supprimer une piece ne faisant pas partie de sa configuration
+	 * @throws ActionPieceInvalideException
+	 * @throws ResultatIncorrectException
+	 * @throws ParametreIncorrectException
+	 */
 	@Test
 	public void testExpectedException() throws ActionPieceInvalideException, ResultatIncorrectException, ParametreIncorrectException {
 		this.observable.actionAjouterPiece("TM5");

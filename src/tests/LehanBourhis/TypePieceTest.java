@@ -22,7 +22,7 @@ import exceptions.ResultatIncorrectException;
 class TypePieceTest {
 	
 	/**
-	 * Initialise les pieces pour tous les tests
+	 * Au lancement de la classe de test, va initialiser toutes les pieces
 	 * @throws ParametreIncorrectException
 	 * @throws ResultatIncorrectException
 	 */
@@ -48,7 +48,8 @@ class TypePieceTest {
 	}
 	
 	/**
-	 * On verifie si on obtient bien la bonne description a partir du nom d'une piece
+	 * On verifie si on obtient bien la bonne description, les bonnes incompatibilites et les 
+	 * bonnes necessites a partir du nom d'une piece
 	 * @throws ResultatIncorrectException 
 	 */
 	@Test
