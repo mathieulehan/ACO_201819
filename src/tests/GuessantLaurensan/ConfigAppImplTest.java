@@ -107,8 +107,23 @@ class ConfigAppImplTest {
 		HashSet<Piece> incompatilibitesSouhaitees = new HashSet<>();
 		incompatilibitesSouhaitees.add(TypePiece.chercherPieceParNom("EG210"));
 		assertEquals(incompatilibitesSouhaitees, this.observable.actionGetPiecesIncompatibles());
-
 	}
+	
+	/**
+	 * L'utilisateur souhaite connaitre le prix d'une piece exterieur (EXTERIOR)
+	 * @throws ActionPieceInvalideException
+	 * @throws ParametreIncorrectException
+	 * @throws ResultatIncorrectException
+	 */
+	@Test
+	public void recuperer_cout_configuration() throws ActionPieceInvalideException, ResultatIncorrectException, ParametreIncorrectException {
+
+		this.observable.actionAjouterPiece("XC");
+		this.observable.actionAjouterPiece("EH120");
+		assertTrue(this.observable.actionGetPrix() == 3600.0);
+		
+	}
+	
 	
 	
 	/**
@@ -123,11 +138,10 @@ class ConfigAppImplTest {
 		this.observable.getConfigurationStandard();
 		assertEquals(4, this.observable.actionGetConfiguration().size());
 		
-		assertTrue(this.observable.actionGetConfiguration().contains(TypePiece.chercherPieceParNom("EG133")));
+		assertTrue(this.observable.actionGetConfiguration().contains(TypePiece.chercherPieceParNom("ED180")));
 		assertTrue(this.observable.actionGetConfiguration().contains(TypePiece.chercherPieceParNom("XS")));
 		assertTrue(this.observable.actionGetConfiguration().contains(TypePiece.chercherPieceParNom("IS")));
 		assertTrue(this.observable.actionGetConfiguration().contains(TypePiece.chercherPieceParNom("TA5")));
-
 		assertFalse(this.observable.actionGetConfiguration().contains(TypePiece.chercherPieceParNom("EH120")));
 	}
 	

@@ -68,7 +68,7 @@ public class ConfigurationTest extends Observable {
 	 * @return
 	 * @throws ResultatIncorrectException
 	 */
-	public String actionGetPrix() throws ResultatIncorrectException{
+	public Double actionGetPrix() throws ResultatIncorrectException{
 		return this.cv.getPrix();
 	}
 	

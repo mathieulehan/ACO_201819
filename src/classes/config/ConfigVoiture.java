@@ -50,11 +50,11 @@ public class ConfigVoiture implements ConfigInterface {
 
 	/**
 	 * Renvoie le prix de la configuration actuelle en euros apres possibles reductions
-	 * @return
+	 * @return le cout total
 	 * @throws ResultatIncorrectException 
 	 */
 	@Override
-	public String getPrix() throws ResultatIncorrectException {
+	public Double getPrix() throws ResultatIncorrectException {
 		double prix = 0.0;
 		for (Piece piece : maConfig) {
 			prix += piece.getPrix();
@@ -66,8 +66,7 @@ public class ConfigVoiture implements ConfigInterface {
 		if(maConfig.contains(TypePiece.chercherPieceParNom("XC")) && maConfig.contains(TypePiece.chercherPieceParNom("IN"))) {
 			prix -= 100.00;
 		}
-		String monPrix = "Cette configuration coute actuellement " + prix + "€.";
-		return monPrix;
+		return prix;
 	}
 
 	/**
