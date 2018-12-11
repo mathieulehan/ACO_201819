@@ -34,12 +34,17 @@ class TypePieceTest {
 	/**
 	 * Test verifiant si la methode initialiserPieces fonctionne comme attendu
 	 * On verifie apres execution si toutes les pieces ont etees generees
+	 * @throws ResultatIncorrectException 
 	 */
 	@Test
-	void taille_du_catalogue_piece()  {
+	public void testCataloguePieces() throws ResultatIncorrectException  {
 		
 		assertEquals(18, TypePiece.getPieces().size());
 		assertFalse(TypePiece.getPieces().isEmpty());
+		
+		assertThrows(ResultatIncorrectException.class, 
+				() -> TypePiece.getPieces().contains(TypePiece.chercherPieceParNom("INEXISTANTE")));
+		assertTrue(TypePiece.getPieces().contains(TypePiece.chercherPieceParNom("XM")));
 	}
 	
 	/**
@@ -47,53 +52,18 @@ class TypePieceTest {
 	 * @throws ResultatIncorrectException 
 	 */
 	@Test
-	void attribut_piece_TA5() throws ResultatIncorrectException {
+	public void testGetter() throws ResultatIncorrectException {
+		Piece TA5 = TypePiece.chercherPieceParNom("TA5");
 		
-		assertEquals("Automatic 5 gears", TypePiece.chercherPieceParNom("TA5").getDescription());
-		assertEquals("TA5", TypePiece.chercherPieceParNom("TA5").getNom());
-	}
+		assertEquals("Automatic 5 gears", TA5.getDescription());
+		assertEquals("TA5", TA5.getNom());
 	
-	/**
-	 * On verifie si TA5 a pour incompatibilite EG100
-	 * @throws ResultatIncorrectException
-	 */
-	@Test
-	void getIncompatibilites_TA5() throws ResultatIncorrectException {
-		
 		HashSet<Piece> incompatibiliteSouhaitee = new HashSet<>();
 		incompatibiliteSouhaitee.addAll( Arrays.asList(TypePiece.chercherPieceParNom("EG100")));
-		assertEquals(incompatibiliteSouhaitee, TypePiece.chercherPieceParNom("TA5").getIncompatibilites());
-		
-	}
-	
-	/**
-	 * On regarde si TA5 a des necessites, ce qui n'est pas le cas ici
-	 * @throws ResultatIncorrectException 
-	 */
-	@Test
-	void getNecessite_TA5() throws ResultatIncorrectException {
+		assertEquals(incompatibiliteSouhaitee, TA5.getIncompatibilites());
 		
 		HashSet<Piece> necessiteSouhaitee = new HashSet<>();
-		assertEquals(necessiteSouhaitee, TypePiece.chercherPieceParNom("TA5").getNecessites());
+		assertEquals(necessiteSouhaitee, TA5.getNecessites());
 	}
 	
-	/**
-	 * Si on cherche une piece qui n'existe pas, ResultatIncorrectException est levee 
-	 */
-	@Test
-	void chercher_piece_inexistance() {
-		
-		assertThrows(ResultatIncorrectException.class, 
-				() -> TypePiece.getPieces().contains(TypePiece.chercherPieceParNom("INEXISTANTE")));
-	}
-
-	/**
-	 * Recherche une piece existante
-	 * @throws ResultatIncorrectException 
-	 */
-	@Test
-	void chercher_piece_existance() throws ResultatIncorrectException {
-		
-		assertTrue(TypePiece.getPieces().contains(TypePiece.chercherPieceParNom("XM")));
-	}
 }

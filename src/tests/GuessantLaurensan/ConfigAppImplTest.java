@@ -29,7 +29,7 @@ class ConfigAppImplTest {
 	ConfigAppImpl observer;
 
 	@BeforeAll
-	static void init() throws ParametreIncorrectException, ResultatIncorrectException {
+	public static void init() throws ParametreIncorrectException, ResultatIncorrectException {
 		Categorie.initialiserCategories();
 	}
 
@@ -83,7 +83,7 @@ class ConfigAppImplTest {
 	 * @throws ResultatIncorrectException
 	 */
 	@Test
-	void getIncompatibilites() throws ActionPieceInvalideException, ResultatIncorrectException, ParametreIncorrectException {
+	public void getIncompatibilites() throws ActionPieceInvalideException, ResultatIncorrectException, ParametreIncorrectException {
 
 		this.observable.actionAjouterPiece("XC");
 

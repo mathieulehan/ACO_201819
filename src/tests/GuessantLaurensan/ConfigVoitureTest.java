@@ -32,7 +32,7 @@ class ConfigVoitureTest {
 	 * @throws ResultatIncorrectException
 	 */
 	@BeforeAll
-	static void init() throws ParametreIncorrectException, ResultatIncorrectException {
+	public static void init() throws ParametreIncorrectException, ResultatIncorrectException {
 		Categorie.initialiserCategories();
 	}
 
@@ -42,7 +42,7 @@ class ConfigVoitureTest {
 	 * @throws ParametreIncorrectException
 	 */
 	@BeforeEach
-	private void init2() throws ResultatIncorrectException, ParametreIncorrectException {
+	private void initConfigVoiture() throws ResultatIncorrectException, ParametreIncorrectException {
 		this.cv = new ConfigVoiture();
 	}
 
@@ -56,7 +56,7 @@ class ConfigVoitureTest {
 	 * @throws ResultatIncorrectException
 	 */
 	@Test
-	void ajout_de_pieces() throws ParametreIncorrectException, ResultatIncorrectException, ActionPieceInvalideException {
+	public void ajout_de_pieces() throws ParametreIncorrectException, ResultatIncorrectException, ActionPieceInvalideException {
 
 		assertTrue(this.cv.ajouterPiece("TM5"));
 		assertTrue(this.cv.getConfiguration().contains(TypePiece.chercherPieceParNom("TM5")));
@@ -66,8 +66,6 @@ class ConfigVoitureTest {
 		assertThrows(ResultatIncorrectException.class,
 				() -> this.cv.ajouterPiece("") );
 		assertEquals(2, this.cv.getConfiguration().size());
-
-		//GetIncompatibilté
 
 		assertThrows(NullPointerException.class,
 				() -> this.cv.ajouterPiece(null) );
@@ -83,7 +81,7 @@ class ConfigVoitureTest {
 	 * @throws ResultatIncorrectException
 	 */
 	@Test
-	void getIncompatibilites() throws ActionPieceInvalideException, ResultatIncorrectException, ParametreIncorrectException {
+	public void getIncompatibilites() throws ActionPieceInvalideException, ResultatIncorrectException, ParametreIncorrectException {
 
 		assertTrue(this.cv.ajouterPiece("EG100"));
 
@@ -106,7 +104,7 @@ class ConfigVoitureTest {
 	 * @throws ResultatIncorrectException
 	 */
 	@Test
-	void suppression_pieces() throws ActionPieceInvalideException, ParametreIncorrectException, ResultatIncorrectException {
+	public void suppression_pieces() throws ActionPieceInvalideException, ParametreIncorrectException, ResultatIncorrectException {
 
 		assertTrue(this.cv.ajouterPiece("EG133"));
 		assertTrue(this.cv.ajouterPiece("XS"));
@@ -206,6 +204,12 @@ class ConfigVoitureTest {
 		assertFalse(this.cv.getPiecesPossibles().contains(TypePiece.chercherPieceParNom("IS")));
 	}
 
+	/**
+	 * Verification que la configuration est complete
+	 * @throws ActionPieceInvalideException
+	 * @throws ResultatIncorrectException
+	 * @throws ParametreIncorrectException
+	 */
 	@Test
 	public void configuration_complete() throws ActionPieceInvalideException, ResultatIncorrectException, ParametreIncorrectException {
 
@@ -217,7 +221,6 @@ class ConfigVoitureTest {
 
 		assertThrows(ActionPieceInvalideException.class, 
 				() -> this.cv.ajouterPiece("EH120")); // Configuration terminee
-
 	}
 
 }

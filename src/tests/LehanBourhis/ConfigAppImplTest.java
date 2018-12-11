@@ -115,13 +115,12 @@ class ConfigAppImplTest {
 	 * @throws ParametreIncorrectException
 	 */
 	@Test
-	public void get() throws ActionPieceInvalideException, ResultatIncorrectException, ParametreIncorrectException {
+	public void testsGetCategorieRestantes() throws ActionPieceInvalideException, ResultatIncorrectException, ParametreIncorrectException {
 
-		this.observable.getConfigurationStandard();
-		this.observable.actionSupprimerPiece("TA5");
+		this.observable.actionAjouterPiece("TA5");
 		
 		HashSet<String> categoriesRestantes = new HashSet<>();
-		categoriesRestantes.add("TRANSMISSION");
+		categoriesRestantes.addAll(Arrays.asList("ENGINE", "INTERIOR", "EXTERIOR"));
 		assertEquals(categoriesRestantes, this.observable.actionGetCategoriesRestantes());
 	}
 	
@@ -132,13 +131,14 @@ class ConfigAppImplTest {
 	 * @throws ParametreIncorrectException
 	 */
 	@Test
-	public void configuration_invalide() throws ActionPieceInvalideException, ResultatIncorrectException, ParametreIncorrectException {
+	public void testActionValidationConfiguration() throws ActionPieceInvalideException, ResultatIncorrectException, ParametreIncorrectException {
 
 		this.observable.getConfigurationStandard();
 		assertTrue(this.observable.actionGetConfiguration().contains(TypePiece.chercherPieceParNom("EG133")));
 		assertTrue(this.observable.actionGetConfiguration().contains(TypePiece.chercherPieceParNom("XS")));
 		assertTrue(this.observable.actionGetConfiguration().contains(TypePiece.chercherPieceParNom("IS")));
 		assertTrue(this.observable.actionGetConfiguration().contains(TypePiece.chercherPieceParNom("TA5")));
+		assertTrue(this.observable.actionValidationConfiguration());
 		
 		this.observable.actionSupprimerPiece("TA5");
 		assertFalse(this.observable.actionGetConfiguration().contains(TypePiece.chercherPieceParNom("TA5")));

@@ -25,7 +25,7 @@ class PieceTest {
 	 * @throws ResultatIncorrectException
 	 */
 	@BeforeAll
-	static void init() throws ParametreIncorrectException, ResultatIncorrectException {
+	public static void init() throws ParametreIncorrectException, ResultatIncorrectException {
 		TypePiece.initialiserPieces();
 	}
 
@@ -119,11 +119,11 @@ class PieceTest {
 	public void modification_necessites_incorrecte() throws ParametreIncorrectException {
 		Piece pieceTest = new Piece("Piece", "Piece de test");
 		assertThrows(NullPointerException.class, 
-				() -> pieceTest.setIncompatibilites(null));
-		assertTrue(pieceTest.getIncompatibilites().size() == 0);
+				() -> pieceTest.setNecessites(null));
+		assertTrue(pieceTest.getNecessites().size() == 0);
 
-		pieceTest.setIncompatibilites(new HashSet<>());
-		assertEquals(pieceTest.getIncompatibilites(), new HashSet<>());
+		pieceTest.setNecessites(new HashSet<>());
+		assertEquals(pieceTest.getNecessites(), new HashSet<>());
 	}
 	
 	/**
@@ -131,7 +131,7 @@ class PieceTest {
 	 * @throws ParametreIncorrectException 
 	 */
 	@Test
-	void ajout_incompatibilite_valide() throws ParametreIncorrectException {
+	public void ajout_incompatibilite_valide() throws ParametreIncorrectException {
 		Piece pieceTest = new Piece("Piece", "Piece de test");
 		assertTrue(pieceTest.getIncompatibilites().size() == 0);
 		
