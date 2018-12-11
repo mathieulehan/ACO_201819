@@ -127,7 +127,7 @@ class PieceTest {
 	}
 	
 	/**
-	 * Ajout d'une incompatibilite pour une piece
+	 * L'administration souhaite ajouter une incompatibilite pour une piece
 	 * @throws ParametreIncorrectException 
 	 */
 	@Test
@@ -148,7 +148,7 @@ class PieceTest {
 	}
 	
 	/**	 
-	 * Ajout d'une necessite pour une piece
+	 * L'administration souhaite ajouter une necessite pour une piece
 	 * @throws ParametreIncorrectException
 	 */
 	@Test
@@ -194,7 +194,7 @@ class PieceTest {
 	}
 	
 	/**
-	 * Suppression d'une incompatibilite pour une piece
+	 * L'administration souhaite supprimer une incompatibilite pour une piece
 	 * @throws ParametreIncorrectException 
 	 */
 	@Test
@@ -211,7 +211,7 @@ class PieceTest {
 	}
 	
 	/**
-	 * Suppression d'une incompatibilite pour une piece
+	 * L'administration souhaite supprimer une incompatibilite pour une piece
 	 * @throws ParametreIncorrectException 
 	 */
 	@Test
@@ -263,7 +263,5 @@ class PieceTest {
 		assertTrue(EG100.estIncompatible(TSF7));
 		assertFalse(EG100.estIncompatible(TM5));
 		assertFalse(TSF7.estIncompatible(TM5));
-		
-		
 	}
 }

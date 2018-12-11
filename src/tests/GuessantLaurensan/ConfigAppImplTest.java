@@ -2,7 +2,6 @@ package tests.GuessantLaurensan;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import java.util.Arrays;
 import java.util.HashSet;
 
 import org.junit.jupiter.api.BeforeAll;
@@ -28,19 +27,34 @@ class ConfigAppImplTest {
 	ConfigurationTest observable;
 	ConfigAppImpl observer;
 
+	/**
+	 * Initialise toutes les categories et leurs pieces pour tous les tests
+	 * @throws ParametreIncorrectException
+	 * @throws ResultatIncorrectException
+	 */
 	@BeforeAll
 	public static void init() throws ParametreIncorrectException, ResultatIncorrectException {
 		Categorie.initialiserCategories();
 	}
 
+	/**
+	 * Reinitialise la configuration pour chaque test
+	 * @throws ResultatIncorrectException
+	 * @throws ParametreIncorrectException
+	 */
 	@BeforeEach
-	private void init2() throws ResultatIncorrectException, ParametreIncorrectException {
+	private void init_configuration_observer_observable() throws ResultatIncorrectException, ParametreIncorrectException {
 		this.observable = new ConfigurationTest();
 		this.observer = new ConfigAppImpl();
 		this.observable.addObserver(observer);
 	}
 	
-	
+	/**
+	 * L'utilisateur ajoute une piece dans sa configuration
+	 * @throws ResultatIncorrectException
+	 * @throws ActionPieceInvalideException
+	 * @throws ParametreIncorrectException
+	 */
 	@Test
 	public void ajout_piece_dans_configuration() throws ResultatIncorrectException, ActionPieceInvalideException, ParametreIncorrectException {
 
@@ -77,7 +91,7 @@ class ConfigAppImplTest {
 	}
 	
 	/**
-	 * Ajouter la piece EG100 et voir les incompatibilites
+	 * L'utilisateur veut connaitre les pieces incompatibles a celles presentes dans la configuration
 	 * @throws ActionPieceInvalideException
 	 * @throws ParametreIncorrectException
 	 * @throws ResultatIncorrectException
@@ -88,14 +102,14 @@ class ConfigAppImplTest {
 		this.observable.actionAjouterPiece("XC");
 
 		HashSet<Piece> incompatilibitesSouhaitees = new HashSet<>();
-		incompatilibitesSouhaitees.addAll(Arrays.asList(TypePiece.chercherPieceParNom("EG210")));
+		incompatilibitesSouhaitees.add(TypePiece.chercherPieceParNom("EG210"));
 		assertEquals(incompatilibitesSouhaitees, this.observable.actionGetPiecesIncompatibles());
 
 	}
 	
 	
 	/**
-	 * L'utilisateur souhaite instancier la configuration existant deja 
+	 * L'utilisateur souhaite instancier la configuration existante 
 	 * @throws ActionPieceInvalideException
 	 * @throws ResultatIncorrectException
 	 * @throws ParametreIncorrectException
