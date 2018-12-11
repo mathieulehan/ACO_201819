@@ -1,4 +1,4 @@
-package tests;
+package tests.LehanBourhis;
 
 import static org.junit.Assert.*;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -16,7 +16,7 @@ import exceptions.ResultatIncorrectException;
 
 /**
  * 
- * @author YMCA
+ * @author Yann & Mathieu
  *
  */
 class TypePieceTest {

@@ -1,4 +1,4 @@
-package tests;
+package tests.GuessantLaurensan;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -19,7 +19,7 @@ import exceptions.ResultatIncorrectException;
 
 /**
  * 
- * @author YMCA
+ * @author Charlotte & Thomas
  *
  */
 class ConfigVoitureTest {
