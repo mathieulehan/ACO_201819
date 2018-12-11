@@ -13,6 +13,7 @@ import org.junit.jupiter.api.Test;
 import classes.categorie.Categorie;
 import classes.config.ConfigVoiture;
 import classes.piece.Piece;
+import classes.piece.Piece.Couleur;
 import classes.piece.TypePiece;
 import exceptions.ParametreIncorrectException;
 import exceptions.ResultatIncorrectException;
@@ -30,9 +31,12 @@ class TypePieceTest {
 	 * Initialise toutes les categories et leurs pieces pour tous les tests
 	 * @throws ParametreIncorrectException
 	 * @throws ResultatIncorrectException
+	 * @throws ClassNotFoundException 
+	 * @throws IllegalAccessException 
+	 * @throws InstantiationException 
 	 */
 	@BeforeAll
-	static void init() throws ResultatIncorrectException, ParametreIncorrectException {
+	static void init() throws ResultatIncorrectException, ParametreIncorrectException, InstantiationException, IllegalAccessException, ClassNotFoundException {
 		Categorie.initialiserCategories();
 	}
 	
@@ -70,15 +74,21 @@ class TypePieceTest {
 		assertEquals("Automatic 5 gears", TypePiece.chercherPieceParNom("TA5").getDescription());
 		assertEquals("TA5", TypePiece.chercherPieceParNom("TA5").getNom());
 		
-		Double prixAttendu = new Double(9.0);
-		assertTrue(prixAttendu == TypePiece.chercherPieceParNom("TA5").getPrix());
-		
 		HashSet<Piece> incompatibiliteSouhaitee = new HashSet<>();
 		incompatibiliteSouhaitee.addAll( Arrays.asList(TypePiece.chercherPieceParNom("EG100")));
 		assertEquals(incompatibiliteSouhaitee, TypePiece.chercherPieceParNom("TA5").getIncompatibilites());
 		
 		HashSet<Piece> necessiteSouhaitee = new HashSet<>();
 		assertEquals(necessiteSouhaitee, TypePiece.chercherPieceParNom("TA5").getNecessites());
+	}
+	
+	@Test
+	void testXS() throws ResultatIncorrectException{
+		System.out.println(TypePiece.chercherPieceParNom("XS").getNom());
+		System.out.println(TypePiece.chercherPieceParNom("XS").getPropriete("couleur").get());
+		TypePiece.chercherPieceParNom("XS").setPropriete("couleur", Couleur.BLEU.name());
+		System.out.println(TypePiece.chercherPieceParNom("XS").getPropriete("couleur").get());
+		System.out.println(TypePiece.chercherPieceParNom("XS").getClass().getSuperclass().getSimpleName());
 	}
 	
 	/**

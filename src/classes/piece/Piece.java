@@ -17,61 +17,89 @@ import exceptions.ParametreIncorrectException;
  * @author YMCA
  *
  */
-public class Piece implements PieceInterface, GestionCompatibilite, VerifCompatibilite {
+public class Piece implements ProprieteManagerInterface, GestionCompatibilite, VerifCompatibilite {
 
 	private String nom;
 	private String description;
 	private Set<Piece> incompatibilites;
 	private Set<Piece> necessites;
-	private double prix;
+	public enum Couleur{ROUGE, BLANC, BLEU};
 	
 	private class Propriete{
 		public final Supplier<String> getter;
 		public final Consumer<String> setter;
-		public String valeur;
 		public final Set<String> valeursPossibles;
-		public Propriete(Supplier<String> getter, Consumer<String> setter, String valeur, Set<String> valeursPossibles){
+		public Propriete(Supplier<String> getter, Consumer<String> setter, Set<String> valeursPossibles){
 			this.getter = getter;
 			this.setter = setter;
-			this.valeur = valeur;
 			this.valeursPossibles = valeursPossibles;
 		}
 	}
 	
 	private Map<String, Propriete> proprietes = new HashMap<>();
-
-	protected void ajoutPropriete(String nom, Supplier<String> getter, Consumer<String> setter, String valeur, Set<String> valeursPossibles) {
-		proprietes.put(nom, new Propriete(getter, setter, valeur, valeursPossibles));
+	
+	/**
+	 * Permet d'ajouter une propriete, utilisee pour la couleur de la peinture
+	 * @param nom
+	 * @param getter
+	 * @param setter
+	 * @param valeursPossibles
+	 */
+	protected void ajoutPropriete(String nom, Supplier<String> getter, Consumer<String> setter, Set<String> valeursPossibles) {
+		proprietes.put(nom, new Propriete(getter, setter, valeursPossibles));
 	}
 	
+	/**
+	 * Retourne un set des noms de proprietes gerees par le manager
+	 */
 	@Override
-	public Set<String> getNomsPropriete(){
+	public Set<String> getNomsProprietes(){
 		return Collections.unmodifiableSet(proprietes.keySet());
 	}
 	
+	/**
+	 * Retourne la valeur de la propriete
+	 * Si l'objet ne gere pas cette propriete, return vide
+	 * @param nomPropriete
+	 * @return
+	 */
 	@Override
 	public Optional<String> getPropriete(String nomPropriete){
 		Objects.requireNonNull(nomPropriete);
 		if(proprietes.containsKey(nomPropriete)) {
-//			return Optional.of(proprietes.get(nomPropriete).getter.get());
-			return Optional.of(proprietes.get(nomPropriete).valeur);
+			return Optional.of(proprietes.get(nomPropriete).getter.get());
 		}
 		return Optional.empty();
 	}
 	
+	/**
+	 * Met en place la valeur de la propriete passee en parametre
+	 * Si la propriete n'existe pas (ou non modifiable), ou si la valeur est invalide,
+	 * return une exception IllegalArgumentException
+	 * @param nomPropriete
+	 * @param valeurPropriete
+	 * @throws IllegalArgumentException
+	 */
 	@Override
 	public void setPropriete(String nomPropriete, String valeurPropriete) {
 		Objects.requireNonNull(nomPropriete);
 		Objects.requireNonNull(valeurPropriete);
 		if((proprietes.containsKey(nomPropriete)) && (proprietes.get(nomPropriete).setter != null) && getValeursProprietePossibles(nomPropriete).contains(valeurPropriete)) {
 			proprietes.get(nomPropriete).setter.accept(valeurPropriete);
-			proprietes.get(nomPropriete).valeur = valeurPropriete;
 		}
 		else {
 			throw new IllegalArgumentException("nom ou valeur invalide pour : " + nomPropriete);
 		}
 	}
 	
+	/**
+	 * Retourne un set des valeurs de la propriete en parametre
+	 * Pour les proprietes qui n'ont pas de valeurs possibles ou pour un
+	 * nom de propriete inexistant, retourne un set vide
+	 * 
+	 * @param nomPropriete
+	 * @return immutable set
+	 */
 	@Override
 	public Set<String> getValeursProprietePossibles(String nomPropriete){
 		if(proprietes.containsKey(nomPropriete)) {
@@ -80,37 +108,15 @@ public class Piece implements PieceInterface, GestionCompatibilite, VerifCompati
 		return Collections.emptySet();
 	}
 	
-	protected double getPrice() {
-		if(this.getNomsPropriete().contains("couleur")) {
-			String couleur = this.getPropriete("couleur").get();
-			switch(couleur) {
-			case "blue": return 500;
-			case "red": return 400;
-			case "white": return 0;
-			default: return 0;
-			}
-		}
-		return 0;
-	}
-
-	public double getPrix() {
-		return prix;
-	}
-
-	public void setPrix(double prix) {
-		this.prix = prix;
-	}
-	
-	
-	// V1 __________________________________________________________________________________
-	
 	/**
 	 * Constructeur
 	 * @param nom le nom de la piece
 	 * @param description la description de la piece
 	 * @throws ParametreIncorrectException si nom de piece deja existant 
 	 */
-	public Piece(String nom, String description, Double prix) throws ParametreIncorrectException {
+	public Piece(String nom, String description) throws ParametreIncorrectException {
+		this.incompatibilites = new HashSet<>();
+		this.necessites = new HashSet<>();
 		String nouveauNom = Objects.requireNonNull(nom);
 		String nouvelleDescription = Objects.requireNonNull(description);
 		if(nouveauNom == "") throw new ParametreIncorrectException("Le nom de la nouvelle piece est incorrect");
@@ -121,9 +127,6 @@ public class Piece implements PieceInterface, GestionCompatibilite, VerifCompati
 		}
 		this.nom = nouveauNom;
 		this.description = nouvelleDescription;
-		this.prix = prix;
-		this.incompatibilites = new HashSet<>();
-		this.necessites = new HashSet<>();
 	}
 
 	/**
@@ -133,6 +136,11 @@ public class Piece implements PieceInterface, GestionCompatibilite, VerifCompati
 		return this.nom;
 	}
 	
+	/**
+	 * Change le nom de la piece
+	 * @param nom
+	 * @throws ParametreIncorrectException
+	 */
 	public void setNom(String nom) throws ParametreIncorrectException {
 		String nouveauNom = Objects.requireNonNull(nom);
 		if(nouveauNom == "") throw new ParametreIncorrectException("Le nom de la nouvelle piece est incorrect");
@@ -248,6 +256,10 @@ public class Piece implements PieceInterface, GestionCompatibilite, VerifCompati
 	public boolean estIncompatible (Piece piece) {
 		Piece autrePiece = Objects.requireNonNull(piece);
 		return this.incompatibilites.contains(autrePiece);
+	}
+	
+	public double getPrix() {
+		return 0;
 	}
 
 }

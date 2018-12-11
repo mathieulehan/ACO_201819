@@ -62,4 +62,11 @@ public interface ConfigInterface {
 	 * @throws ResultatIncorrectException
 	 */
 	public Set<Piece> getPiecesPossibles() throws ParametreIncorrectException, ResultatIncorrectException;
+
+	/**
+	 * Renvoie le prix de la configuration actuelle en euros apres possibles reductions
+	 * @return
+	 * @throws ResultatIncorrectException 
+	 */
+	String getPrix() throws ResultatIncorrectException;
 }

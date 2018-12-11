@@ -1,5 +1,7 @@
 package classes.config;
 
+import java.io.PrintStream;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -12,6 +14,7 @@ import java.util.Objects;
 
 import classes.categorie.Categorie;
 import classes.piece.Piece;
+import classes.piece.Piece.Couleur;
 import classes.piece.TypePiece;
 import exceptions.ActionPieceInvalideException;
 import exceptions.ParametreIncorrectException;
@@ -43,6 +46,28 @@ public class ConfigVoiture implements ConfigInterface {
 	@Override
 	public boolean estComplet() {
 		return (this.mesCategories.size() == Categorie.getCategories().size());
+	}
+
+	/**
+	 * Renvoie le prix de la configuration actuelle en euros apres possibles reductions
+	 * @return
+	 * @throws ResultatIncorrectException 
+	 */
+	@Override
+	public String getPrix() throws ResultatIncorrectException {
+		double prix = 0.0;
+		for (Piece piece : maConfig) {
+			prix += piece.getPrix();
+		}
+		if(maConfig.contains(TypePiece.chercherPieceParNom("ED180")) && maConfig.contains(TypePiece.chercherPieceParNom("XS")) 
+				&& maConfig.contains(TypePiece.chercherPieceParNom("IS")) && maConfig.contains(TypePiece.chercherPieceParNom("TA5"))) {
+			prix *= 0.90;
+		}
+		if(maConfig.contains(TypePiece.chercherPieceParNom("XC")) && maConfig.contains(TypePiece.chercherPieceParNom("IN"))) {
+			prix -= 100.00;
+		}
+		String monPrix = "Cette configuration coute actuellement " + prix + "€.";
+		return monPrix;
 	}
 
 	/**
@@ -197,7 +222,7 @@ public class ConfigVoiture implements ConfigInterface {
 		}
 		return piecesPossibles;
 	}
-	
+
 	public Set<Piece> getMesIncompatibilites(){
 		return this.mesIncompatibilites;
 	}
@@ -208,5 +233,59 @@ public class ConfigVoiture implements ConfigInterface {
 
 	public Set<String> getMesCategories() {
 		return this.mesCategories;
+	}
+
+	public Set<Couleur> getCouleursPossibles(String p) throws ResultatIncorrectException, ParametreIncorrectException{
+		String pieceNonNull = Objects.requireNonNull(p);
+		Piece piece = TypePiece.chercherPieceParNom(pieceNonNull);
+		if(Categorie.getPiecesParCategorie("EXTERIOR").contains(piece)) {
+			Set<Couleur> mesCouleurs = new HashSet<>();
+			mesCouleurs.add(Piece.Couleur.BLANC);
+			mesCouleurs.add(Piece.Couleur.BLEU);
+			mesCouleurs.add(Piece.Couleur.ROUGE);
+			String maCouleur = piece.getPropriete("couleur").get();
+			switch(maCouleur) {
+			case "BLANC": mesCouleurs.remove(Piece.Couleur.BLANC);
+			break;
+			case "BLEU": mesCouleurs.remove(Piece.Couleur.BLEU);
+			break;
+			case "ROUGE": mesCouleurs.remove(Piece.Couleur.ROUGE);
+			break;
+			}
+			return mesCouleurs;
+		}
+		return Collections.emptySet();
+	}
+
+	/**
+	 * Modification de la couleur d'une peinture, peu importe si la piece est dans ma configuration ou non
+	 * @param p
+	 * @param c
+	 * @throws ResultatIncorrectException
+	 * @throws ParametreIncorrectException
+	 */
+	public boolean setCouleur(String p, Couleur c) throws ResultatIncorrectException, ParametreIncorrectException {
+		String pieceNonNull = Objects.requireNonNull(p);
+		Couleur couleurNonNull = Objects.requireNonNull(c);
+		Piece piece = TypePiece.chercherPieceParNom(pieceNonNull);
+		// S'il s'agit bien d'une peinture
+		if(Categorie.getPiecesParCategorie("EXTERIOR").contains(piece)) {
+			// Autre possibilite de check s'il s'agit bien d'une peinture : piece doit heriter de Exterior :
+			//if(piece.getClass().getSuperclass().getSimpleName() == TypePiece.chercherPieceParNom("XS").getClass().getSuperclass().getSimpleName()) {
+			if(piece.getValeursProprietePossibles("couleur").contains(c.name()) && piece.getPropriete("couleur").get() != c.name()) {
+				piece.setPropriete("couleur", couleurNonNull.name());
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	public void getDescription(PrintStream ps) throws ResultatIncorrectException {
+		if(estComplet()) {
+			// TODO utiliser un PrintStream
+			System.out.println("Votre configuration est composee de ces quatre pieces : ");
+			this.getConfiguration();
+			System.out.println("Son prix s'eleve a " + this.getPrix());
+		}
 	}
 }

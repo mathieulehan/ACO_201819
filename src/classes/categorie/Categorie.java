@@ -38,8 +38,11 @@ public class Categorie {
 	 * Initialisation des cles (categorie) suivies de leurs valeurs (pieces associees)
 	 * @throws ResultatIncorrectException 
 	 * @throws ParametreIncorrectException 
+	 * @throws ClassNotFoundException 
+	 * @throws IllegalAccessException 
+	 * @throws InstantiationException 
 	 */
-	public static void initialiserCategories () throws ResultatIncorrectException, ParametreIncorrectException {
+	public static void initialiserCategories () throws ResultatIncorrectException, ParametreIncorrectException, InstantiationException, IllegalAccessException, ClassNotFoundException {
 		TypePiece.initialiserPieces();
 		categories.add("ENGINE");
 		categories.add("TRANSMISSION");

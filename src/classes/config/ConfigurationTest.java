@@ -4,6 +4,8 @@ import java.util.Observable;
 import java.util.Set;
 
 import classes.piece.Piece;
+import classes.piece.TypePiece;
+import classes.piece.Piece.Couleur;
 import exceptions.ActionPieceInvalideException;
 import exceptions.ParametreIncorrectException;
 import exceptions.ResultatIncorrectException;
@@ -63,18 +65,52 @@ public class ConfigurationTest extends Observable {
 	}
 	
 	/**
+	 * L'utilisateur demande a connaitre le prix de la configuration actuelle
+	 * @return
+	 * @throws ResultatIncorrectException
+	 */
+	public String actionGetPrix() throws ResultatIncorrectException{
+		return this.cv.getPrix();
+	}
+	
+	/**
 	 * Configuration de base
 	 * @throws ParametreIncorrectException 
 	 * @throws ResultatIncorrectException 
 	 * @throws ActionPieceInvalideException 
 	 */
 	public void getConfigurationStandard() throws ActionPieceInvalideException, ResultatIncorrectException, ParametreIncorrectException {
-		cv.ajouterPiece("EG133");
+		cv.ajouterPiece("ED180");
 		cv.ajouterPiece("XS");
 		// Ajout de la piece IS car necessaire a la piece XS
 		cv.ajouterPiece("TA5");
 		
 		notifierObserver();
+	}
+	
+	/**
+	 * L'utilisateur demande a recuperer les couleurs possibles pour la peinture exterieure
+	 * @return
+	 * @throws ParametreIncorrectException 
+	 * @throws ResultatIncorrectException 
+	 */
+	public Set<Couleur> actionGetCouleursPossibles(String p) throws ResultatIncorrectException, ParametreIncorrectException{
+		return this.cv.getCouleursPossibles(p);
+	}
+	
+	/**
+	 * L'utilisateur souhaite changer la couleur de la piece
+	 * @param p la piece
+	 * @param c la couleur souhaitee
+	 * @throws ResultatIncorrectException
+	 * @throws ParametreIncorrectException 
+	 */
+	public void actionSetCouleur(String p, Couleur c) throws ResultatIncorrectException, ParametreIncorrectException {
+		this.cv.setCouleur(p, c);
+	}
+	
+	public void actionGetDescription() throws ResultatIncorrectException {
+		this.cv.getDescription(null);
 	}
 	
 	/**

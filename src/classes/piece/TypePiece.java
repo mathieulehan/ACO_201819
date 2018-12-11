@@ -1,14 +1,7 @@
 package classes.piece;
 
-import java.util.HashMap;
-import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.function.Consumer;
-import java.util.function.Supplier;
-
 import exceptions.ParametreIncorrectException;
 import exceptions.ResultatIncorrectException;
 
@@ -25,12 +18,7 @@ import exceptions.ResultatIncorrectException;
 public class TypePiece {
 
 	private static List<Piece> pieces = new LinkedList<>();
-	/**
-	 * Donnees brutes dans un catalogue, il s'agit des pieces standards
-	 */
-	private static Map<String, String> cataloguePiecesStandards  = new HashMap<>();
-	private static Map<String, Double> cataloguePrixPieces  = new HashMap<>();
-	
+
 	/**
 	 * Getter de la liste de Piece 
 	 * @return List de piece
@@ -41,134 +29,79 @@ public class TypePiece {
 
 	/**
 	 * Initialisation des pieces (objets TypePiece), de leurs incompatibilites et de leurs necessites
-	 * @throws ParametreIncorrectException 
-	 * @throws ResultatIncorrectException 
+	 * @throws ParametreIncorrectException
 	 */
-	public static void initialiserPieces () throws ResultatIncorrectException, ParametreIncorrectException {
+	public static void initialiserPieces () throws ParametreIncorrectException {
 
-		initDonneesBrutes();
-		
-		Set<String> colors = new HashSet<>();
-		colors.add("red");
-		colors.add("white");
-		colors.add("blue");
-		
 		/**
 		 * Initialisation du notre catalogue de pieces
 		 */
-		for (String nomPiece : cataloguePiecesStandards.keySet()) {
-			Piece nouvellePiece = new Piece(nomPiece, cataloguePiecesStandards.get(nomPiece), cataloguePrixPieces.get(nomPiece));
-			pieces.add(nouvellePiece);
-			// V2 try : Consumer & Supplier
-			Consumer<String> c = System.out::println; // Syso lors du setPropriete
-			Supplier<String> s = () -> new String(); // valeur par defaut
-			String valeur = "white";
-			nouvellePiece.ajoutPropriete("couleur", s, c, valeur, colors); // creation de la propriete
-		}
+		Piece ED110 = new ED110("ED110", "Diesel 110kW");
+		Piece ED180 = new ED180("ED180", "Diesel 180kW");
+		Piece EG100 = new EG100("EG100", "Gasoline 100kW");
+		Piece EG133 = new EG133("EG133", "Gasoline 133kW");
+		Piece EG210 = new EG210("EG210", "Gasoline 210kW");
+		Piece EH120 = new EH120("EH120", "Gasoline/electric hybrid 120kW");
+		Piece IH = new IH("IH", "High-end interior");
+		Piece IN = new IN("IN", "Standard interior");
+		Piece IS = new IS("IS", "Sport-finish");
+		Piece TA5 = new TA5("TA5", "Automatic 5 gears");
+		Piece TC120 = new TC120("TC120", "Converter 120kW max");
+		Piece TM5 = new TM5("TM5", "Manual 5 gears");
+		Piece TM6 = new TM6("TM6", "Manual 6 gears");
+		Piece TS6 = new TS6("TS6", "Sequential 6 gears");
+		Piece TSF7 = new TSF7("TSF7", "Sequential 7 gears 4 wheels drive");
+		Piece XC = new XC("XC", "Classic paint");
+		Piece XM = new XM("XM", "Metallic paint");
+		Piece XS = new XS("XS", "Red paint and sport decoration");
+		
+
+		pieces.add(ED110);
+		pieces.add(ED180);
+		pieces.add(EG100);
+		pieces.add(EG133);
+		pieces.add(EG210);
+		pieces.add(EH120);
+		pieces.add(IH);
+		pieces.add(IN);
+		pieces.add(IS);
+		pieces.add(TA5);
+		pieces.add(TC120);
+		pieces.add(TM5);
+		pieces.add(TM6);
+		pieces.add(TS6);
+		pieces.add(TSF7);
+		pieces.add(XC);
+		pieces.add(XM);
+		pieces.add(XS);
 
 		/**
 		 * Ajout des incompatibilites et des necessites des pieces instanciees
 		 */
-		for (Piece piece : pieces) {
-			Set<Piece> mesIncompatibilites = new HashSet<>();
-			Set<Piece> mesNecessites = new HashSet<>();
-			switch (piece.getNom()) {
-			case "TA5":
-				mesIncompatibilites.add(chercherPieceParNom("EG100"));
-				break;
-			case "TSF7":
-				mesIncompatibilites.add(chercherPieceParNom("EG100"));
-				mesIncompatibilites.add(chercherPieceParNom("EG133"));
-				mesIncompatibilites.add(chercherPieceParNom("ED110"));
-				break;
-			case "XC":
-				mesIncompatibilites.add(chercherPieceParNom("EG210"));
-				break;
-			case "XM":
-				mesIncompatibilites.add(chercherPieceParNom("EG100"));
-				break;
-			case "XS":
-				mesIncompatibilites.add(chercherPieceParNom("EG100"));
-				mesNecessites.add(chercherPieceParNom("IS"));
-				break;
-			case "IS":
-				mesIncompatibilites.add(chercherPieceParNom("EG100"));
-				mesIncompatibilites.add(chercherPieceParNom("TM5"));
-				mesNecessites.add(chercherPieceParNom("XS"));
-				break;
-			case "EG100":
-				mesIncompatibilites.add(chercherPieceParNom("TA5"));
-				mesIncompatibilites.add(chercherPieceParNom("TSF7"));
-				mesIncompatibilites.add(chercherPieceParNom("XM"));
-				mesIncompatibilites.add(chercherPieceParNom("XS"));
-				mesIncompatibilites.add(chercherPieceParNom("IS"));
-				break;
-			case "EG133":
-				mesIncompatibilites.add(chercherPieceParNom("TSF7"));
-				break;
-			case "ED110":
-				mesIncompatibilites.add(chercherPieceParNom("TSF7"));
-				break;
-			case "EG210":
-				mesIncompatibilites.add(chercherPieceParNom("XC"));
-				break;
-			case "EH120":
-				mesNecessites.add(chercherPieceParNom("TC120"));
-				break;
-			case "TC120":
-				mesNecessites.add(chercherPieceParNom("EH120"));
-				break;
-			case "TM5":
-				mesIncompatibilites.add(chercherPieceParNom("IS"));
-				break;
-			default :
-				break;
-			}
-			piece.setIncompatibilites(mesIncompatibilites);
-			piece.setNecessites(mesNecessites);
-		}
-	}
-
-	/**
-	 * Initialisation des donnees brutes dans le catalogue de base
-	 */
-	private static void initDonneesBrutes () {
-		cataloguePiecesStandards.put("EG100", "Gasoline 100kW");
-		cataloguePrixPieces.put("EG100", 1.0);
-		cataloguePiecesStandards.put("EG133", "Gasoline 133kW");
-		cataloguePrixPieces.put("EG133", 2.0);
-		cataloguePiecesStandards.put("EG210", "Gasoline 210kW");
-		cataloguePrixPieces.put("EG210", 3.0);
-		cataloguePiecesStandards.put("ED110", "Diesel 110kW");
-		cataloguePrixPieces.put("ED110", 4.0);
-		cataloguePiecesStandards.put("ED180", "Diesel 180kW");
-		cataloguePrixPieces.put("ED180", 5.0);
-		cataloguePiecesStandards.put("EH120", "Gasoline/electric hybrid 120kW");
-		cataloguePrixPieces.put("EH120", 6.0);
-		cataloguePiecesStandards.put("TM5", "Manual 5 gears");
-		cataloguePrixPieces.put("TM5", 7.0);
-		cataloguePiecesStandards.put("TM6", "Manual 6 gears");
-		cataloguePrixPieces.put("TM6", 8.0);
-		cataloguePiecesStandards.put("TA5", "Automatic 5 gears");
-		cataloguePrixPieces.put("TA5", 9.0);
-		cataloguePiecesStandards.put("TS6", "Sequential 6 gears");
-		cataloguePrixPieces.put("TS6", 10.0);
-		cataloguePiecesStandards.put("TSF7", "Sequential 7 gears 4 wheels drive");
-		cataloguePrixPieces.put("TSF7", 11.0);
-		cataloguePiecesStandards.put("TC120", "Converter 120kW max");
-		cataloguePrixPieces.put("TC120", 12.0);
-		cataloguePiecesStandards.put("XC", "Classic paint");
-		cataloguePrixPieces.put("XC", 13.0);
-		cataloguePiecesStandards.put("XM", "Metallic paint");
-		cataloguePrixPieces.put("XM", 14.0);
-		cataloguePiecesStandards.put("XS", "Red paint and sport decoration");
-		cataloguePrixPieces.put("XS", 15.0);
-		cataloguePiecesStandards.put("IN",  "Standard interior");
-		cataloguePrixPieces.put("IN", 16.0);
-		cataloguePiecesStandards.put("IH", "High-end interior");
-		cataloguePrixPieces.put("IH", 17.0);
-		cataloguePiecesStandards.put("IS", "Sport-finish");
-		cataloguePrixPieces.put("IS", 18.0);
+		TA5.ajoutIncompatibilite(EG100);
+		TSF7.ajoutIncompatibilite(EG100);
+		TSF7.ajoutIncompatibilite(EG133);
+		TSF7.ajoutIncompatibilite(ED110);
+		XC.ajoutIncompatibilite(EG210);
+		XM.ajoutIncompatibilite(EG100);
+		XS.ajoutIncompatibilite(EG100);
+		XS.ajoutNecessite(IS);
+		IS.ajoutIncompatibilite(EG100);
+		IS.ajoutIncompatibilite(TM5);
+		IS.ajoutNecessite(XS);
+		EG100.ajoutIncompatibilite(TA5);
+		EG100.ajoutIncompatibilite(TSF7);
+		EG100.ajoutIncompatibilite(XM);
+		EG100.ajoutIncompatibilite(XS);
+		EG100.ajoutIncompatibilite(IS);
+		EG133.ajoutIncompatibilite(TSF7);
+		ED110.ajoutIncompatibilite(TSF7);
+		EG210.ajoutIncompatibilite(XC);
+		EH120.ajoutNecessite(TC120);
+		TC120.ajoutNecessite(EH120);
+		TM5.ajoutIncompatibilite(IS);
+		
+		
 	}
 
 	/**

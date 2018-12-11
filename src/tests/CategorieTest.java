@@ -20,9 +20,12 @@ class CategorieTest {
 	 * Initialise toutes les categories et leurs pieces pour tous les tests
 	 * @throws ParametreIncorrectException
 	 * @throws ResultatIncorrectException
+	 * @throws ClassNotFoundException 
+	 * @throws IllegalAccessException 
+	 * @throws InstantiationException 
 	 */
 	@BeforeAll
-	static void init() throws ParametreIncorrectException, ResultatIncorrectException {
+	static void init() throws ParametreIncorrectException, ResultatIncorrectException, InstantiationException, IllegalAccessException, ClassNotFoundException {
 		Categorie.initialiserCategories();
 	}
 	

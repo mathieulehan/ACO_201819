@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.Set;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -11,6 +12,7 @@ import org.junit.jupiter.api.Test;
 
 import classes.categorie.Categorie;
 import classes.config.ConfigVoiture;
+import classes.piece.Piece.Couleur;
 import classes.piece.TypePiece;
 import exceptions.ActionPieceInvalideException;
 import exceptions.ParametreIncorrectException;
@@ -29,9 +31,12 @@ class ConfigVoitureTest {
 	 * Initialise toutes les categories et leurs pieces pour tous les tests
 	 * @throws ParametreIncorrectException
 	 * @throws ResultatIncorrectException
+	 * @throws ClassNotFoundException 
+	 * @throws IllegalAccessException 
+	 * @throws InstantiationException 
 	 */
 	@BeforeAll
-	static void init() throws ParametreIncorrectException, ResultatIncorrectException {
+	static void init() throws ParametreIncorrectException, ResultatIncorrectException, InstantiationException, IllegalAccessException, ClassNotFoundException {
 		Categorie.initialiserCategories();
 	}
 
@@ -181,7 +186,7 @@ class ConfigVoitureTest {
 	
 	@Test
 	public void configuration_complete() throws ActionPieceInvalideException, ResultatIncorrectException, ParametreIncorrectException {
-		
+
 		assertTrue(this.cv.ajouterPiece("ED110"));
 		assertTrue(this.cv.ajouterPiece("TA5"));
 		assertTrue(this.cv.ajouterPiece("XM"));
@@ -191,6 +196,17 @@ class ConfigVoitureTest {
 		assertThrows(ActionPieceInvalideException.class, 
 				() -> this.cv.ajouterPiece("EH120")); // Configuration terminee
 
+	}
+	
+	@Test
+	public void changementDeCouleur() throws ResultatIncorrectException, ParametreIncorrectException {
+		assertTrue(TypePiece.chercherPieceParNom("XS").getPropriete("couleur").get() == Couleur.ROUGE.name());
+		assertTrue(this.cv.setCouleur("XS", Couleur.BLANC));
+		Set<Couleur> couleursSouhaitees = new HashSet<>();
+		couleursSouhaitees.addAll( Arrays.asList(Couleur.BLEU, Couleur.ROUGE));
+		assertEquals(couleursSouhaitees, this.cv.getCouleursPossibles("XS"));
+		assertFalse(this.cv.setCouleur("XS", Couleur.BLANC));
+		assertFalse(TypePiece.chercherPieceParNom("XS").getPropriete("couleur").get() == Couleur.ROUGE.name());
 	}
 
 }

@@ -24,7 +24,7 @@ class ConfigAppImplTest {
 	ConfigAppImpl observer;
 
 	@BeforeAll
-	static void init() throws ParametreIncorrectException, ResultatIncorrectException {
+	static void init() throws ParametreIncorrectException, ResultatIncorrectException, InstantiationException, IllegalAccessException, ClassNotFoundException {
 		Categorie.initialiserCategories();
 	}
 
