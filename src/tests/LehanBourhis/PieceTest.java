@@ -2,6 +2,7 @@ package tests.LehanBourhis;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.util.Arrays;
 import java.util.HashSet;
 
 import org.junit.jupiter.api.BeforeAll;
@@ -138,6 +139,32 @@ class PieceTest {
 		assertFalse(TypePiece.chercherPieceParNom("EG100").estIncompatible(TypePiece.chercherPieceParNom("TM5")));
 		assertFalse(TypePiece.chercherPieceParNom("TSF7").estIncompatible(TypePiece.chercherPieceParNom("TM5")));		
 	}	
+	
+	@Test
+	public void getProprietes() throws ResultatIncorrectException {
+		Piece TA5 = TypePiece.chercherPieceParNom("TA5");
+		
+		HashSet<String> valeurProprieteAttendu = new HashSet<>();
+		valeurProprieteAttendu.addAll(Arrays.asList("white", "blue", "red"));
+		assertEquals(valeurProprieteAttendu, TA5.getValeursProprietePossibles("couleur"));
+
+		HashSet<String> nomProprieteAttendu = new HashSet<>();
+		nomProprieteAttendu.add("couleur");
+		assertEquals(nomProprieteAttendu, TA5.getNomsProprietes());
+		
+		String couleurInitiale = new String("white");
+		assertEquals(couleurInitiale, TA5.getPropriete("couleur").get());
+		
+		TypePiece.chercherPieceParNom("TA5").setPropriete("couleur", "red");
+		String couleurModifiee = new String("red");
+		assertEquals(couleurModifiee, TA5.getPropriete("couleur").get());
+		
+		TypePiece.chercherPieceParNom("TA5").setPropriete("couleur", "blue");
+		String couleurModifiee2 = new String("blue");
+		assertEquals(couleurModifiee2, TA5.getPropriete("couleur").get());
+		
+		assertEquals(valeurProprieteAttendu, TA5.getValeursProprietePossibles("couleur"));
+	}
 
 	@Test
 	public void testExpectedException() throws ParametreIncorrectException {

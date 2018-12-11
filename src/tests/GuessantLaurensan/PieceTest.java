@@ -269,26 +269,27 @@ class PieceTest {
 	
 	@Test
 	public void getProprietes() throws ResultatIncorrectException {
+		Piece TA5 = TypePiece.chercherPieceParNom("TA5");
 		
 		HashSet<String> valeurProprieteAttendu = new HashSet<>();
 		valeurProprieteAttendu.addAll(Arrays.asList("white", "blue", "red"));
-		assertEquals(valeurProprieteAttendu, TypePiece.chercherPieceParNom("TA5").getValeursProprietePossibles("couleur"));
+		assertEquals(valeurProprieteAttendu, TA5.getValeursProprietePossibles("couleur"));
 
 		HashSet<String> nomProprieteAttendu = new HashSet<>();
 		nomProprieteAttendu.add("couleur");
-		assertEquals(nomProprieteAttendu, TypePiece.chercherPieceParNom("TA5").getNomsProprietes());
+		assertEquals(nomProprieteAttendu, TA5.getNomsProprietes());
 		
 		String couleurInitiale = new String("white");
-		assertEquals(couleurInitiale, TypePiece.chercherPieceParNom("TA5").getPropriete("couleur").get());
+		assertEquals(couleurInitiale, TA5.getPropriete("couleur").get());
 		
 		TypePiece.chercherPieceParNom("TA5").setPropriete("couleur", "red");
 		String couleurModifiee = new String("red");
-		assertEquals(couleurModifiee, TypePiece.chercherPieceParNom("TA5").getPropriete("couleur").get());
+		assertEquals(couleurModifiee, TA5.getPropriete("couleur").get());
 		
 		TypePiece.chercherPieceParNom("TA5").setPropriete("couleur", "blue");
 		String couleurModifiee2 = new String("blue");
-		assertEquals(couleurModifiee2, TypePiece.chercherPieceParNom("TA5").getPropriete("couleur").get());
+		assertEquals(couleurModifiee2, TA5.getPropriete("couleur").get());
 		
-		assertEquals(valeurProprieteAttendu, TypePiece.chercherPieceParNom("TA5").getValeursProprietePossibles("couleur"));
+		assertEquals(valeurProprieteAttendu, TA5.getValeursProprietePossibles("couleur"));
 	}
 }
