@@ -21,7 +21,7 @@
   </interface>  
   <class id="3" language="java" name="classes.config.ConfigAppImpl" project="ACO_201819" 
     file="/ACO_201819/src/classes/config/ConfigAppImpl.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="99" width="180" x="28" y="74"/>    
+    <position height="-1" width="-1" x="149" y="150"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
