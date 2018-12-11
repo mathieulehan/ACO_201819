@@ -4,7 +4,6 @@ import java.util.Observable;
 import java.util.Set;
 
 import classes.piece.Piece;
-import classes.piece.TypePiece;
 import classes.piece.Piece.Couleur;
 import exceptions.ActionPieceInvalideException;
 import exceptions.ParametreIncorrectException;
@@ -71,6 +70,30 @@ public class ConfigurationTest extends Observable {
 	 */
 	public String actionGetPrix() throws ResultatIncorrectException{
 		return this.cv.getPrix();
+	}
+	
+	/**
+	 * L'utilisateur affiche les categories restantes de sa configuration
+	 * @return un set de categories
+	 */
+	public Set<String> actionGetCategoriesRestantes() {
+		return this.cv.getCategoriesRestantes();
+	}
+	
+	/**
+	 * L'utilisateur affiche les pieces incompatibles à sa configuration courante
+	 * @return un set de pieces
+	 */
+	public Set<Piece> actionGetPiecesIncompatibles() {
+		return this.cv.getMesIncompatibilites();
+	}
+	
+	/**
+	 * L'utilisateur souhaite valider sa configuration 
+	 * @return true si la configuration comporte 4 pieces compatibles (une piece dans chaque categorie), false sinon
+	 */
+	public boolean actionValidationConfiguration() {
+		return this.cv.estComplet();
 	}
 	
 	/**

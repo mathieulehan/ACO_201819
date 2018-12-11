@@ -1,4 +1,4 @@
-package tests;
+package tests.GuessantLaurensan;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -8,7 +8,6 @@ import java.util.HashSet;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-import classes.categorie.Categorie;
 import classes.piece.Piece;
 import classes.piece.TypePiece;
 import exceptions.ParametreIncorrectException;
@@ -16,7 +15,7 @@ import exceptions.ResultatIncorrectException;
 
 /**
  * 
- * @author YMCA
+ * @author Charlotte & Thomas
  *
  */
 class PieceTest {
@@ -25,13 +24,10 @@ class PieceTest {
 	 * Initialise toutes les categories et leurs pieces pour tous les tests
 	 * @throws ParametreIncorrectException
 	 * @throws ResultatIncorrectException
-	 * @throws ClassNotFoundException 
-	 * @throws IllegalAccessException 
-	 * @throws InstantiationException 
 	 */
 	@BeforeAll
-	static void init() throws ParametreIncorrectException, ResultatIncorrectException, InstantiationException, IllegalAccessException, ClassNotFoundException {
-		Categorie.initialiserCategories();
+	public static void init() throws ParametreIncorrectException, ResultatIncorrectException {
+		TypePiece.initialiserPieces();
 	}
 
 	/**
@@ -39,50 +35,17 @@ class PieceTest {
 	 * - Nom de piece ou description null 	-> NullPointerException
 	 * - Nom de piece egal a "" 			-> ParametreIncorrectException
 	 * - Nom de piece deja utilisee 		-> ParametreIncorrectException
-	 * @throws ParametreIncorrectException 
-	 * @throws ResultatIncorrectException 
 	 */
 	@Test
-	public void constructeur_piece_incorrects() throws ParametreIncorrectException, ResultatIncorrectException {
-		assertThrows(NullPointerException.class,
-				() -> new Piece(null, "Piece de test"));
-		assertThrows(ParametreIncorrectException.class, 
-				() -> new Piece("", "Piece de test"));
-		assertThrows(ParametreIncorrectException.class, 
-				() -> new Piece("EG100", "Piece de test"));
+	public void constructeur_piece_incorrect() {
 		assertThrows(NullPointerException.class, 
-				() -> new Piece("Piece", null));
+				() -> {new Piece(null, "Piece de test");});
+		assertThrows(ParametreIncorrectException.class, 
+				() -> {new Piece("", "Piece de test");});
+		assertThrows(ParametreIncorrectException.class, 
+				() -> {new Piece("EG100", "Piece de test");});
 		assertThrows(NullPointerException.class, 
-				() -> new Piece("Piece", "Piece de test"));
-	}
-	
-	/**
-	 * 
-	 * @throws ResultatIncorrectException
-	 */
-	@Test
-	public void getProprietes() throws ResultatIncorrectException {
-		
-		HashSet<String> valeurProprieteAttendu = new HashSet<>();
-		valeurProprieteAttendu.addAll(Arrays.asList("white", "blue", "red"));
-		assertEquals(valeurProprieteAttendu, TypePiece.chercherPieceParNom("TA5").getValeursProprietePossibles("couleur"));
-
-		HashSet<String> nomProprieteAttendu = new HashSet<>();
-		nomProprieteAttendu.add("couleur");
-		assertEquals(nomProprieteAttendu, TypePiece.chercherPieceParNom("TA5").getNomsProprietes());
-		
-		String couleurInitiale = new String("white");
-		assertEquals(couleurInitiale, TypePiece.chercherPieceParNom("TA5").getPropriete("couleur").get());
-		
-		TypePiece.chercherPieceParNom("TA5").setPropriete("couleur", "red");
-		String couleurModifiee = new String("red");
-		assertEquals(couleurModifiee, TypePiece.chercherPieceParNom("TA5").getPropriete("couleur").get());
-		
-		TypePiece.chercherPieceParNom("TA5").setPropriete("couleur", "blue");
-		String couleurModifiee2 = new String("blue");
-		assertEquals(couleurModifiee2, TypePiece.chercherPieceParNom("TA5").getPropriete("couleur").get());
-		
-		assertEquals(valeurProprieteAttendu, TypePiece.chercherPieceParNom("TA5").getValeursProprietePossibles("couleur"));
+				() -> {new Piece("Piece", null);});
 	}
 	
 	/**
@@ -91,17 +54,16 @@ class PieceTest {
 	 * - Nom de piece egal a "" 	-> ParametreIncorrectException
 	 * - Nom de piece deja utilisee -> ParametreIncorrectException
 	 * @throws ParametreIncorrectException 
-	 * @throws ResultatIncorrectException 
 	 */
 	@Test
-	public void modification_nom_incorrects() throws ParametreIncorrectException, ResultatIncorrectException {
+	public void modification_nom_incorrecte() throws ParametreIncorrectException {
 		Piece pieceTest = new Piece("Piece", "Piece de test");
 		assertThrows(NullPointerException.class, 
-				() -> pieceTest.setNom(null));
+				() -> {pieceTest.setNom(null);});
 		assertThrows(ParametreIncorrectException.class, 
-				() -> pieceTest.setNom(""));
+				() -> {pieceTest.setNom("");});
 		assertThrows(ParametreIncorrectException.class, 
-				() -> pieceTest.setNom("IS"));
+				() -> {pieceTest.setNom("IS");});
 		assertEquals(pieceTest.getNom(), "Piece");
 	}
 
@@ -110,21 +72,35 @@ class PieceTest {
 	 * @throws ParametreIncorrectException 
 	 */
 	@Test
-	public void modification_description_incorrect() throws ParametreIncorrectException {
+	public void modification_description_incorrecte() throws ParametreIncorrectException {
 		Piece pieceTest = new Piece("Piece", "Piece de test");
 		assertThrows(NullPointerException.class, 
-				() -> pieceTest.setDescription(null));
+				() -> {pieceTest.setDescription(null);});
 		assertEquals(pieceTest.getDescription(), "Piece de test");
+	}
+	
+	/**
+	 * Setter de nom et de description valide
+	 * @throws ParametreIncorrectException 
+	 */
+	@Test
+	public void modification_nom_description_correcte() throws ParametreIncorrectException {
+		Piece pieceTest = new Piece("Piece", "Piece de test");
+
+		pieceTest.setNom("Nouveau nom");
+		assertEquals(pieceTest.getNom(), "Nouveau nom");
+		
+		pieceTest.setDescription("Nouvelle description");
+		assertEquals(pieceTest.getDescription(), "Nouvelle description");
 	}
 	
 	/**
 	 * On initialise un set d'incompatibilites grace au setter, le set peut etre vide
 	 * Si le parametre du setter est null -> NullPointerException
-	 * @throws ResultatIncorrectException
 	 * @throws ParametreIncorrectException 
 	 */
 	@Test
-	public void modification_incompatibilites_incorrect() throws ParametreIncorrectException {
+	public void modification_incompatibilites_incorrecte() throws ParametreIncorrectException {
 		Piece pieceTest = new Piece("Piece", "Piece de test");
 		assertThrows(NullPointerException.class, 
 				() -> pieceTest.setIncompatibilites(null));
@@ -138,26 +114,25 @@ class PieceTest {
 	/**
 	 * On initialise un set de necessites grace au setter, le set peut etre vide
 	 * Si le parametre du setter est null -> NullPointerException
-	 * @throws ResultatIncorrectException
 	 * @throws ParametreIncorrectException 
 	 */
 	@Test
-	public void modification_necessites_incorrect() throws ResultatIncorrectException, ParametreIncorrectException {
+	public void modification_necessites_incorrecte() throws ParametreIncorrectException {
 		Piece pieceTest = new Piece("Piece", "Piece de test");
 		assertThrows(NullPointerException.class, 
-				() -> pieceTest.setIncompatibilites(null));
-		assertTrue(pieceTest.getIncompatibilites().size() == 0);
+				() -> pieceTest.setNecessites(null));
+		assertTrue(pieceTest.getNecessites().size() == 0);
 
-		pieceTest.setIncompatibilites(new HashSet<>());
-		assertEquals(pieceTest.getIncompatibilites(), new HashSet<>());
+		pieceTest.setNecessites(new HashSet<>());
+		assertEquals(pieceTest.getNecessites(), new HashSet<>());
 	}
 	
 	/**
-	 * Ajout d'une incompatibilite pour une piece
+	 * L'administration souhaite ajouter une incompatibilite pour une piece
 	 * @throws ParametreIncorrectException 
 	 */
 	@Test
-	void ajout_incompatibilite_valide() throws ParametreIncorrectException  {
+	public void ajout_incompatibilite_valide() throws ParametreIncorrectException {
 		Piece pieceTest = new Piece("Piece", "Piece de test");
 		assertTrue(pieceTest.getIncompatibilites().size() == 0);
 		
@@ -174,11 +149,11 @@ class PieceTest {
 	}
 	
 	/**	 
-	 * Ajout d'une necessite pour une piece
+	 * L'administration souhaite ajouter une necessite pour une piece
 	 * @throws ParametreIncorrectException
 	 */
 	@Test
-	void ajout_necessite_valide() throws ParametreIncorrectException{
+	void ajout_necessite_valide() throws ParametreIncorrectException {
 		Piece pieceTest = new Piece("Piece", "Piece de test");
 		assertTrue(pieceTest.getNecessites().size() == 0);
 		
@@ -209,18 +184,18 @@ class PieceTest {
 		assertThrows(ParametreIncorrectException.class,
 				() -> pieceTest.ajoutIncompatibilite(incompatibilite)); // Piece deja ajoutee, donc elle ne s'ajoute pas
 		assertThrows(NullPointerException.class, 
-				() -> pieceTest.ajoutIncompatibilite(null)); 
+				() -> {pieceTest.ajoutIncompatibilite(null);}); 
 
 		Piece necessite = new Piece("Necessite", "Necessite de test");
 		pieceTest.ajoutNecessite(necessite);
 		assertThrows(ParametreIncorrectException.class,
 				() -> pieceTest.ajoutNecessite(necessite)); // Piece deja ajoutee, donc elle ne s'ajoute pas
 		assertThrows(NullPointerException.class, 
-				() -> pieceTest.ajoutNecessite(null));
+				() -> {pieceTest.ajoutNecessite(null);});
 	}
 	
 	/**
-	 * Suppression d'une incompatibilite pour une piece
+	 * L'administration souhaite supprimer une incompatibilite pour une piece
 	 * @throws ParametreIncorrectException 
 	 */
 	@Test
@@ -237,7 +212,7 @@ class PieceTest {
 	}
 	
 	/**
-	 * Suppression d'une incompatibilite pour une piece
+	 * L'administration souhaite supprimer une incompatibilite pour une piece
 	 * @throws ParametreIncorrectException 
 	 */
 	@Test
@@ -260,19 +235,60 @@ class PieceTest {
 	 * @throws ParametreIncorrectException 
 	 */
 	@Test
-	void suppression_incompatibilite_necessite_incorrect() throws ParametreIncorrectException {
+	void suppression_incompatibilite_necessite_incorrecte() throws ParametreIncorrectException {
 		Piece pieceTest = new Piece("Piece", "Piece de test");
 
 		Piece incompatibilite = new Piece("Incompatibilite", "Incompatibilte de test");
 		assertThrows(ParametreIncorrectException.class,
 				() -> pieceTest.suppressionIncompatibilite(incompatibilite)); // Piece jamais ajoutee
 		assertThrows(NullPointerException.class, 
-				() -> pieceTest.suppressionIncompatibilite(null));
+				() -> {pieceTest.suppressionIncompatibilite(null);});
 
 		Piece necessite = new Piece("Necessite", "Necessite de test");
 		assertThrows(ParametreIncorrectException.class,
 				() -> pieceTest.suppressionNecessite(necessite)); // Piece jamais ajoutee
 		assertThrows(NullPointerException.class, 
-				() -> pieceTest.suppressionNecessite(null));
+				() -> {pieceTest.suppressionNecessite(null);});
+	}
+	
+	/**
+	 * Verification de la methode permettant de savoir si deux pieces sont incompatibles entre elles
+	 * @throws ResultatIncorrectException 
+	 */
+	@Test
+	public void piece_estIncompatible() throws ResultatIncorrectException {
+		Piece EG100 = TypePiece.chercherPieceParNom("EG100");
+		Piece TSF7 = TypePiece.chercherPieceParNom("TSF7");
+		Piece TM5 = TypePiece.chercherPieceParNom("TM5");
+		
+		assertTrue(EG100.estIncompatible(TSF7));
+		assertFalse(EG100.estIncompatible(TM5));
+		assertFalse(TSF7.estIncompatible(TM5));
+	}
+	
+	
+	@Test
+	public void getProprietes() throws ResultatIncorrectException {
+		
+		HashSet<String> valeurProprieteAttendu = new HashSet<>();
+		valeurProprieteAttendu.addAll(Arrays.asList("white", "blue", "red"));
+		assertEquals(valeurProprieteAttendu, TypePiece.chercherPieceParNom("TA5").getValeursProprietePossibles("couleur"));
+
+		HashSet<String> nomProprieteAttendu = new HashSet<>();
+		nomProprieteAttendu.add("couleur");
+		assertEquals(nomProprieteAttendu, TypePiece.chercherPieceParNom("TA5").getNomsProprietes());
+		
+		String couleurInitiale = new String("white");
+		assertEquals(couleurInitiale, TypePiece.chercherPieceParNom("TA5").getPropriete("couleur").get());
+		
+		TypePiece.chercherPieceParNom("TA5").setPropriete("couleur", "red");
+		String couleurModifiee = new String("red");
+		assertEquals(couleurModifiee, TypePiece.chercherPieceParNom("TA5").getPropriete("couleur").get());
+		
+		TypePiece.chercherPieceParNom("TA5").setPropriete("couleur", "blue");
+		String couleurModifiee2 = new String("blue");
+		assertEquals(couleurModifiee2, TypePiece.chercherPieceParNom("TA5").getPropriete("couleur").get());
+		
+		assertEquals(valeurProprieteAttendu, TypePiece.chercherPieceParNom("TA5").getValeursProprietePossibles("couleur"));
 	}
 }
