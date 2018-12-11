@@ -57,11 +57,18 @@ class CategorieTest {
 	 */
 	@Test
 	public void testGetPiecesParCategorie() throws ResultatIncorrectException, ParametreIncorrectException {
-		LinkedList<Piece> piecesAttendues = new LinkedList<Piece>(Arrays.asList(TypePiece.chercherPieceParNom("IN"),
-																				TypePiece.chercherPieceParNom("IH"), 
-																				TypePiece.chercherPieceParNom("IS")));
-		assertEquals(piecesAttendues, Categorie.getPiecesParCategorie("INTERIOR"));
-		
+		LinkedList<Piece> piecesAttendues = new LinkedList<Piece>(Arrays.asList(TypePiece.chercherPieceParNom("EG100"),
+																				TypePiece.chercherPieceParNom("EG133"), 
+																				TypePiece.chercherPieceParNom("EG210"),
+																				TypePiece.chercherPieceParNom("ED110"),
+																				TypePiece.chercherPieceParNom("ED180"), 
+																				TypePiece.chercherPieceParNom("EH120")));
+	
+		assertEquals(piecesAttendues, Categorie.getPiecesParCategorie("ENGINE"));
+	}
+	
+	@Test
+	public void testExpectedException() {
 		assertThrows(ParametreIncorrectException.class,
 				() -> Categorie.getPiecesParCategorie("TRIM"));
 	}

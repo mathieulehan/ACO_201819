@@ -53,10 +53,6 @@ class ConfigAppImplTest {
 		this.observable.actionAjouterPiece("XS");
 		assertEquals(2, this.observable.actionGetConfiguration().size());
 		
-		assertThrows(ActionPieceInvalideException.class, 
-				() -> this.observable.actionAjouterPiece("XS"));
-		assertEquals(2, this.observable.actionGetConfiguration().size());
-		
 		this.observable.actionAjouterPiece("TA5");
 		assertEquals(3, this.observable.actionGetConfiguration().size());
 	}
@@ -76,16 +72,31 @@ class ConfigAppImplTest {
 
 		this.observable.actionSupprimerPiece("IS");
 		assertEquals(1, this.observable.actionGetConfiguration().size());
-		
-		assertThrows(ActionPieceInvalideException.class, 
-				() -> this.observable.actionSupprimerPiece("EG100"));
-		assertEquals(1, this.observable.actionGetConfiguration().size());
 
 		HashSet<Piece> incompatilibitesSouhaitees = new HashSet<>();
 		incompatilibitesSouhaitees.addAll(Arrays.asList(TypePiece.chercherPieceParNom("TSF7")));
 		assertEquals(incompatilibitesSouhaitees, this.observable.actionGetPiecesIncompatibles());
-	}
+	}	
 	
+	/**
+	 * L'utilisateur souhaite voir les categories restantes dans sa configuration
+	 * @throws ActionPieceInvalideException
+	 * @throws ResultatIncorrectException
+	 * @throws ParametreIncorrectException
+	 */
+	@Test
+	public void testActionGetCategorieRestantes() throws ActionPieceInvalideException, ResultatIncorrectException, ParametreIncorrectException {
+		
+		HashSet<String> categoriesRestantes = new HashSet<>();
+		categoriesRestantes.addAll(Arrays.asList("TRANSMISSION", "ENGINE", "INTERIOR", "EXTERIOR"));
+		assertEquals(categoriesRestantes, this.observable.actionGetCategoriesRestantes());
+
+		this.observable.actionAjouterPiece("TC120");
+		
+		HashSet<String> categoriesRestantes2 = new HashSet<>();
+		categoriesRestantes2.addAll(Arrays.asList("INTERIOR", "EXTERIOR"));
+		assertEquals(categoriesRestantes2, this.observable.actionGetCategoriesRestantes());
+	}
 	
 	/**
 	 * L'utilisateur souhaite instancier la configuration existant deja, y ajouter une nouvelle piece (impossible) 
@@ -103,24 +114,7 @@ class ConfigAppImplTest {
 		assertFalse(this.observable.actionGetConfiguration().contains(TypePiece.chercherPieceParNom("EH120")));
 		
 		assertTrue(this.observable.actionValidationConfiguration());
-	}
-	
-	
-	/**
-	 * L'utilisateur souhaite voir les categories restantes dans sa configuration
-	 * @throws ActionPieceInvalideException
-	 * @throws ResultatIncorrectException
-	 * @throws ParametreIncorrectException
-	 */
-	@Test
-	public void testsGetCategorieRestantes() throws ActionPieceInvalideException, ResultatIncorrectException, ParametreIncorrectException {
-
-		this.observable.actionAjouterPiece("TA5");
-		
-		HashSet<String> categoriesRestantes = new HashSet<>();
-		categoriesRestantes.addAll(Arrays.asList("ENGINE", "INTERIOR", "EXTERIOR"));
-		assertEquals(categoriesRestantes, this.observable.actionGetCategoriesRestantes());
-	}
+	}	
 	
 	/**
 	 * L'utilisateur a une configuration invalide
@@ -132,15 +126,30 @@ class ConfigAppImplTest {
 	public void testActionValidationConfiguration() throws ActionPieceInvalideException, ResultatIncorrectException, ParametreIncorrectException {
 
 		this.observable.getConfigurationStandard();
-		assertTrue(this.observable.actionGetConfiguration().contains(TypePiece.chercherPieceParNom("EG133")));
-		assertTrue(this.observable.actionGetConfiguration().contains(TypePiece.chercherPieceParNom("XS")));
-		assertTrue(this.observable.actionGetConfiguration().contains(TypePiece.chercherPieceParNom("IS")));
 		assertTrue(this.observable.actionGetConfiguration().contains(TypePiece.chercherPieceParNom("TA5")));
 		assertTrue(this.observable.actionValidationConfiguration());
 		
 		this.observable.actionSupprimerPiece("TA5");
 		assertFalse(this.observable.actionGetConfiguration().contains(TypePiece.chercherPieceParNom("TA5")));
-		
 		assertFalse(this.observable.actionValidationConfiguration());
+	}
+	
+	@Test
+	public void testExpectedException() throws ActionPieceInvalideException, ResultatIncorrectException, ParametreIncorrectException {
+		this.observable.actionAjouterPiece("TM5");
+		this.observable.actionAjouterPiece("ED110");		
+
+		assertThrows(ResultatIncorrectException.class,
+				() -> this.observable.actionAjouterPiece("") );
+		assertThrows(NullPointerException.class,
+				() -> this.observable.actionAjouterPiece(null) );
+		assertThrows(ActionPieceInvalideException.class, 
+				() -> this.observable.actionAjouterPiece("EH120"));
+		
+		assertThrows(NullPointerException.class,
+				() -> this.observable.actionSupprimerPiece(null) );
+		assertThrows(ActionPieceInvalideException.class, 
+				() -> this.observable.actionSupprimerPiece("EH120"));
+		
 	}
 }

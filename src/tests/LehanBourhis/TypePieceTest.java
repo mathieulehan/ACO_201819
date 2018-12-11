@@ -43,7 +43,7 @@ class TypePieceTest {
 		assertFalse(TypePiece.getPieces().isEmpty());
 		
 		assertThrows(ResultatIncorrectException.class, 
-				() -> TypePiece.getPieces().contains(TypePiece.chercherPieceParNom("INEXISTANTE")));
+				() -> TypePiece.getPieces().contains(TypePiece.chercherPieceParNom("A")));
 		assertTrue(TypePiece.getPieces().contains(TypePiece.chercherPieceParNom("XM")));
 	}
 	
