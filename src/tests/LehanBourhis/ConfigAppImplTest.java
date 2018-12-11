@@ -42,7 +42,7 @@ class ConfigAppImplTest {
 	
 	
 	/**
-	 * L'utilsateur ajoute une piece dans sa configuration
+	 * L'utilsateur ajoute une piece dans sa configuration (ajout des pieces necessaires automatique)
 	 * @throws ResultatIncorrectException
 	 * @throws ActionPieceInvalideException
 	 * @throws ParametreIncorrectException
@@ -51,7 +51,6 @@ class ConfigAppImplTest {
 	public void testActionAjouterPiece() throws ResultatIncorrectException, ActionPieceInvalideException, ParametreIncorrectException {
 
 		this.observable.actionAjouterPiece("XS");
-		// Ajout de la piece IS car necessaire a la piece XS
 		assertEquals(2, this.observable.actionGetConfiguration().size());
 		
 		assertThrows(ActionPieceInvalideException.class, 
@@ -63,7 +62,7 @@ class ConfigAppImplTest {
 	}
 	
 	/**
-	 * L'utilisateur supprime une piece de sa configuration
+	 * L'utilisateur supprime une piece de sa configuration (suppression des pieces necessaires automatique)
 	 * @throws ResultatIncorrectException
 	 * @throws ActionPieceInvalideException
 	 * @throws ParametreIncorrectException
@@ -89,8 +88,7 @@ class ConfigAppImplTest {
 	
 	
 	/**
-	 * L'utilisateur souhaite instancier la configuration existant deja, 
-	 * y ajouter une piece (impossible) 
+	 * L'utilisateur souhaite instancier la configuration existant deja, y ajouter une nouvelle piece (impossible) 
 	 * et valider cette configuration
 	 * @throws ActionPieceInvalideException
 	 * @throws ResultatIncorrectException

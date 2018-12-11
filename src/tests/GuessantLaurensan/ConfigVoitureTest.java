@@ -24,7 +24,7 @@ import exceptions.ResultatIncorrectException;
  */
 class ConfigVoitureTest {
 
-	ConfigVoiture configuration;
+	private ConfigVoiture configuration;
 
 	/**
 	 * Initialise toutes les categories et leurs pieces pour tous les tests
@@ -32,7 +32,7 @@ class ConfigVoitureTest {
 	 * @throws ResultatIncorrectException
 	 */
 	@BeforeAll
-	public static void init() throws ParametreIncorrectException, ResultatIncorrectException {
+	private static void init() throws ParametreIncorrectException, ResultatIncorrectException {
 		Categorie.initialiserCategories();
 	}
 

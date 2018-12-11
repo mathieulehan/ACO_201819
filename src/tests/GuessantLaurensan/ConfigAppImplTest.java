@@ -24,8 +24,8 @@ import exceptions.ResultatIncorrectException;
  */
 class ConfigAppImplTest {
 	
-	ConfigurationTest observable;
-	ConfigAppImpl observer;
+	private ConfigurationTest observable;
+	private ConfigAppImpl observer;
 
 	/**
 	 * Initialise toutes les categories et leurs pieces pour tous les tests
@@ -33,7 +33,7 @@ class ConfigAppImplTest {
 	 * @throws ResultatIncorrectException
 	 */
 	@BeforeAll
-	public static void init() throws ParametreIncorrectException, ResultatIncorrectException {
+	private static void init() throws ParametreIncorrectException, ResultatIncorrectException {
 		Categorie.initialiserCategories();
 	}
 
@@ -43,7 +43,7 @@ class ConfigAppImplTest {
 	 * @throws ParametreIncorrectException
 	 */
 	@BeforeEach
-	private void init_configuration_observer_observable() throws ResultatIncorrectException, ParametreIncorrectException {
+	public void init_configuration_observer_observable() throws ResultatIncorrectException, ParametreIncorrectException {
 		this.observable = new ConfigurationTest();
 		this.observer = new ConfigAppImpl();
 		this.observable.addObserver(observer);

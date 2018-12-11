@@ -19,7 +19,7 @@ import exceptions.ResultatIncorrectException;
  *
  */
 class TypePieceTest {
-	static Piece XM;
+	private static Piece XM;
 	
 	/**
 	 * Initialise les pieces pour tous les tests
@@ -27,7 +27,7 @@ class TypePieceTest {
 	 * @throws ResultatIncorrectException
 	 */
 	@BeforeAll
-	public static void init() throws ResultatIncorrectException, ParametreIncorrectException  {
+	private static void init() throws ResultatIncorrectException, ParametreIncorrectException  {
 		TypePiece.initialiserPieces();
 		XM = TypePiece.chercherPieceParNom("XM");
 		

@@ -31,8 +31,8 @@ class CategorieTest {
 	}
 	
 	/**
-	 * On verifie si l'initialisation de la Map<Categories, List<String>> categorieCatalogue se deroule comme prevu
-	 * On verifie si on a bien le bon nombre de categories qui a ete genere
+	 * Catalogue de categorie non null
+	 * Taille catalogue de categorie == 4
 	 */
 	@Test
 	public void testVerifierCatalogueCategorie() {
@@ -41,8 +41,8 @@ class CategorieTest {
 	}
 	
 	/**
-	 * On verifie si la categorie ENGINE est bien presente dans la Map
-	 * Categorie TRIM (enjoliveur) presente dans la Map
+	 * Categorie ENGINE presente dans la Map
+	 * Categorie TRIM (enjoliveur) non presente dans la Map
 	 */
 	@Test
 	public void testGetCategories() {
@@ -51,14 +51,14 @@ class CategorieTest {
 	}
 	
 	/**
-	 * Recuperer les pieces en fonction du categorie
+	 * Recuperer les pieces en fonction de la categorie
 	 * @throws ResultatIncorrectException
 	 * @throws ParametreIncorrectException
 	 */
 	@Test
 	public void testGetPiecesParCategorie() throws ResultatIncorrectException, ParametreIncorrectException {
-		LinkedList<Piece> piecesAttendues = new LinkedList<Piece>(Arrays.asList(TypePiece.chercherPieceParNom("IC"),
-																				TypePiece.chercherPieceParNom("IM"), 
+		LinkedList<Piece> piecesAttendues = new LinkedList<Piece>(Arrays.asList(TypePiece.chercherPieceParNom("IN"),
+																				TypePiece.chercherPieceParNom("IH"), 
 																				TypePiece.chercherPieceParNom("IS")));
 		assertEquals(piecesAttendues, Categorie.getPiecesParCategorie("INTERIOR"));
 		
