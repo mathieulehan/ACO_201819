@@ -21,12 +21,9 @@ import exceptions.ResultatIncorrectException;
 class CategorieTest {
 
 	/**
-	 * Initialise toutes les categories et leurs pieces pour tous les tests
+	 * Lance l'initialisation des categories et de leurs pieces au lancement de la classe de test
 	 * @throws ParametreIncorrectException
 	 * @throws ResultatIncorrectException
-	 * @throws ClassNotFoundException 
-	 * @throws IllegalAccessException 
-	 * @throws InstantiationException 
 	 */
 	@BeforeAll
 	static void init() throws ResultatIncorrectException, ParametreIncorrectException, InstantiationException, IllegalAccessException, ClassNotFoundException {
@@ -34,7 +31,7 @@ class CategorieTest {
 	}
 	
 	/**
-	 * Catalogue de categorie non null
+	 * Catalogue de categorie non vide
 	 * Taille catalogue de categorie == 4
 	 */
 	@Test
@@ -49,7 +46,7 @@ class CategorieTest {
 	 */
 	@Test
 	public void testGetCategories() {
-		assertTrue(Categorie.getCategories().contains("INTERIOR"));
+		assertTrue(Categorie.getCategories().contains("ENGINE"));
 		assertFalse(Categorie.getCategories().contains("TRIM"));
 	}
 	
@@ -70,6 +67,9 @@ class CategorieTest {
 		assertEquals(piecesAttendues, Categorie.getPiecesParCategorie("ENGINE"));
 	}
 	
+	/**
+	 * On tente de recuperer les pieces d'une categorie qui n'existe pas
+	 */
 	@Test
 	public void testExpectedException() {
 		assertThrows(ParametreIncorrectException.class,

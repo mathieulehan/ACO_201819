@@ -23,7 +23,7 @@ import exceptions.ResultatIncorrectException;
 class TypePieceTest {
 	
 	/**
-	 * Initialise les pieces pour tous les tests
+	 * Au lancement de la classe de test, va initialiser toutes les pieces
 	 * @throws ParametreIncorrectException
 	 * @throws ResultatIncorrectException
 	 */
@@ -49,7 +49,8 @@ class TypePieceTest {
 	}
 	
 	/**
-	 * On verifie si on obtient bien la bonne description a partir du nom d'une piece
+	 * On verifie si on obtient bien la bonne description, les bonnes incompatibilites et les 
+	 * bonnes necessites a partir du nom d'une piece
 	 * @throws ResultatIncorrectException 
 	 */
 	@Test
@@ -67,6 +68,10 @@ class TypePieceTest {
 		assertEquals(necessiteSouhaitee, TA5.getNecessites());
 	}
 	
+	/**
+	 * On doit pouvoir recuperer une propriete d'une piece par son nom, et obtenir les valeurs de cette propriete
+	 * @throws ResultatIncorrectException
+	 */
 	@Test
 	void testXS() throws ResultatIncorrectException{
 		System.out.println(TypePiece.chercherPieceParNom("XS").getNom());

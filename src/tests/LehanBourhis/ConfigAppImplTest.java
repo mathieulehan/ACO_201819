@@ -28,11 +28,21 @@ class ConfigAppImplTest {
 	ConfigurationTest observable;
 	ConfigAppImpl observer;
 
+	/**
+	 * Lance l'initialisation des categories et de leurs pieces au lancement de la classe de test
+	 * @throws ParametreIncorrectException
+	 * @throws ResultatIncorrectException
+	 */
 	@BeforeAll
 	static void init() throws ParametreIncorrectException, ResultatIncorrectException, InstantiationException, IllegalAccessException, ClassNotFoundException {
 		Categorie.initialiserCategories();
 	}
 
+	/**
+	 * Avant chaque test de la classe, va reinitialiser la configuration
+	 * @throws ResultatIncorrectException
+	 * @throws ParametreIncorrectException
+	 */
 	@BeforeEach
 	private void init2() throws ResultatIncorrectException, ParametreIncorrectException {
 		this.observable = new ConfigurationTest();
@@ -42,7 +52,8 @@ class ConfigAppImplTest {
 	
 	
 	/**
-	 * L'utilsateur ajoute une piece dans sa configuration (ajout des pieces necessaires automatique)
+	 * L'utilsateur ajoute une piece dans sa configuration
+	 * Les pieces necessaires a la piece ajouteee doivent etre ajoutees automatiquement
 	 * @throws ResultatIncorrectException
 	 * @throws ActionPieceInvalideException
 	 * @throws ParametreIncorrectException
@@ -58,7 +69,9 @@ class ConfigAppImplTest {
 	}
 	
 	/**
-	 * L'utilisateur supprime une piece de sa configuration (suppression des pieces necessaires automatique)
+	 * L'utilisateur supprime une piece de sa configuration
+	 * Les pieces necessaires qui avaient etees ajoutees automatiquement
+	 * devront etre supprimees
 	 * @throws ResultatIncorrectException
 	 * @throws ActionPieceInvalideException
 	 * @throws ParametreIncorrectException
@@ -79,7 +92,7 @@ class ConfigAppImplTest {
 	}	
 	
 	/**
-	 * L'utilisateur souhaite voir les categories restantes dans sa configuration
+	 * L'utilisateur demande a voir les categories restantes dans sa configuration
 	 * @throws ActionPieceInvalideException
 	 * @throws ResultatIncorrectException
 	 * @throws ParametreIncorrectException
@@ -117,7 +130,7 @@ class ConfigAppImplTest {
 	}	
 	
 	/**
-	 * L'utilisateur a une configuration invalide
+	 *La configuration de l'utilisateur est invalide
 	 * @throws ActionPieceInvalideException
 	 * @throws ResultatIncorrectException
 	 * @throws ParametreIncorrectException
@@ -134,6 +147,13 @@ class ConfigAppImplTest {
 		assertFalse(this.observable.actionValidationConfiguration());
 	}
 	
+	/**
+	 * L'utilisateur souhaite ajouter une piece inexistante
+	 * et supprimer une piece ne faisant pas partie de sa configuration
+	 * @throws ActionPieceInvalideException
+	 * @throws ResultatIncorrectException
+	 * @throws ParametreIncorrectException
+	 */
 	@Test
 	public void testExpectedException() throws ActionPieceInvalideException, ResultatIncorrectException, ParametreIncorrectException {
 		this.observable.actionAjouterPiece("TM5");
