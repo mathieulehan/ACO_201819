@@ -259,6 +259,7 @@ public class ConfigVoiture implements ConfigInterface {
 
 	/**
 	 * Modification de la couleur d'une peinture, peu importe si la piece est dans ma configuration ou non
+	 * Si la peinture a deja la couleur demandee, renvoie false
 	 * @param p
 	 * @param c
 	 * @throws ResultatIncorrectException
@@ -280,6 +281,11 @@ public class ConfigVoiture implements ConfigInterface {
 		return false;
 	}
 	
+	/**
+	 * L'utilisateur peut recuperer la description de sa configuration si elle est complete (pieces + prix)
+	 * @param ps
+	 * @throws ResultatIncorrectException
+	 */
 	public void getDescription(PrintStream ps) throws ResultatIncorrectException {
 		if(estComplet()) {
 			// TODO utiliser un PrintStream
