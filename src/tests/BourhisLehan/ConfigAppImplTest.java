@@ -1,4 +1,4 @@
-package tests.LehanBourhis;
+package tests.BourhisLehan;
 
 import static org.junit.jupiter.api.Assertions.*;
 
