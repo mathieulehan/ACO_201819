@@ -1,4 +1,4 @@
-package tests.LehanBourhis;
+package tests.BourhisLehan;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -250,14 +250,21 @@ class ConfigVoitureTest {
 				() -> TypePiece.chercherPieceParNom("X").equals(this.configVoiture.getPieceParCategorie("TRANSMISSION")));		
 	}
 
+	/**
+	 * Verifie que le printStream va bien afficher quelque chose dans la console quand la configuration est complete (return true)
+	 * et au contraire, qu'elle n'affiche rien quand elle ne l'est pas (return false)
+	 * @throws ResultatIncorrectException
+	 * @throws ActionPieceInvalideException
+	 * @throws ParametreIncorrectException
+	 */
 	@Test
-	public void printStream() throws ResultatIncorrectException, ActionPieceInvalideException, ParametreIncorrectException {
+	public void testPrintStream() throws ResultatIncorrectException, ActionPieceInvalideException, ParametreIncorrectException {
 		PrintStream ps = new PrintStream(System.out);
-		assertFalse(this.cv.getDescription(ps));
-		assertTrue(this.cv.ajouterPiece("EG133"));
-		assertTrue(this.cv.ajouterPiece("TA5"));
-		assertTrue(this.cv.ajouterPiece("XS"));
-		assertTrue(this.cv.getDescription(ps));
+		assertFalse(this.configVoiture.getDescription(ps));
+		assertTrue(this.configVoiture.ajouterPiece("EG133"));
+		assertTrue(this.configVoiture.ajouterPiece("TA5"));
+		assertTrue(this.configVoiture.ajouterPiece("XS"));
+		assertTrue(this.configVoiture.getDescription(ps));
 	}
 	
 }
