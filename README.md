@@ -1,2 +1,4 @@
 # ACO_201819
-Projet Car Tailor. Interface permettant de créer de toutes pièces sa voiture.
+Projet Car Tailor. 
+
+Projet permettant de créer une configuration de voiture grâce à l'ajout et la suppression de pièce.
