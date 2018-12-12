@@ -7,4 +7,6 @@ La version 1 du projet se trouve sur la branche V1.
 La version 2 du projet se trouve sur la branche V2.
 Les tests des deux binômes se trouvent dans le package "test" suivi des noms des contributeurs.
 
-Les documents propres aux deux binômes se trouvent sur la master.
+Les documents à rendre (pour les deux binômes) se trouvent sur la master.
+-> Rapport 
+-> Javadoc
