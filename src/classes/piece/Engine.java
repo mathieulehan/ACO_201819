@@ -8,7 +8,7 @@ public class Engine extends Piece{
 	}
 	
 	public double getPrix() {
-		double d = super.getPrix();
-		return d;
+		double prix = super.getPrix();
+		return prix;
 	}
 }

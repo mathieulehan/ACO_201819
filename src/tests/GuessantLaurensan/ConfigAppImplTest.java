@@ -2,6 +2,7 @@ package tests.GuessantLaurensan;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.util.Arrays;
 import java.util.HashSet;
 
 import org.junit.jupiter.api.BeforeAll;
@@ -13,6 +14,7 @@ import classes.config.ConfigAppImpl;
 import classes.config.ConfigurationTest;
 import classes.piece.Piece;
 import classes.piece.TypePiece;
+import classes.piece.Piece.Couleur;
 import exceptions.ActionPieceInvalideException;
 import exceptions.ParametreIncorrectException;
 import exceptions.ResultatIncorrectException;
@@ -107,9 +109,49 @@ class ConfigAppImplTest {
 		HashSet<Piece> incompatilibitesSouhaitees = new HashSet<>();
 		incompatilibitesSouhaitees.add(TypePiece.chercherPieceParNom("EG210"));
 		assertEquals(incompatilibitesSouhaitees, this.observable.actionGetPiecesIncompatibles());
-
 	}
 	
+	/**
+	 * L'utilisateur souhaite connaitre le cout de sa configuration actuelle
+	 * @throws ActionPieceInvalideException
+	 * @throws ParametreIncorrectException
+	 * @throws ResultatIncorrectException
+	 */
+	@Test
+	public void recuperer_cout_configuration() throws ActionPieceInvalideException, ResultatIncorrectException, ParametreIncorrectException {
+
+		this.observable.actionAjouterPiece("XC");
+		this.observable.actionAjouterPiece("EH120");
+		assertTrue(this.observable.actionGetPrix() == 3600.0);
+
+		this.observable.actionSupprimerPiece("XC");
+		assertTrue(this.observable.actionGetPrix() == 2600.0);
+		
+	}
+	
+	/**
+	 * L'utilisateur demande a recuperer les couleurs possibles pour la peinture exterieure
+	 * Puis a change de couleur sa piece
+	 * @return
+	 * @throws ActionPieceInvalideException 
+	 * @throws ParametreIncorrectException 
+	 * @throws ResultatIncorrectException 
+	 */
+	@Test
+	public void recuperer_modifier_couleurs_possibles() throws ActionPieceInvalideException, ResultatIncorrectException, ParametreIncorrectException {
+
+		this.observable.actionAjouterPiece("XC");
+		
+		HashSet<Couleur> couleursPossibles = new HashSet<>();
+		couleursPossibles.addAll(Arrays.asList(Couleur.BLANC, Couleur.BLEU));
+		assertEquals(couleursPossibles, this.observable.actionGetCouleursPossibles("XC"));
+		
+		this.observable.actionSetCouleur("XC", Couleur.BLEU);
+
+		HashSet<Couleur> couleursPossibles2 = new HashSet<>();
+		couleursPossibles2.addAll(Arrays.asList(Couleur.BLANC, Couleur.ROUGE));
+		assertEquals(couleursPossibles2, this.observable.actionGetCouleursPossibles("XC"));
+	}
 	
 	/**
 	 * L'utilisateur souhaite instancier la configuration existante 
@@ -123,11 +165,10 @@ class ConfigAppImplTest {
 		this.observable.getConfigurationStandard();
 		assertEquals(4, this.observable.actionGetConfiguration().size());
 		
-		assertTrue(this.observable.actionGetConfiguration().contains(TypePiece.chercherPieceParNom("EG133")));
+		assertTrue(this.observable.actionGetConfiguration().contains(TypePiece.chercherPieceParNom("ED180")));
 		assertTrue(this.observable.actionGetConfiguration().contains(TypePiece.chercherPieceParNom("XS")));
 		assertTrue(this.observable.actionGetConfiguration().contains(TypePiece.chercherPieceParNom("IS")));
 		assertTrue(this.observable.actionGetConfiguration().contains(TypePiece.chercherPieceParNom("TA5")));
-
 		assertFalse(this.observable.actionGetConfiguration().contains(TypePiece.chercherPieceParNom("EH120")));
 	}
 	

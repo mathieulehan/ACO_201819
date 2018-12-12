@@ -65,10 +65,10 @@ public class ConfigurationTest extends Observable {
 	
 	/**
 	 * L'utilisateur demande a connaitre le prix de la configuration actuelle
-	 * @return
+	 * @return le cout total de sa configuration
 	 * @throws ResultatIncorrectException
 	 */
-	public String actionGetPrix() throws ResultatIncorrectException{
+	public Double actionGetPrix() throws ResultatIncorrectException{
 		return this.cv.getPrix();
 	}
 	
@@ -113,7 +113,8 @@ public class ConfigurationTest extends Observable {
 	
 	/**
 	 * L'utilisateur demande a recuperer les couleurs possibles pour la peinture exterieure
-	 * @return
+	 * @param le nom de la piece
+	 * @return un set de couleur possible
 	 * @throws ParametreIncorrectException 
 	 * @throws ResultatIncorrectException 
 	 */
@@ -132,8 +133,12 @@ public class ConfigurationTest extends Observable {
 		this.cv.setCouleur(p, c);
 	}
 	
+	/**
+	 * Si la configuration est complete, renvoie une description de celle-ci en utilisant un PrintStream
+	 * @throws ResultatIncorrectException
+	 */
 	public void actionGetDescription() throws ResultatIncorrectException {
-		this.cv.getDescription(null);
+		this.cv.getDescription(System.out);
 	}
 	
 	/**

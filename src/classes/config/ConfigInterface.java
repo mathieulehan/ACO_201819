@@ -68,5 +68,5 @@ public interface ConfigInterface {
 	 * @return
 	 * @throws ResultatIncorrectException 
 	 */
-	String getPrix() throws ResultatIncorrectException;
+	public Double getPrix() throws ResultatIncorrectException;
 }

@@ -3,6 +3,7 @@ package tests.GuessantLaurensan;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashSet;
 
 import org.junit.jupiter.api.BeforeAll;
@@ -13,6 +14,7 @@ import classes.categorie.Categorie;
 import classes.config.ConfigVoiture;
 import classes.piece.Piece;
 import classes.piece.TypePiece;
+import classes.piece.Piece.Couleur;
 import exceptions.ActionPieceInvalideException;
 import exceptions.ParametreIncorrectException;
 import exceptions.ResultatIncorrectException;
@@ -230,6 +232,75 @@ class ConfigVoitureTest {
 				() -> this.configuration.ajouterPiece("EH120")); // Configuration terminee
 		
 		assertTrue(this.configuration.estComplet());
+	}
+	
+	/**
+	 * Verifier le cout de la configuration courante
+	 * @throws ActionPieceInvalideException
+	 * @throws ParametreIncorrectException
+	 * @throws ResultatIncorrectException
+	 */
+	@Test
+	public void recuperer_cout_configuration() throws ActionPieceInvalideException, ResultatIncorrectException, ParametreIncorrectException {
+
+		this.configuration.ajouterPiece("EH120");
+		assertTrue(this.configuration.getPrix() == 2600.0);
+		
+		this.configuration.ajouterPiece("XC");
+		assertTrue(this.configuration.getPrix() == 3600.0);
+		
+		this.configuration.supprimerPiece("XC");
+		assertTrue(this.configuration.getPrix() == 2600.0);
+		
+		this.configuration.supprimerPiece("TC120");
+		assertTrue(this.configuration.getPrix() == 0.0);
+	}
+	
+	/**
+	 * Recuperer les couleurs possibles pour la peinture exterieure et changer la couleur de la piece
+	 * @throws ActionPieceInvalideException 
+	 * @throws ParametreIncorrectException 
+	 * @throws ResultatIncorrectException 
+	 */
+	@Test
+	public void modification_couleur_valide() throws ActionPieceInvalideException, ResultatIncorrectException, ParametreIncorrectException {
+
+		this.configuration.ajouterPiece("XM");
+
+		//assertEquals(Couleur.ROUGE, TypePiece.chercherPieceParNom("XM").getPropriete("couleur").get());
+		
+		HashSet<Couleur> couleursPossibles = new HashSet<>();
+		couleursPossibles.addAll(Arrays.asList(Couleur.BLANC, Couleur.BLEU));
+		assertEquals(couleursPossibles, this.configuration.getCouleursPossibles("XM"));
+
+		assertTrue(this.configuration.getCouleursPossibles("XM").size() == 2);
+		
+		this.configuration.setCouleur("XM", Couleur.BLEU);
+
+		HashSet<Couleur> couleursPossibles2 = new HashSet<>();
+		couleursPossibles2.addAll(Arrays.asList(Couleur.BLANC, Couleur.ROUGE));
+		assertEquals(couleursPossibles2, this.configuration.getCouleursPossibles("XM"));
+		
+		this.configuration.setCouleur("XM", Couleur.BLANC);
+
+		HashSet<Couleur> couleursPossibles3 = new HashSet<>();
+		couleursPossibles3.addAll(Arrays.asList(Couleur.BLEU, Couleur.ROUGE));
+		assertEquals(couleursPossibles3, this.configuration.getCouleursPossibles("XM"));
+
+		assertTrue(this.configuration.getCouleursPossibles("XM").size() == 2);
+	}
+	
+	@Test
+	public void piece_setCouleur_invalide() throws ResultatIncorrectException, ParametreIncorrectException {
+		assertEquals(Collections.emptySet(), this.configuration.getCouleursPossibles("EG100"));
+		assertFalse(this.configuration.setCouleur("EG100", Couleur.BLANC));
+		
+		assertThrows(NullPointerException.class,
+				() -> this.configuration.setCouleur(null, Couleur.BLANC));
+		assertThrows(ResultatIncorrectException.class,
+				() -> this.configuration.setCouleur("", Couleur.BLANC));
+		assertThrows(NullPointerException.class,
+				() -> this.configuration.setCouleur("XC", null));
 	}
 
 }
