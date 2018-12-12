@@ -122,7 +122,7 @@ class ConfigAppImplTest {
 
 		this.observable.actionAjouterPiece("XC");
 		this.observable.actionAjouterPiece("EH120");
-		assertTrue(this.observable.actionGetPrix() == 3600.0);
+		assertTrue(this.observable.actionGetPrix() == 3200.0);
 
 		this.observable.actionSupprimerPiece("XC");
 		assertTrue(this.observable.actionGetPrix() == 2600.0);
