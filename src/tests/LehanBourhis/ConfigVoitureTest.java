@@ -2,6 +2,9 @@ package tests.LehanBourhis;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.io.FileNotFoundException;
+import java.io.OutputStream;
+import java.io.PrintStream;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
@@ -177,7 +180,7 @@ class ConfigVoitureTest {
 	}
 
 	@Test
-	public void testConfigurationComplete() throws ActionPieceInvalideException, ResultatIncorrectException, ParametreIncorrectException {
+	public void testConfigurationComplete() throws ActionPieceInvalideException, ResultatIncorrectException, ParametreIncorrectException, FileNotFoundException {
 
 		assertTrue(this.cv.ajouterPiece("EG133"));
 		assertTrue(this.cv.ajouterPiece("TA5"));
@@ -222,4 +225,14 @@ class ConfigVoitureTest {
 				() -> TypePiece.chercherPieceParNom("X").equals(this.cv.getPieceParCategorie("TRANSMISSION")));		
 	}
 
+	@Test
+	public void printStream() throws ResultatIncorrectException, ActionPieceInvalideException, ParametreIncorrectException {
+		PrintStream ps = new PrintStream(System.out);
+		assertFalse(this.cv.getDescription(ps));
+		assertTrue(this.cv.ajouterPiece("EG133"));
+		assertTrue(this.cv.ajouterPiece("TA5"));
+		assertTrue(this.cv.ajouterPiece("XS"));
+		assertTrue(this.cv.getDescription(ps));
+	}
+	
 }

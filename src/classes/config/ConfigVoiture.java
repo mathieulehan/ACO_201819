@@ -49,7 +49,7 @@ public class ConfigVoiture implements ConfigInterface {
 	}
 
 	/**
-	 * Renvoie le prix de la configuration actuelle en euros apres possibles reductions
+	 * Renvoie le prix de la configuration actuelle apres possibles reductions
 	 * @return le cout total
 	 * @throws ResultatIncorrectException 
 	 */
@@ -222,12 +222,46 @@ public class ConfigVoiture implements ConfigInterface {
 		return piecesPossibles;
 	}
 
+	/**
+	 * Retourne un Set de toutes les pieces que l'on ne peut pas ajouter, car etant incompatible avec les pieces
+	 * deja presentes dans la configuration
+	 * @return
+	 */
 	public Set<Piece> getMesIncompatibilites(){
 		return this.mesIncompatibilites;
 	}
 
+	/**
+	 * Retourne le Set des pieces presentes dans la configuration actuelle
+	 * @return
+	 */
 	public Set<Piece> getConfiguration() {
 		return maConfig;
+	}
+
+	/**
+	 * Renvoie une phrase qui enonce les pieces comprises dans la configuration actuelle
+	 * @return
+	 */
+	public String getConfigurationStr() {
+		String s = "";
+		if(maConfig.size() >= 1) {
+			s = "La configuration est composee de ces " + maConfig.size() + " pieces :\n";
+			int i = 0;
+			for (Piece piece : maConfig) {
+				if(i > 0) {
+					s += " - ";
+				}
+				s += piece.getNom();
+				i = 1;
+			}
+			s += ".";
+		}
+		else {
+			s = "Il n'y a pas de piece dans la configuration actuelle.";
+		}
+		
+		return s;
 	}
 
 	public Set<String> getMesCategories() {
@@ -279,18 +313,18 @@ public class ConfigVoiture implements ConfigInterface {
 		}
 		return false;
 	}
-	
+
 	/**
 	 * L'utilisateur peut recuperer la description de sa configuration si elle est complete (pieces + prix)
 	 * @param ps
 	 * @throws ResultatIncorrectException
 	 */
-	public void getDescription(PrintStream ps) throws ResultatIncorrectException {
+	public boolean getDescription(PrintStream ps) throws ResultatIncorrectException {
 		if(estComplet()) {
-			// TODO utiliser un PrintStream
-			System.out.println("Votre configuration est composee de ces quatre pieces : ");
-			this.getConfiguration();
-			System.out.println("Son prix s'eleve a " + this.getPrix());
+			String s = getConfigurationStr() + "\nSon prix est de " + getPrix() + "€.";
+			ps.append(s);
+			return true;
 		}
+		return false;
 	}
 }

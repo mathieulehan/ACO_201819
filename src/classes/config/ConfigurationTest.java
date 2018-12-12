@@ -133,8 +133,12 @@ public class ConfigurationTest extends Observable {
 		this.cv.setCouleur(p, c);
 	}
 	
+	/**
+	 * Si la configuration est complete, renvoie une description de celle-ci en utilisant un PrintStream
+	 * @throws ResultatIncorrectException
+	 */
 	public void actionGetDescription() throws ResultatIncorrectException {
-		this.cv.getDescription(null);
+		this.cv.getDescription(System.out);
 	}
 	
 	/**

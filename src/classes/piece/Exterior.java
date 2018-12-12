@@ -16,12 +16,13 @@ public class Exterior extends Piece{
 	}
 	
 	public double getPrix() {
-		double d = super.getPrix();
+		double prix = super.getPrix();
+		double monPrix = 0.0;
 		switch(couleur) {
-		case "BLEU": return d + 500;
-		case "ROUGE": return d + 400;
-		case "BLANC": return d + 0;
-		default: return d + 0;
+		case "BLEU": monPrix = 500;
+		case "ROUGE": monPrix=  400;
+		case "BLANC": monPrix = 0;
+		default: return  prix + monPrix;
 		}
 	}
 	
