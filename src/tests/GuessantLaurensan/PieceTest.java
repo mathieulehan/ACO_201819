@@ -22,6 +22,7 @@ import exceptions.ResultatIncorrectException;
  */
 class PieceTest {
 
+	private String COULEUR = "couleur";
 	/**
 	 * Initialise toutes les categories et leurs pieces pour tous les tests
 	 * @throws ParametreIncorrectException
@@ -276,24 +277,23 @@ class PieceTest {
 	 */
 	@Test
 	public void recuperer_prix() throws ResultatIncorrectException, ParametreIncorrectException {
-		Exterior EXTERIOR = new Exterior("hgfr", "gte");
+		Exterior EXTERIOR = new Exterior("EXT", "Description EXT");
 		Piece TA5 = TypePiece.chercherPieceParNom("TA5");
 		Piece EG100 = TypePiece.chercherPieceParNom("EG100");
 		Piece IS = TypePiece.chercherPieceParNom("IS");
-		Piece XS = TypePiece.chercherPieceParNom("XS");
+		Piece XS = (Exterior) TypePiece.chercherPieceParNom("XS");
 		assertEquals(0.0, EXTERIOR.getPrix());
 		assertEquals(600.0, TA5.getPrix());
 		assertEquals(1000.0, EG100.getPrix());
 		assertEquals(800.0, IS.getPrix());
 
-		EXTERIOR.getCouleur();
-		XS.setPropriete("couleur", "BLANC"); // Blanc coute 0
+		XS.setPropriete(COULEUR, "BLANC"); // Blanc coute 0
 		assertEquals(1000.0, XS.getPrix());
 
-		XS.setPropriete("couleur", "ROUGE"); // Rouge coute 400
+		XS.setPropriete(COULEUR, "ROUGE"); // Rouge coute 400
 		assertEquals(1400.0, XS.getPrix());
-
-		XS.setPropriete("couleur", "BLEU"); // Bleu coute 500
+		
+		XS.setPropriete(COULEUR, "BLEU"); // Bleu coute 500
 		assertEquals(1500.0, XS.getPrix());
 	}
 
@@ -312,14 +312,14 @@ class PieceTest {
 
 		HashSet<String> valeursProprieteAttendues = new HashSet<>();
 		valeursProprieteAttendues.addAll(Arrays.asList("BLEU", "BLANC", "ROUGE"));
-		assertEquals(valeursProprieteAttendues, XM.getValeursProprietePossibles("couleur"));
+		assertEquals(valeursProprieteAttendues, XM.getValeursProprietePossibles(COULEUR));
 
 		String couleurInitiale = new String("ROUGE");
-		assertEquals(couleurInitiale, XM.getPropriete("couleur").get());
+		assertEquals(couleurInitiale, XM.getPropriete(COULEUR).get());
 
 		XM.setPropriete("couleur", "BLANC");
 		String couleurModifiee = new String("BLANC");
-		assertEquals(couleurModifiee, XM.getPropriete("couleur").get());
+		assertEquals(couleurModifiee, XM.getPropriete(COULEUR).get());
 	}
 	
 	/**

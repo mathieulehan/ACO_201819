@@ -247,7 +247,8 @@ class ConfigVoitureTest {
 		assertTrue(this.configuration.getPrix() == 2600.0);
 		
 		this.configuration.ajouterPiece("XC");
-		assertTrue(this.configuration.getPrix() == 3600.0);
+		this.configuration.setCouleur("XC", Couleur.BLANC);
+		assertTrue(this.configuration.getPrix() == 3200.0);
 		
 		this.configuration.supprimerPiece("XC");
 		assertTrue(this.configuration.getPrix() == 2600.0);
